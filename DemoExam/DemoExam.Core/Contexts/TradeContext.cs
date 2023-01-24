@@ -9,11 +9,13 @@ public partial class TradeContext : DbContext
 {
     public TradeContext()
     {
+        Database.EnsureCreated();
     }
 
     public TradeContext(DbContextOptions<TradeContext> options)
         : base(options)
     {
+        Database.EnsureCreated();
     }
 
     public virtual DbSet<Order> Orders { get; set; }
