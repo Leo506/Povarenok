@@ -30,10 +30,8 @@ public class AuthViewModel : MvxViewModel
         try
         {
             var user = await _authService.AuthenticateAsync(Login, Password);
-            _alert.Alert("", JsonSerializer.Serialize(user, new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            }));
+            _alert.Alert("",
+                $"Name: {user.UserSurname} {user.UserName} {user.UserPatronymic}\nRole: {user.UserRoleNavigation.RoleName}");
         }
         catch (Exception e)
         {
