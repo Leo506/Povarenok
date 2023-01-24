@@ -3,7 +3,7 @@ using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoExam.Core.Services;
+namespace DemoExam.Core.Services.Auth;
 
 public class AuthService : IAuthService
 {

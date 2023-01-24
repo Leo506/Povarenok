@@ -1,4 +1,5 @@
 ﻿using DemoExam.Core.Services;
+using DemoExam.Core.Services.Auth;
 using MvvmCross;
 using MvvmCross.ViewModels;
 

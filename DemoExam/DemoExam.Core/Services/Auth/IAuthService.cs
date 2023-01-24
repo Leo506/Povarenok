@@ -1,6 +1,6 @@
 ﻿using DemoExam.Core.Models;
 
-namespace DemoExam.Core.Services;
+namespace DemoExam.Core.Services.Auth;
 
 public interface IAuthService
 {
