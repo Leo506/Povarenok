@@ -15,4 +15,10 @@
     <PackageReference Include="MvvmCross" Version="9.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <HintPath>..\..\..\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\7.0.0\PresentationCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

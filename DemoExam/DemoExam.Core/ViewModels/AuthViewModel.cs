@@ -53,8 +53,7 @@ public class AuthViewModel : MvxViewModel
         try
         {
             var user = await _authService.AuthenticateAsync(Login, Password).ConfigureAwait(false);
-            _alert.Alert("",
-                $"Name: {user.UserSurname} {user.UserName} {user.UserPatronymic}\nRole: {user.UserRoleNavigation.RoleName}");
+            await _navigationService.Navigate<ProductsViewModel>();
         }
         catch (Exception e)
         {
