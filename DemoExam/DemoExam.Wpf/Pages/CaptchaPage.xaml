@@ -1,0 +1,30 @@
+﻿<views:MvxWpfView x:Class="DemoExam.Wpf.Pages.CaptchaPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:DemoExam.Wpf.Pages"
+             xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center"
+                   FontSize="20" Text="Enter a code from picture"
+                   Margin="0 100 0 0"/>
+        
+        <Rectangle Fill="Gray" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="20"/>
+        <TextBlock Text="{Binding CaptchaText}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" 
+                   TextDecorations="Strikethrough" Width="Auto" Height="Auto">
+            <TextBlock.RenderTransform>
+                <RotateTransform Angle="-5"></RotateTransform>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        
+        <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 50 0 0" 
+                 Text="{Binding UserInput}"
+                 Width="100"/>
+        
+        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 100 0 0"
+                Content="Verify" Width="100" Command="{Binding VerifyCommand}"/>
+    </Grid>
+</views:MvxWpfView>
