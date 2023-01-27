@@ -36,7 +36,8 @@ public class AuthViewModel : MvxViewModel
         }
         catch (Exception e)
         {
-            await _navigationService.Navigate<CaptchaViewModel>();
+            await _navigationService.Navigate<CaptchaViewModel, Action<bool>>(result => _alert.Alert("", result.ToString()))
+                .ConfigureAwait(false);
         }
     });
 

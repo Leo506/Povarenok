@@ -1,11 +1,12 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Utils;
 using MvvmCross.Commands;
+using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
 
-public class CaptchaViewModel : MvxViewModel
+public class CaptchaViewModel : MvxViewModel<Action<bool>>
 {
     private string _captchaText;
     public string CaptchaText
@@ -24,14 +25,22 @@ public class CaptchaViewModel : MvxViewModel
     private MvxCommand? _verifyCommand;
     public ICommand VerifyCommand => _verifyCommand ??= new MvxCommand(() =>
     {
-        if (UserInput == CaptchaText)
-        {
-            // TODO on success captcha pass
-        }
+        _navigationService.Close(this);
+        _callBack(UserInput == CaptchaText);
     });
 
-    public CaptchaViewModel()
+    private Action<bool> _callBack;
+
+    private readonly IMvxNavigationService _navigationService;
+    
+    public CaptchaViewModel(IMvxNavigationService navigationService)
     {
+        _navigationService = navigationService;
         CaptchaText = CaptchaTextGenerator.GenerateCaptchaText();
+    }
+
+    public override void Prepare(Action<bool> parameter)
+    {
+        _callBack = parameter;
     }
 }

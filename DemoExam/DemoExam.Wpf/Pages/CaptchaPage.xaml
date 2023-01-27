@@ -16,7 +16,7 @@
                        Margin="0 0 0 10"/>
             
             <Border Width="100" Height="20" Background="Brown" Margin="0 0 0 10">
-                <TextBlock Text="3434" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" 
+                <TextBlock Text="{Binding CaptchaText}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" 
                            TextDecorations="Strikethrough" Width="Auto" Height="Auto">
                     <TextBlock.RenderTransform>
                         <RotateTransform Angle="-5"></RotateTransform>
