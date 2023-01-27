@@ -1,9 +1,12 @@
 ﻿using System.Windows.Controls;
+using DemoExam.Core.ViewModels;
+using MvvmCross.Platforms.Wpf.Presenters.Attributes;
 using MvvmCross.Platforms.Wpf.Views;
 
 namespace DemoExam.Wpf.Pages;
 
-public partial class CaptchaPage : MvxWpfView
+[MvxWindowPresentation(Modal = true)]
+public partial class CaptchaPage : MvxWindow<CaptchaViewModel>
 {
     public CaptchaPage()
     {

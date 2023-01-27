@@ -4,6 +4,7 @@ using DemoExam.Core.Services;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Auth;
 using MvvmCross.Commands;
+using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
@@ -35,16 +36,18 @@ public class AuthViewModel : MvxViewModel
         }
         catch (Exception e)
         {
-            _alert.Alert("", e.Message);
+            await _navigationService.Navigate<CaptchaViewModel>();
         }
     });
 
     private readonly IAuthService _authService;
     private readonly IAlert _alert;
+    private readonly IMvxNavigationService _navigationService;
     
-    public AuthViewModel(IAuthService authService, IAlert alert)
+    public AuthViewModel(IAuthService authService, IAlert alert, IMvxNavigationService navigationService)
     {
         _authService = authService;
         _alert = alert;
+        _navigationService = navigationService;
     }
 }
