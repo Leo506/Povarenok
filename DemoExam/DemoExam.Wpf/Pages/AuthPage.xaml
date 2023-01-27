@@ -54,7 +54,7 @@
             
             <Button Grid.Row="2" Grid.ColumnSpan="2"
                     Margin="10"
-                    Content="Login"
+                    Content="{Binding LoginButtonText}"
                     FontSize="17"
                     Command="{Binding AuthCommand}"/>
        </Grid>

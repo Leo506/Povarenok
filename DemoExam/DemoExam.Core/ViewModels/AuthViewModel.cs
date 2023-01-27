@@ -25,8 +25,30 @@ public class AuthViewModel : MvxViewModel
         set => SetProperty(ref _password, value);
     }
 
-    private MvxCommand? _authCommand;
-    public ICommand AuthCommand => _authCommand ??= new MvxCommand(async () =>
+    private string _loginButtonText = "Login";
+    public string LoginButtonText
+    {
+        get => _loginButtonText;
+        set => SetProperty(ref _loginButtonText, value);
+    }
+
+    private MvxAsyncCommand? _authCommand;
+    public ICommand AuthCommand => _authCommand ??= new MvxAsyncCommand(Authenticate, () => _isLoginAvailable);
+
+    private readonly IAuthService _authService;
+    private readonly IAlert _alert;
+    private readonly IMvxNavigationService _navigationService;
+
+    private bool _isLoginAvailable = true;
+    
+    public AuthViewModel(IAuthService authService, IAlert alert, IMvxNavigationService navigationService)
+    {
+        _authService = authService;
+        _alert = alert;
+        _navigationService = navigationService;
+    }
+
+    private async Task Authenticate()
     {
         try
         {
@@ -36,19 +58,30 @@ public class AuthViewModel : MvxViewModel
         }
         catch (Exception e)
         {
-            await _navigationService.Navigate<CaptchaViewModel, Action<bool>>(result => _alert.Alert("", result.ToString()))
+            await _navigationService.Navigate<CaptchaViewModel, Action<bool>>(CaptchaCallback)
                 .ConfigureAwait(false);
         }
-    });
 
-    private readonly IAuthService _authService;
-    private readonly IAlert _alert;
-    private readonly IMvxNavigationService _navigationService;
-    
-    public AuthViewModel(IAuthService authService, IAlert alert, IMvxNavigationService navigationService)
-    {
-        _authService = authService;
-        _alert = alert;
-        _navigationService = navigationService;
+        void CaptchaCallback(bool result)
+        {
+            if (result is false)
+            {
+                _isLoginAvailable = false;
+                _authCommand?.RaiseCanExecuteChanged();
+                Task.Run(async () =>
+                {
+                    var waitTime = DateTime.Now;
+                    for (var i = 0; i < 10; i++)
+                    {
+                        LoginButtonText = (10 - (int)(DateTime.Now - waitTime).TotalSeconds).ToString();
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    
+                    _isLoginAvailable = true;
+                    LoginButtonText = "Login";
+                    _authCommand?.RaiseCanExecuteChanged();
+                });
+            }
+        }
     }
 }
