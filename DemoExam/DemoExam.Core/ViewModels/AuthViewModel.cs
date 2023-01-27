@@ -52,7 +52,7 @@ public class AuthViewModel : MvxViewModel
     {
         try
         {
-            var user = await _authService.AuthenticateAsync(Login, Password);
+            var user = await _authService.AuthenticateAsync(Login, Password).ConfigureAwait(false);
             _alert.Alert("",
                 $"Name: {user.UserSurname} {user.UserName} {user.UserPatronymic}\nRole: {user.UserRoleNavigation.RoleName}");
         }
@@ -74,7 +74,7 @@ public class AuthViewModel : MvxViewModel
                     for (var i = 0; i < 10; i++)
                     {
                         LoginButtonText = (10 - (int)(DateTime.Now - waitTime).TotalSeconds).ToString();
-                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
                     }
                     
                     _isLoginAvailable = true;

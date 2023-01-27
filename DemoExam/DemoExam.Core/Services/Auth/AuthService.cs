@@ -16,12 +16,14 @@ public class AuthService : IAuthService
 
     public async Task<User> AuthenticateAsync(string login, string password)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserLogin == login && x.UserPassword == password);
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserLogin == login && x.UserPassword == password)
+            .ConfigureAwait(false);
         if (user is null)
             throw new AuthenticationException("Incorrect login or password");
 
-        user.UserRoleNavigation = await _context.Roles.FirstOrDefaultAsync(x => x.RoleId == user.UserRole) ??
-                                  throw new InvalidDataException("User has no role");
+        user.UserRoleNavigation =
+            await _context.Roles.FirstOrDefaultAsync(x => x.RoleId == user.UserRole).ConfigureAwait(false) ??
+            throw new InvalidDataException("User has no role");
 
         return user;
     }

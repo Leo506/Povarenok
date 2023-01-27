@@ -23,9 +23,9 @@ public class CaptchaViewModel : MvxViewModel<Action<bool>>
     }
 
     private MvxCommand? _verifyCommand;
-    public ICommand VerifyCommand => _verifyCommand ??= new MvxCommand(() =>
+    public ICommand VerifyCommand => _verifyCommand ??= new MvxCommand(async () =>
     {
-        _navigationService.Close(this);
+        await _navigationService.Close(this).ConfigureAwait(false);
         _callBack(UserInput == CaptchaText);
     });
 
