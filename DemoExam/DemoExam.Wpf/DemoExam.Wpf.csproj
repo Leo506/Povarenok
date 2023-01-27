@@ -15,4 +15,15 @@
       <ProjectReference Include="..\DemoExam.Core\DemoExam.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Resources\Images" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\Images\default_image.png" />
+      <Resource Include="Resources\Images\default_image.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
 </Project>

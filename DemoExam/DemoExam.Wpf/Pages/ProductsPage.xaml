@@ -6,14 +6,19 @@
                   xmlns:local="clr-namespace:DemoExam.Wpf.Pages"
                   xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
+                  xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="600">
+    <views:MvxWpfView.Resources>
+        <converters:NullImageConverter x:Key="NullImageConverter"/>
+    </views:MvxWpfView.Resources>
     <Grid>
         <ListBox ItemsSource="{Binding Products}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding ProductPhoto}" Width="200" Height="100"/>
+                        <Image Source="{Binding ProductPhoto, Converter={StaticResource NullImageConverter}}"
+                               Width="200" Height="100"/>
                         <TextBlock Text="{Binding ProductName}"/>
                     </StackPanel>
                 </DataTemplate>

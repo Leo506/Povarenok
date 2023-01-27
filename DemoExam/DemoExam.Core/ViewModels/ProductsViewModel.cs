@@ -10,6 +10,6 @@ public class ProductsViewModel : MvxViewModel
     
     public ProductsViewModel(TradeContext context)
     {
-        Products = new MvxObservableCollection<Product>(context.Products.Where(x => x.ProductPhoto != null));
+        Products = new MvxObservableCollection<Product>(context.Products);
     }
 }
