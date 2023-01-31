@@ -7,20 +7,39 @@
                   xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                   xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
+                  xmlns:models="clr-namespace:DemoExam.Core.Models;assembly=DemoExam.Core"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="600">
     <views:MvxWpfView.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter"/>
+        <converters:NumberToDiscountStringConverter x:Key="NumberToDiscountStringConverter"/>
     </views:MvxWpfView.Resources>
     <Grid>
-        <ListBox ItemsSource="{Binding Products}">
+        <ListBox ItemsSource="{Binding Products}" HorizontalAlignment="Center" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding ProductPhoto, Converter={StaticResource NullImageConverter}}"
-                               Width="200" Height="100"/>
-                        <TextBlock Text="{Binding ProductName}"/>
-                    </StackPanel>
+                <DataTemplate DataType="{x:Type models:Product}">
+                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="LightBlue" Margin="10" HorizontalAlignment="Stretch">
+                        <Grid ShowGridLines="True" Width="600">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.25*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.25*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Image Grid.Column="0" Source="{Binding ProductPhoto, Converter={StaticResource NullImageConverter}}"
+                                   Width="200" Height="100" Margin="10"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding ProductName}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding ProductDescription}" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding ProductManufacturer}"/>
+                                <TextBlock Text="{Binding ProductCost}"/>
+                            </StackPanel>
+                            
+                            <TextBlock Grid.Column="2" Text="{Binding CurrentDiscount, Converter={StaticResource NumberToDiscountStringConverter}}" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="20"/>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
