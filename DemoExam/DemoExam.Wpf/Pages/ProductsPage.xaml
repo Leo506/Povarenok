@@ -16,7 +16,14 @@
         <converters:DiscountToColorBrushConverter x:Key="DiscountToColorConverter"/>
     </views:MvxWpfView.Resources>
     <Grid>
-        <ListBox ItemsSource="{Binding Products}" HorizontalAlignment="Center" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <TextBox Grid.Row="0" TextChanged="OnSearchTextChange" Width="150" Height="20" HorizontalAlignment="Left" Margin="10 0 0 0"/>
+        
+        <ListBox Grid.Row="1" ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Product}">
                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="LightBlue" Margin="10" HorizontalAlignment="Stretch"

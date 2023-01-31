@@ -10,4 +10,9 @@ public partial class ProductsPage : MvxWpfView<ProductsViewModel>
     {
         InitializeComponent();
     }
+
+    private void OnSearchTextChange(object sender, TextChangedEventArgs e)
+    {
+        ViewModel.SearchString = (sender as TextBox)!.Text;
+    }
 }
