@@ -13,12 +13,14 @@
     <views:MvxWpfView.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter"/>
         <converters:NumberToDiscountStringConverter x:Key="NumberToDiscountStringConverter"/>
+        <converters:DiscountToColorBrushConverter x:Key="DiscountToColorConverter"/>
     </views:MvxWpfView.Resources>
     <Grid>
         <ListBox ItemsSource="{Binding Products}" HorizontalAlignment="Center" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Product}">
-                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="LightBlue" Margin="10" HorizontalAlignment="Stretch">
+                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="LightBlue" Margin="10" HorizontalAlignment="Stretch"
+                            Background="{Binding CurrentDiscount, Converter={StaticResource DiscountToColorConverter}}">
                         <Grid ShowGridLines="True" Width="600">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.25*"/>
