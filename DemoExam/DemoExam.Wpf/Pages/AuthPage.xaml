@@ -8,7 +8,7 @@
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid d:DataContext="{x:Type viewModels:AuthViewModel}">
        <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -23,6 +23,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
@@ -58,5 +59,10 @@
                     FontSize="17"
                     Command="{Binding AuthCommand}"/>
        </Grid>
+       
+       <TextBlock Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+           <Hyperlink Command="{Binding ContinueAsGuest}">Continue as guest</Hyperlink>
+       </TextBlock>
+       
     </Grid>
 </views:MvxWpfView>

@@ -35,6 +35,11 @@ public class AuthViewModel : MvxViewModel
     private MvxAsyncCommand? _authCommand;
     public ICommand AuthCommand => _authCommand ??= new MvxAsyncCommand(Authenticate, () => _isLoginAvailable);
 
+    private MvxAsyncCommand? _continueAsGuestCommand;
+
+    public ICommand ContinueAsGuest => _continueAsGuestCommand ??=
+        new MvxAsyncCommand(async () => await _navigationService.Navigate<ProductsViewModel>());
+
     private readonly IAuthService _authService;
     private readonly IAlert _alert;
     private readonly IMvxNavigationService _navigationService;
