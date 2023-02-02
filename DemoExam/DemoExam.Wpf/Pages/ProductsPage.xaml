@@ -46,7 +46,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding ProductCost}" 
                                            TextDecorations="{Binding CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}"/>
-                                    <TextBlock Text="{Binding ActualProductCost, Converter={StaticResource DecimalToStringConverter}}"
+                                    <TextBlock Text="{Binding ProductCostWithDiscount, Converter={StaticResource DecimalToStringConverter}}"
                                                Margin="15 0 0 0"/>
                                 </StackPanel>
                             </StackPanel>
