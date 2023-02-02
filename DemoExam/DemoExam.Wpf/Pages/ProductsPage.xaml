@@ -14,6 +14,8 @@
         <converters:NullImageConverter x:Key="NullImageConverter"/>
         <converters:NumberToDiscountStringConverter x:Key="NumberToDiscountStringConverter"/>
         <converters:DiscountToColorBrushConverter x:Key="DiscountToColorConverter"/>
+        <converters:DiscountToTextDecorationConverter x:Key="DiscountToTextDecorationConverter"/>
+        <converters:DecimalToStringConverter x:Key="DecimalToStringConverter"/>
     </views:MvxWpfView.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -28,7 +30,7 @@
                 <DataTemplate DataType="{x:Type models:Product}">
                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="LightBlue" Margin="10" HorizontalAlignment="Stretch"
                             Background="{Binding CurrentDiscount, Converter={StaticResource DiscountToColorConverter}}">
-                        <Grid ShowGridLines="True" Width="600">
+                        <Grid Width="600">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.25*"/>
                                 <ColumnDefinition Width="0.5*"/>
@@ -41,7 +43,12 @@
                                 <TextBlock Text="{Binding ProductName}" FontWeight="Bold"/>
                                 <TextBlock Text="{Binding ProductDescription}" TextWrapping="Wrap"/>
                                 <TextBlock Text="{Binding ProductManufacturer}"/>
-                                <TextBlock Text="{Binding ProductCost}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ProductCost}" 
+                                           TextDecorations="{Binding CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}"/>
+                                    <TextBlock Text="{Binding ActualProductCost, Converter={StaticResource DecimalToStringConverter}}"
+                                               Margin="15 0 0 0"/>
+                                </StackPanel>
                             </StackPanel>
                             
                             <TextBlock Grid.Column="2" Text="{Binding CurrentDiscount, Converter={StaticResource NumberToDiscountStringConverter}}" 
