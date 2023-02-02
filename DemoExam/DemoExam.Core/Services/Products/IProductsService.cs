@@ -9,4 +9,6 @@ public interface IProductsService
     Task<IEnumerable<Product>> GetAllAsync();
     
     IEnumerable<Product> GetWhere(Func<Product, bool> predicate);
+
+    int Count();
 }

@@ -33,6 +33,8 @@ public class ProductsViewModel : MvxViewModel
 
     public ICommand CloseCommand =>
         _closeCommand ??= new MvxAsyncCommand(async () => await _navigationService.Close(this));
+
+    public string CurrentSelectionAmount => $"{Products.Count}/{_productsService.Count()}";
     
     public string SearchString
     {
@@ -100,6 +102,7 @@ public class ProductsViewModel : MvxViewModel
         SelectByDiscount();
         SortProducts();
         RaisePropertyChanged(() => Products);
+        RaisePropertyChanged(() => CurrentSelectionAmount);
     }
 
 

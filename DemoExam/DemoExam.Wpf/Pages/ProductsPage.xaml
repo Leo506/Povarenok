@@ -30,6 +30,7 @@
             <Button Height="20" Width="100" Command="{Binding ChangeSortOrderCommand}" 
                     Content="{Binding SortOrderName}"/>
             <ComboBox ItemsSource="{Binding DiscountSelects}" SelectionChanged="OnDiscountSelectorChange" SelectedIndex="0" Height="20" Width="100"/>
+            <TextBlock Text="{Binding CurrentSelectionAmount}" Margin="10 0 0 0" VerticalAlignment="Center"/>
         </StackPanel>
         
         <ListBox Grid.Row="1" ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch">

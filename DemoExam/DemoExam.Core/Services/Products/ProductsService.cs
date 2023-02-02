@@ -20,4 +20,6 @@ public class ProductsService : IProductsService
 
     public IEnumerable<Product> GetWhere(Func<Product, bool> predicate) =>
         _tradeContext.Products.Where(predicate).ToList();
+
+    public int Count() => _tradeContext.Products.Count();
 }
