@@ -23,7 +23,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <TextBox Grid.Row="0" TextChanged="OnSearchTextChange" Width="150" Height="20" HorizontalAlignment="Left" Margin="10 0 0 0"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBox TextChanged="OnSearchTextChange" Width="150" Height="20" HorizontalAlignment="Left" 
+                     Margin="10 0 0 0"/>
+            <Button Height="20" Width="100" Command="{Binding ChangeSortOrderCommand}" Content="{Binding SortOrderName}"/>
+        </StackPanel>
         
         <ListBox Grid.Row="1" ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
