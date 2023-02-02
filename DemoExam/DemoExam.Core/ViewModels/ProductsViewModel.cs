@@ -1,5 +1,6 @@
 ﻿using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
+using DemoExam.Core.Services.Products;
 using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
@@ -21,19 +22,20 @@ public class ProductsViewModel : MvxViewModel
         }
     }
 
-    private TradeContext _context;
+    private readonly IProductsService _productsService;
     
-    public ProductsViewModel(TradeContext context)
+    public ProductsViewModel(IProductsService productsService)
     {
-        _context = context;
-        Products = new MvxObservableCollection<Product>(context.Products);
+        _productsService = productsService;
+        Products = new MvxObservableCollection<Product>(_productsService.GetAll());
     }
 
     private void UpdateProducts()
     {
         if (string.IsNullOrEmpty(SearchString))
-            Products = new MvxObservableCollection<Product>(_context.Products);
+            Products = new MvxObservableCollection<Product>(_productsService.GetAll());
         else
-            Products = new MvxObservableCollection<Product>(Products.Where(x => x.ProductName.Contains(SearchString)));
+            Products = new MvxObservableCollection<Product>(_productsService.GetWhere(x =>
+                x.ProductName.Contains(SearchString)));
     }
 }
