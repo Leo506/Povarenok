@@ -24,6 +24,7 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Command="{Binding CloseCommand}" Content="Close" Height="20" Margin="10 0 0 0"/>
             <TextBox TextChanged="OnSearchTextChange" Width="150" Height="20" HorizontalAlignment="Left" 
                      Margin="10 0 0 0"/>
             <Button Height="20" Width="100" Command="{Binding ChangeSortOrderCommand}" 

@@ -2,6 +2,7 @@
 using DemoExam.Core.Models;
 using DemoExam.Core.Services.Products;
 using MvvmCross.Commands;
+using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
@@ -29,6 +30,9 @@ public class ProductsViewModel : MvxViewModel
     public List<DiscountSelectableItem> DiscountSelects { get; set; }
 
     public ICommand ChangeSortOrderCommand => _changeSortOrderCommand ??= new MvxCommand(ChangeSortOrder);
+
+    public ICommand CloseCommand =>
+        _closeCommand ??= new MvxAsyncCommand(async () => await _navigationService.Close(this));
     
     public string SearchString
     {
@@ -41,15 +45,18 @@ public class ProductsViewModel : MvxViewModel
     }
 
     private string _sortOrderName;
-    private MvxCommand _changeSortOrderCommand;
+    private MvxCommand? _changeSortOrderCommand;
+    private MvxAsyncCommand? _closeCommand;
     private Func<double, bool> _discountSelectorPredicate = _ => true;
     private string _searchString;
     private readonly IProductsService _productsService;
     private SortOrder _sortOrder;
+    private readonly IMvxNavigationService _navigationService;
     
-    public ProductsViewModel(IProductsService productsService)
+    public ProductsViewModel(IProductsService productsService, IMvxNavigationService navigationService)
     {
         _productsService = productsService;
+        _navigationService = navigationService;
         Products = new MvxObservableCollection<Product>(_productsService.GetAll());
         SortOrderName = DetermineSortOrderName();
         DiscountSelects = new List<DiscountSelectableItem>()
