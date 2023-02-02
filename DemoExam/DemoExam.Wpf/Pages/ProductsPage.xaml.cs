@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using DemoExam.Core.Models;
 using DemoExam.Core.ViewModels;
 using MvvmCross.Platforms.Wpf.Views;
 
@@ -14,5 +15,13 @@ public partial class ProductsPage : MvxWpfView<ProductsViewModel>
     private void OnSearchTextChange(object sender, TextChangedEventArgs e)
     {
         ViewModel.SearchString = (sender as TextBox)!.Text;
+    }
+
+    private void OnDiscountSelectorChange(object sender, SelectionChangedEventArgs e)
+    {
+        if ((sender as ComboBox)?.SelectedItem is DiscountSelectableItem discountSelectableItem)
+        {
+            ViewModel.ChangeDiscountSelector(discountSelectableItem);
+        }
     }
 }
