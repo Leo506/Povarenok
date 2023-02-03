@@ -1,4 +1,6 @@
-﻿namespace DemoExam.Core.Models;
+﻿using System;
+
+namespace DemoExam.Wpf.DataElements;
 
 public class DiscountSelectableItem
 {

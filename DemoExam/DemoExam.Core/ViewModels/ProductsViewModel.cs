@@ -27,7 +27,7 @@ public class ProductsViewModel : MvxViewModel<User>
     }
 
     public MvxObservableCollection<Product> Products { get; set; }
-    public List<DiscountSelectableItem> DiscountSelects { get; set; }
+    
 
     public ICommand ChangeSortOrderCommand => _changeSortOrderCommand ??= new MvxCommand(ChangeSortOrder);
 
@@ -63,24 +63,6 @@ public class ProductsViewModel : MvxViewModel<User>
         _navigationService = navigationService;
         Products = new MvxObservableCollection<Product>(_productsService.GetAll());
         SortOrderName = DetermineSortOrderName();
-        DiscountSelects = new List<DiscountSelectableItem>()
-        {
-            new(),
-            new()
-            {
-                MinDiscount = 0,
-                MaxDiscount = 9.99
-            },
-            new()
-            {
-                MinDiscount = 10,
-                MaxDiscount = 14.99
-            },
-            new()
-            {
-                MinDiscount = 15
-            }
-        };
     }
 
     private void ChangeSortOrder()
@@ -143,9 +125,9 @@ public class ProductsViewModel : MvxViewModel<User>
         };
     }
     
-    public void ChangeDiscountSelector(DiscountSelectableItem discountSelectableItem)
+    public void ChangeDiscountSelector(Func<double, bool> discountSelectorPredicate)
     {
-        _discountSelectorPredicate = discountSelectableItem.GetDiscountSortPredicate();
+        _discountSelectorPredicate = discountSelectorPredicate;
         UpdateProducts();
     }
 

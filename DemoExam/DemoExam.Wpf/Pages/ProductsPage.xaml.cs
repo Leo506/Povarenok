@@ -1,7 +1,9 @@
-﻿using System.Windows.Controls;
-using DemoExam.Core.Models;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 using DemoExam.Core.ViewModels;
+using DemoExam.Wpf.DataElements;
 using MvvmCross.Platforms.Wpf.Views;
+using MvvmCross.ViewModels;
 
 namespace DemoExam.Wpf.Pages;
 
@@ -21,7 +23,7 @@ public partial class ProductsPage : MvxWpfView<ProductsViewModel>
     {
         if ((sender as ComboBox)?.SelectedItem is DiscountSelectableItem discountSelectableItem)
         {
-            ViewModel.ChangeDiscountSelector(discountSelectableItem);
+            ViewModel?.ChangeDiscountSelector(discountSelectableItem.GetDiscountSortPredicate());
         }
     }
 }

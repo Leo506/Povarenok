@@ -8,7 +8,9 @@
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                   xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                   xmlns:models="clr-namespace:DemoExam.Core.Models;assembly=DemoExam.Core"
+                  xmlns:dataElements="clr-namespace:DemoExam.Wpf.DataElements"
                   mc:Ignorable="d"
+                  x:Name="ProductsView"
                   d:DesignHeight="300" d:DesignWidth="600">
     <views:MvxWpfView.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter"/>
@@ -39,10 +41,14 @@
                     Command="{Binding ChangeSortOrderCommand}" 
                     Content="{Binding SortOrderName}"/>
             
-            <ComboBox ItemsSource="{Binding DiscountSelects}" 
-                      SelectionChanged="OnDiscountSelectorChange" 
+            <ComboBox SelectionChanged="OnDiscountSelectorChange" 
                       SelectedIndex="0" 
-                      Height="20" Width="100"/>
+                      Height="20" Width="100">
+                <dataElements:DiscountSelectableItem/>
+                <dataElements:DiscountSelectableItem MinDiscount="0" MaxDiscount="9.99"/>
+                <dataElements:DiscountSelectableItem MinDiscount="10" MaxDiscount="14.99"/>
+                <dataElements:DiscountSelectableItem MinDiscount="15"/>
+            </ComboBox>
             
             <TextBlock Text="{Binding CurrentSelectionAmount}" 
                        Margin="10 0 0 0" 
