@@ -2,6 +2,7 @@
 using DemoExam.Core.Services;
 using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Products;
+using DemoExam.Core.Services.UserRole;
 using DemoExam.Core.ViewModels;
 using MvvmCross;
 using MvvmCross.IoC;
@@ -16,7 +17,8 @@ public class App : MvxApplication
         Mvx.IoCProvider.LazyConstructAndRegisterSingleton(() => new TradeContext());
         Mvx.IoCProvider.RegisterType<IAuthService, AuthService>();
         Mvx.IoCProvider.RegisterType<IProductsService, ProductsService>();
-        
+        Mvx.IoCProvider.RegisterType<IUserRoleService, UserRoleService>();
+
         RegisterAppStart<AuthViewModel>();
         
         base.Initialize();

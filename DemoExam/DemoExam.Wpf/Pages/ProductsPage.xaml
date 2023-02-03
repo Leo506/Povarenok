@@ -111,6 +111,31 @@
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <!--<ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="ContextMenu">
+                        <Setter.Value>
+                            <ContextMenu ItemsSource="{Binding ViewModel.AvailableProductOperations, ElementName=ProductsView}">
+                                ~1~<ContextMenu.ItemTemplate>
+                                    <DataTemplate>
+                                        <MenuItem Header="gegege"></MenuItem>
+                                    </DataTemplate>
+                                </ContextMenu.ItemTemplate>@1@
+                            </ContextMenu>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>-->
+            <ListBox.ContextMenu>
+                <ContextMenu ItemsSource="{Binding AvailableProductOperations}">
+                    <ContextMenu.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Header" Value="{Binding OperationName}"/>
+                            <Setter Property="Command" Value="{Binding Operation}"/>
+                        </Style>
+                    </ContextMenu.ItemContainerStyle>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
     </Grid>
 </views:MvxWpfView>

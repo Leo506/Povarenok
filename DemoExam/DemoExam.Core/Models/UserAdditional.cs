@@ -9,6 +9,10 @@ public partial class User
     public static User Guest => new User()
     {
         UserLogin = "Guest",
-        UserName = "Guest"
+        UserName = "Guest",
+        UserRoleNavigation = new Role()
+        {
+            RoleName = Role.ClientRoleName
+        }
     };
 }

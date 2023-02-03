@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Models;
+using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Products;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -28,6 +29,7 @@ public class ProductsViewModel : MvxViewModel<User>
 
     public MvxObservableCollection<Product> Products { get; set; }
     
+    public List<ProductOperation> AvailableProductOperations => _productsService.GetAvailableProductsOperationsForUser(User);
 
     public ICommand ChangeSortOrderCommand => _changeSortOrderCommand ??= new MvxCommand(ChangeSortOrder);
 
@@ -56,11 +58,13 @@ public class ProductsViewModel : MvxViewModel<User>
     private readonly IProductsService _productsService;
     private SortOrder _sortOrder;
     private readonly IMvxNavigationService _navigationService;
+    private readonly IAlert _alert;
     
-    public ProductsViewModel(IProductsService productsService, IMvxNavigationService navigationService)
+    public ProductsViewModel(IProductsService productsService, IMvxNavigationService navigationService, IAlert alert)
     {
         _productsService = productsService;
         _navigationService = navigationService;
+        _alert = alert;
         Products = new MvxObservableCollection<Product>(_productsService.GetAll());
         SortOrderName = DetermineSortOrderName();
     }
