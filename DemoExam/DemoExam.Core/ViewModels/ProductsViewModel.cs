@@ -14,7 +14,7 @@ internal enum SortOrder
     DESC
 }
 
-public class ProductsViewModel : MvxViewModel
+public class ProductsViewModel : MvxViewModel<User>
 {
     public string SortOrderName
     {
@@ -45,6 +45,8 @@ public class ProductsViewModel : MvxViewModel
             UpdateProducts();
         }
     }
+    
+    public User User { get; set; }
 
     private string _sortOrderName;
     private MvxCommand? _changeSortOrderCommand;
@@ -145,5 +147,10 @@ public class ProductsViewModel : MvxViewModel
     {
         _discountSelectorPredicate = discountSelectableItem.GetDiscountSortPredicate();
         UpdateProducts();
+    }
+
+    public override void Prepare(User parameter)
+    {
+        User = parameter;
     }
 }

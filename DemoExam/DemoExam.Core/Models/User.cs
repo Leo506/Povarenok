@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DemoExam.Core.Models;
+﻿namespace DemoExam.Core.Models;
 
 public partial class User
 {

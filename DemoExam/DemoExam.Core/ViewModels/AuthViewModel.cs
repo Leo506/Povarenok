@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Windows.Input;
+using DemoExam.Core.Models;
 using DemoExam.Core.Services;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Auth;
@@ -38,7 +39,10 @@ public class AuthViewModel : MvxViewModel
     private MvxAsyncCommand? _continueAsGuestCommand;
 
     public ICommand ContinueAsGuest => _continueAsGuestCommand ??=
-        new MvxAsyncCommand(async () => await _navigationService.Navigate<ProductsViewModel>());
+        new MvxAsyncCommand(async () => await _navigationService.Navigate<ProductsViewModel, User>(new User()
+        {
+            UserName = "Guest"
+        }));
 
     private readonly IAuthService _authService;
     private readonly IAlert _alert;
@@ -58,7 +62,7 @@ public class AuthViewModel : MvxViewModel
         try
         {
             var user = await _authService.AuthenticateAsync(Login, Password).ConfigureAwait(false);
-            await _navigationService.Navigate<ProductsViewModel>();
+            await _navigationService.Navigate<ProductsViewModel, User>(user);
         }
         catch (Exception e)
         {

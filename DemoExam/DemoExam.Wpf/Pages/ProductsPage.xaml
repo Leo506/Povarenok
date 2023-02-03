@@ -23,21 +23,55 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Command="{Binding CloseCommand}" Content="Close" Height="20" Margin="10 0 0 0"/>
-            <TextBox TextChanged="OnSearchTextChange" Width="150" Height="20" HorizontalAlignment="Left" 
+        <DockPanel Grid.Row="0">
+            
+            <Button Command="{Binding CloseCommand}" 
+                    Content="Close" 
+                    Height="20" 
+                    Margin="10 0 0 0"/>
+            
+            <TextBox TextChanged="OnSearchTextChange" 
+                     Width="150" Height="20" 
+                     HorizontalAlignment="Left" 
                      Margin="10 0 0 0"/>
-            <Button Height="20" Width="100" Command="{Binding ChangeSortOrderCommand}" 
+            
+            <Button Height="20" Width="100" 
+                    Command="{Binding ChangeSortOrderCommand}" 
                     Content="{Binding SortOrderName}"/>
-            <ComboBox ItemsSource="{Binding DiscountSelects}" SelectionChanged="OnDiscountSelectorChange" SelectedIndex="0" Height="20" Width="100"/>
-            <TextBlock Text="{Binding CurrentSelectionAmount}" Margin="10 0 0 0" VerticalAlignment="Center"/>
-        </StackPanel>
+            
+            <ComboBox ItemsSource="{Binding DiscountSelects}" 
+                      SelectionChanged="OnDiscountSelectorChange" 
+                      SelectedIndex="0" 
+                      Height="20" Width="100"/>
+            
+            <TextBlock Text="{Binding CurrentSelectionAmount}" 
+                       Margin="10 0 0 0" 
+                       VerticalAlignment="Center"/>
+            
+            <TextBlock DockPanel.Dock="Right" 
+                       Text="{Binding User.FullName}" 
+                       HorizontalAlignment="Right" VerticalAlignment="Center" 
+                       Margin="0 0 30 0" 
+                       FontWeight="Bold"
+                       FontSize="15"/>
+            
+        </DockPanel>
         
-        <ListBox Grid.Row="1" ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch">
+        <ListBox Grid.Row="1" 
+                 ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
+                 HorizontalAlignment="Center" 
+                 BorderBrush="{x:Null}"
+                 HorizontalContentAlignment="Stretch">
+            
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Product}">
-                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="LightBlue" Margin="10" HorizontalAlignment="Stretch"
+                    <Border CornerRadius="5" 
+                            BorderThickness="1" 
+                            BorderBrush="LightBlue" 
+                            Margin="10" 
+                            HorizontalAlignment="Stretch"
                             Background="{Binding CurrentDiscount, Converter={StaticResource DiscountToColorConverter}}">
+                        
                         <Grid Width="600">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.25*"/>
@@ -45,11 +79,16 @@
                                 <ColumnDefinition Width="0.25*"/>
                             </Grid.ColumnDefinitions>
                             
-                            <Image Grid.Column="0" Source="{Binding ProductPhoto, Converter={StaticResource NullImageConverter}}"
-                                   Width="200" Height="100" Margin="10"/>
+                            <Image Grid.Column="0" 
+                                   Source="{Binding ProductPhoto, Converter={StaticResource NullImageConverter}}"
+                                   Width="200" Height="100" 
+                                   Margin="10"/>
+                            
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding ProductName}" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding ProductDescription}" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding ProductName}" 
+                                           FontWeight="Bold"/>
+                                <TextBlock Text="{Binding ProductDescription}" 
+                                           TextWrapping="Wrap"/>
                                 <TextBlock Text="{Binding ProductManufacturer}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding ProductCost}" 
