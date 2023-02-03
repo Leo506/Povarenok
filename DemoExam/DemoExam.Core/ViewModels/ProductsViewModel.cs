@@ -50,15 +50,26 @@ public class ProductsViewModel : MvxViewModel<User>
     
     public User User { get; set; }
 
+    public Product? SelectedProduct
+    {
+        get => _selectedProduct;
+        set
+        {
+            SetProperty(ref _selectedProduct, value);
+            RaisePropertyChanged(() => SelectedProduct);
+        }
+    }
+
+    private readonly IProductsService _productsService;
+    private readonly IMvxNavigationService _navigationService;
+    private readonly IAlert _alert;
     private string _sortOrderName;
     private MvxCommand? _changeSortOrderCommand;
     private MvxAsyncCommand? _closeCommand;
     private Func<double, bool> _discountSelectorPredicate = _ => true;
     private string _searchString;
-    private readonly IProductsService _productsService;
     private SortOrder _sortOrder;
-    private readonly IMvxNavigationService _navigationService;
-    private readonly IAlert _alert;
+    private Product? _selectedProduct;
     
     public ProductsViewModel(IProductsService productsService, IMvxNavigationService navigationService, IAlert alert)
     {
@@ -67,6 +78,7 @@ public class ProductsViewModel : MvxViewModel<User>
         _alert = alert;
         Products = new MvxObservableCollection<Product>(_productsService.GetAll());
         SortOrderName = DetermineSortOrderName();
+        _selectedProduct = Products.FirstOrDefault();
     }
 
     private void ChangeSortOrder()

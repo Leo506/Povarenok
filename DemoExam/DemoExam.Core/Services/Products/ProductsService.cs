@@ -9,7 +9,7 @@ namespace DemoExam.Core.Services.Products;
 public class ProductsService : IProductsService
 {
     private readonly TradeContext _tradeContext;
-    private IUserRoleService _userRoleService;
+    private readonly IUserRoleService _userRoleService;
 
     public ProductsService(TradeContext tradeContext, IUserRoleService userRoleService)
     {

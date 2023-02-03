@@ -63,7 +63,8 @@
             
         </DockPanel>
         
-        <ListBox Grid.Row="1" 
+        <ListBox Grid.Row="1"
+                 SelectedItem="{Binding SelectedProduct}"
                  ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
                  HorizontalAlignment="Center" 
                  BorderBrush="{x:Null}"
@@ -111,27 +112,13 @@
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            <!--<ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="ContextMenu">
-                        <Setter.Value>
-                            <ContextMenu ItemsSource="{Binding ViewModel.AvailableProductOperations, ElementName=ProductsView}">
-                                ~1~<ContextMenu.ItemTemplate>
-                                    <DataTemplate>
-                                        <MenuItem Header="gegege"></MenuItem>
-                                    </DataTemplate>
-                                </ContextMenu.ItemTemplate>@1@
-                            </ContextMenu>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>-->
             <ListBox.ContextMenu>
                 <ContextMenu ItemsSource="{Binding AvailableProductOperations}">
                     <ContextMenu.ItemContainerStyle>
                         <Style TargetType="MenuItem">
                             <Setter Property="Header" Value="{Binding OperationName}"/>
                             <Setter Property="Command" Value="{Binding Operation}"/>
+                            <Setter Property="CommandParameter" Value="{Binding Path=ViewModel.SelectedProduct, ElementName=ProductsView}"/>
                         </Style>
                     </ContextMenu.ItemContainerStyle>
                 </ContextMenu>
