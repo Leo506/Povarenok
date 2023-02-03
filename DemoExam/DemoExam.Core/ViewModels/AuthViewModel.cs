@@ -1,8 +1,5 @@
-﻿using System.Text.Json;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using DemoExam.Core.Models;
-using DemoExam.Core.Services;
-using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Auth;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -12,48 +9,42 @@ namespace DemoExam.Core.ViewModels;
 
 public class AuthViewModel : MvxViewModel
 {
-    private string _login = default!;
     public string Login
     {
         get => _login;
         set => SetProperty(ref _login, value);
     }
 
-    private string _password = default!;
     public string Password
     {
         get => _password;
         set => SetProperty(ref _password, value);
     }
 
-    private string _loginButtonText = "Login";
     public string LoginButtonText
     {
         get => _loginButtonText;
         set => SetProperty(ref _loginButtonText, value);
     }
 
-    private MvxAsyncCommand? _authCommand;
     public ICommand AuthCommand => _authCommand ??= new MvxAsyncCommand(Authenticate, () => _isLoginAvailable);
-
-    private MvxAsyncCommand? _continueAsGuestCommand;
-
+    
     public ICommand ContinueAsGuest => _continueAsGuestCommand ??=
-        new MvxAsyncCommand(async () => await _navigationService.Navigate<ProductsViewModel, User>(new User()
-        {
-            UserName = "Guest"
-        }));
+        new MvxAsyncCommand(async () => await _navigationService.Navigate<ProductsViewModel, User>(User.Guest));
 
+    private string _login = default!;
+    private string _password = default!;
+    private string _loginButtonText = "Login";
+    private MvxAsyncCommand? _authCommand;
+    private MvxAsyncCommand? _continueAsGuestCommand;
     private readonly IAuthService _authService;
-    private readonly IAlert _alert;
     private readonly IMvxNavigationService _navigationService;
 
     private bool _isLoginAvailable = true;
     
-    public AuthViewModel(IAuthService authService, IAlert alert, IMvxNavigationService navigationService)
+    public AuthViewModel(IAuthService authService, IMvxNavigationService navigationService)
     {
         _authService = authService;
-        _alert = alert;
         _navigationService = navigationService;
     }
 
