@@ -9,6 +9,7 @@
                   xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                   xmlns:models="clr-namespace:DemoExam.Core.Models;assembly=DemoExam.Core"
                   xmlns:dataElements="clr-namespace:DemoExam.Wpf.DataElements"
+                  Tag="ProductPage"
                   mc:Ignorable="d"
                   x:Name="ProductsView"
                   d:DesignHeight="300" d:DesignWidth="600">
@@ -118,7 +119,7 @@
                         <Style TargetType="MenuItem">
                             <Setter Property="Header" Value="{Binding OperationName}"/>
                             <Setter Property="Command" Value="{Binding Operation}"/>
-                            <Setter Property="CommandParameter" Value="{Binding Path=ViewModel.SelectedProduct, ElementName=ProductsView}"/>
+                            <Setter Property="CommandParameter" Value="{Binding Path=ViewModel.SelectedProduct, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ProductsPage}}}"/>
                         </Style>
                     </ContextMenu.ItemContainerStyle>
                 </ContextMenu>
