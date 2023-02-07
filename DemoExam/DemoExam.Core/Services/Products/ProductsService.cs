@@ -1,8 +1,10 @@
 ﻿using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
 using DemoExam.Core.Services.UserRole;
+using DemoExam.Core.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using MvvmCross.Commands;
+using MvvmCross.Navigation;
 
 namespace DemoExam.Core.Services.Products;
 
@@ -10,11 +12,13 @@ public class ProductsService : IProductsService
 {
     private readonly TradeContext _tradeContext;
     private readonly IUserRoleService _userRoleService;
+    private readonly IMvxNavigationService _navigationService;
 
-    public ProductsService(TradeContext tradeContext, IUserRoleService userRoleService)
+    public ProductsService(TradeContext tradeContext, IUserRoleService userRoleService, IMvxNavigationService navigationService)
     {
         _tradeContext = tradeContext;
         _userRoleService = userRoleService;
+        _navigationService = navigationService;
     }
 
     public IEnumerable<Product> GetAll() => _tradeContext.Products.ToList();
@@ -62,9 +66,11 @@ public class ProductsService : IProductsService
         return new List<ProductOperation>()
         {
             new("Add To Order", new MvxCommand<Product>(product => { return; })), // TODO Add Product to Order
-            new("Edit product", new MvxCommand<Product>(product => {return;})),  // TODO navigate to edit page
-            new("Remove product", new MvxCommand<Product>(product => {return;})), // TODO Remove product
-            new("Add new product", new MvxCommand<Product>(product => {return;})) // TODO navigate to create page
+            new("Edit product",
+                new MvxCommand<Product>(product =>
+                    _navigationService.Navigate<ProductEditViewModel, Product>(product))), // TODO navigate to edit page
+            new("Remove product", new MvxCommand<Product>(product => { return; })), // TODO Remove product
+            new("Add new product", new MvxCommand<Product>(product => { return; })) // TODO navigate to create page
         };
     }
 }
