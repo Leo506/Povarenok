@@ -1,12 +1,13 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using DemoExam.Core.Utils;
 using DemoExam.Core.ViewModels;
 using Microsoft.Win32;
+using MvvmCross.Platforms.Wpf.Presenters.Attributes;
 using MvvmCross.Platforms.Wpf.Views;
 
 namespace DemoExam.Wpf.Pages;
 
+[MvxWindowPresentation(Modal = true)]
 public partial class ProductEditPage : MvxWindow<ProductEditViewModel>
 {
     public ProductEditPage()
