@@ -1,4 +1,8 @@
-﻿using DemoExam.Core.ViewModels;
+﻿using System.IO;
+using System.Windows;
+using DemoExam.Core.Utils;
+using DemoExam.Core.ViewModels;
+using Microsoft.Win32;
 using MvvmCross.Platforms.Wpf.Views;
 
 namespace DemoExam.Wpf.Pages;
@@ -8,5 +12,20 @@ public partial class ProductEditPage : MvxWindow<ProductEditViewModel>
     public ProductEditPage()
     {
         InitializeComponent();
+    }
+
+    private void OnChangePhotoClick(object sender, RoutedEventArgs e)
+    {
+        var openFileDialog = new OpenFileDialog
+        {
+            Filter = "Image files|*.bmp;*.jpeg;*.jpg;*.png",
+            FilterIndex = 1
+        };
+        
+        if (openFileDialog.ShowDialog() is not true) return;
+
+        var byteArray = FileToByteArrayConverter.Convert(openFileDialog.FileName);
+        
+        ViewModel.UpdateProductPhoto(byteArray);
     }
 }

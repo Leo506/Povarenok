@@ -35,4 +35,9 @@ public class ProductEditViewModel : MvxViewModel<Product>
     {
         Product = parameter;
     }
+
+    public void UpdateProductPhoto(byte[] bytes)
+    {
+        Product.ProductPhoto = bytes;
+    }
 }

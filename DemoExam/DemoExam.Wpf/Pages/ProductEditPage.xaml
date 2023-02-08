@@ -114,8 +114,12 @@
                 </Grid.ColumnDefinitions>
                 
                 <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Image"/>
-                <Image Grid.Column="1" HorizontalAlignment="Left" 
-                       Source="{Binding Product.ProductPhoto}" Width="30" Height="30"/>
+                
+                <StackPanel Grid.Column="1">
+                    <Image HorizontalAlignment="Left" 
+                        Source="{Binding Product.ProductPhoto}" Width="30" Height="30"/>
+                    <Button Content="Change photo" Click="OnChangePhotoClick"></Button>
+                </StackPanel>
             </Grid>
         </GroupBox>
         

@@ -1,4 +1,5 @@
 ﻿using DemoExam.Core.Contexts;
+using DemoExam.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Hello, World!");
@@ -120,10 +121,7 @@ byte[]? ReadToByteArray(string name)
 {
     try
     {
-        using var fs = new FileStream($"Pictures/{name}", FileMode.Open, FileAccess.Read);
-        var byteArray = new byte[fs.Length];
-        fs.Read(byteArray, 0, byteArray.Length);
-        return byteArray;
+        return FileToByteArrayConverter.Convert($"Pictures/{name}");
     }
     catch (Exception e)
     {
