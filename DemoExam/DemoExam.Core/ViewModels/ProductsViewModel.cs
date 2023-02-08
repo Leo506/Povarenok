@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Models;
+using DemoExam.Core.NotifyObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Products;
 using MvvmCross.Commands;
@@ -27,7 +28,7 @@ public class ProductsViewModel : MvxViewModel<User>
         }
     }
 
-    public MvxObservableCollection<Product> Products { get; set; }
+    public MvxObservableCollection<ProductNotifyObject> Products { get; set; }
     
     public List<ProductOperation> AvailableProductOperations => _productsService.GetAvailableProductsOperationsForUser(User);
 
@@ -50,7 +51,7 @@ public class ProductsViewModel : MvxViewModel<User>
     
     public User User { get; set; }
 
-    public Product? SelectedProduct
+    public ProductNotifyObject? SelectedProduct
     {
         get => _selectedProduct;
         set
@@ -69,14 +70,14 @@ public class ProductsViewModel : MvxViewModel<User>
     private Func<double, bool> _discountSelectorPredicate = _ => true;
     private string _searchString;
     private SortOrder _sortOrder;
-    private Product? _selectedProduct;
+    private ProductNotifyObject? _selectedProduct;
     
     public ProductsViewModel(IProductsService productsService, IMvxNavigationService navigationService, IAlert alert)
     {
         _productsService = productsService;
         _navigationService = navigationService;
         _alert = alert;
-        Products = new MvxObservableCollection<Product>(_productsService.GetAll());
+        Products = new MvxObservableCollection<ProductNotifyObject>(_productsService.GetAll());
         SortOrderName = DetermineSortOrderName();
         _selectedProduct = Products.FirstOrDefault();
     }
@@ -109,15 +110,15 @@ public class ProductsViewModel : MvxViewModel<User>
     private void SearchProducts()
     {
         if (string.IsNullOrEmpty(SearchString))
-            Products = new MvxObservableCollection<Product>(_productsService.GetAll());
+            Products = new MvxObservableCollection<ProductNotifyObject>(_productsService.GetAll());
         else
-            Products = new MvxObservableCollection<Product>(_productsService.GetWhere(x =>
+            Products = new MvxObservableCollection<ProductNotifyObject>(_productsService.GetWhere(x =>
                 x.ProductName.Contains(SearchString)));
     }
     
     private void SelectByDiscount()
     {
-        Products = new MvxObservableCollection<Product>(Products.Where(x =>
+        Products = new MvxObservableCollection<ProductNotifyObject>(Products.Where(x =>
             _discountSelectorPredicate(x.CurrentDiscount)));
     }
     
@@ -125,8 +126,8 @@ public class ProductsViewModel : MvxViewModel<User>
     {
         Products = _sortOrder switch
         {
-            SortOrder.ASC => new MvxObservableCollection<Product>(Products.OrderBy(x => x.ProductCost)),
-            SortOrder.DESC => new MvxObservableCollection<Product>(Products.OrderByDescending(x => x.ProductCost)),
+            SortOrder.ASC => new MvxObservableCollection<ProductNotifyObject>(Products.OrderBy(x => x.ProductCost)),
+            SortOrder.DESC => new MvxObservableCollection<ProductNotifyObject>(Products.OrderByDescending(x => x.ProductCost)),
             _ => Products
         };
     }
