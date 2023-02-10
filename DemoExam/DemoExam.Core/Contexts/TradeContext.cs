@@ -68,7 +68,7 @@ public partial class TradeContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderLists)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("OrderList_Product_null_fk");
         });
 

@@ -21,4 +21,12 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Decorators" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Decorators\NotifyPropertyChangedDecorator.cs" />
+  </ItemGroup>
+
 </Project>

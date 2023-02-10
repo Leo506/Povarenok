@@ -1,6 +1,8 @@
 ﻿using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
 using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.Services.Alert;
+using DemoExam.Core.Services.ProductEditService;
 using DemoExam.Core.Services.UserRole;
 using DemoExam.Core.ViewModels;
 using MvvmCross.Commands;
@@ -13,12 +15,16 @@ public class ProductsService : IProductsService
     private readonly TradeContext _tradeContext;
     private readonly IUserRoleService _userRoleService;
     private readonly IMvxNavigationService _navigationService;
+    private readonly IAlert _alert;
+    private readonly IProductEditService _editService;
 
-    public ProductsService(TradeContext tradeContext, IUserRoleService userRoleService, IMvxNavigationService navigationService)
+    public ProductsService(TradeContext tradeContext, IUserRoleService userRoleService, IMvxNavigationService navigationService, IAlert alert, IProductEditService editService)
     {
         _tradeContext = tradeContext;
         _userRoleService = userRoleService;
         _navigationService = navigationService;
+        _alert = alert;
+        _editService = editService;
     }
 
     public IEnumerable<ProductNotifyObject> GetAll() =>
@@ -67,7 +73,12 @@ public class ProductsService : IProductsService
             new("Edit product",
                 new MvxCommand<ProductNotifyObject>(product =>
                     _navigationService.Navigate<ProductEditViewModel, ProductNotifyObject>(product))), // TODO navigate to edit page
-            new("Remove product", new MvxCommand<ProductNotifyObject>(product => { return; })), // TODO Remove product
+            new("Remove product", new MvxCommand<ProductNotifyObject>(product =>
+            {
+                var choice = _alert.ShowChoice("Deleting product", "Do you shure?");
+                if (choice is ChoiceResult.Positive)
+                    _editService.DeleteProduct(product);
+            })), // TODO Remove product
             new("Add new product", new MvxCommand<ProductNotifyObject>(product => { return; })) // TODO navigate to create page
         };
     }
