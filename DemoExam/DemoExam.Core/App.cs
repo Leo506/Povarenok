@@ -1,5 +1,6 @@
 ﻿using DemoExam.Core.Contexts;
 using DemoExam.Core.Services.Auth;
+using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.ProductEditService;
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.Services.UserRole;
@@ -18,6 +19,7 @@ public class App : MvxApplication
     public override void Initialize()
     {
         Mvx.IoCProvider.LazyConstructAndRegisterSingleton(() => new TradeContext());
+        Mvx.IoCProvider.LazyConstructAndRegisterSingleton<IOrderService, OrderService>();
         Mvx.IoCProvider.RegisterType<IAuthService, AuthService>();
         Mvx.IoCProvider.RegisterType<IProductsService, ProductsService>();
         Mvx.IoCProvider.RegisterType<IUserRoleService, UserRoleService>();

@@ -1,0 +1,10 @@
+﻿namespace DemoExam.Core.Services.Order;
+
+public interface IOrderService
+{
+    public void CreateNewOrder();
+    
+    public void AddProductToOrder(string productArticleNumber);
+    
+    public Task SaveOrder(Models.Order order);
+}
