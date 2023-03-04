@@ -1,7 +1,7 @@
 ﻿using DemoExam.Core.NotifyObjects;
 using DemoExam.Core.ViewModels;
 
-namespace DemoExam.Core.Services.ViewModelServices;
+namespace DemoExam.Core.Services.ViewModelServices.Products;
 
 public interface IProductsViewModelService
 {

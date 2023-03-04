@@ -4,6 +4,8 @@ using DemoExam.Core.Services.ProductEditService;
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.Services.UserRole;
 using DemoExam.Core.Services.ViewModelServices;
+using DemoExam.Core.Services.ViewModelServices.AddingProduct;
+using DemoExam.Core.Services.ViewModelServices.Products;
 using DemoExam.Core.ViewModels;
 using MvvmCross;
 using MvvmCross.IoC;
@@ -21,6 +23,7 @@ public class App : MvxApplication
         Mvx.IoCProvider.RegisterType<IUserRoleService, UserRoleService>();
         Mvx.IoCProvider.RegisterType<IProductEditService, ProductEditService>();
         Mvx.IoCProvider.RegisterType<IProductsViewModelService, ProductsViewModelService>();
+        Mvx.IoCProvider.RegisterType<IAddingProductViewModelService, AddingProductViewModelService>();
 
         RegisterAppStart<AuthViewModel>();
 

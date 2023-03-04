@@ -4,6 +4,7 @@ using DemoExam.Core.Models;
 using DemoExam.Core.NotifyObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices;
+using DemoExam.Core.Services.ViewModelServices.Products;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;

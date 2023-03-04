@@ -2,7 +2,7 @@
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.ViewModels;
 
-namespace DemoExam.Core.Services.ViewModelServices;
+namespace DemoExam.Core.Services.ViewModelServices.Products;
 
 public class ProductsViewModelService : IProductsViewModelService
 {
