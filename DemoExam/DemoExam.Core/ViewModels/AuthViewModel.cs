@@ -30,8 +30,7 @@ public class AuthViewModel : MvxViewModel
 
     public ICommand AuthCommand => _authCommand ??= new MvxAsyncCommand(Authenticate, () => _isLoginAvailable);
     
-    public ICommand ContinueAsGuest => _continueAsGuestCommand ??=
-        new MvxAsyncCommand(async () => await _navigationService.Navigate<ProductsViewModel, User>(User.Guest));
+    public ICommand ContinueAsGuest => _continueAsGuestCommand ??= new MvxAsyncCommand(LoginAsGuest);
 
     private string _login = default!;
     private string _password = default!;
@@ -85,5 +84,11 @@ public class AuthViewModel : MvxViewModel
                 _authCommand?.RaiseCanExecuteChanged();
             });
         }
+    }
+    
+    private async Task LoginAsGuest()
+    {
+        _orderService.CreateNewOrder();
+        await _navigationService.Navigate<ProductsViewModel, User>(User.Guest);
     }
 }
