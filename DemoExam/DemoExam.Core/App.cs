@@ -3,8 +3,6 @@ using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.ProductEditService;
 using DemoExam.Core.Services.Products;
-using DemoExam.Core.Services.UserRole;
-using DemoExam.Core.Services.ViewModelServices;
 using DemoExam.Core.Services.ViewModelServices.AddingProduct;
 using DemoExam.Core.Services.ViewModelServices.Products;
 using DemoExam.Core.ViewModels;
@@ -22,7 +20,6 @@ public class App : MvxApplication
         Mvx.IoCProvider.LazyConstructAndRegisterSingleton<IOrderService, OrderService>();
         Mvx.IoCProvider.RegisterType<IAuthService, AuthService>();
         Mvx.IoCProvider.RegisterType<IProductsService, ProductsService>();
-        Mvx.IoCProvider.RegisterType<IUserRoleService, UserRoleService>();
         Mvx.IoCProvider.RegisterType<IProductEditService, ProductEditService>();
         Mvx.IoCProvider.RegisterType<IProductsViewModelService, ProductsViewModelService>();
         Mvx.IoCProvider.RegisterType<IAddingProductViewModelService, AddingProductViewModelService>();
