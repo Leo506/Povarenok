@@ -2,10 +2,12 @@
 using DemoExam.Core.Utils;
 using DemoExam.Core.ViewModels;
 using Microsoft.Win32;
+using MvvmCross.Platforms.Wpf.Presenters.Attributes;
 using MvvmCross.Platforms.Wpf.Views;
 
 namespace DemoExam.Wpf.Pages;
 
+[MvxWindowPresentation(Modal = true)]
 public partial class AddingProductPage : MvxWindow<AddingProductViewModel>
 {
     public AddingProductPage()
