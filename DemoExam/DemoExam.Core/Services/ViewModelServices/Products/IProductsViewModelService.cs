@@ -15,4 +15,5 @@ public interface IProductsViewModelService
     void DeleteProduct(ProductNotifyObject product);
 
     void AddProductToOrder(ProductNotifyObject product);
+    bool CanOpenOrder();
 }

@@ -12,13 +12,14 @@
                   Tag="ProductPage"
                   mc:Ignorable="d"
                   x:Name="ProductsView"
-                  d:DesignHeight="300" d:DesignWidth="600">
+                  d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance viewModels:ProductsViewModel}">
     <views:MvxWpfView.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter"/>
         <converters:NumberToDiscountStringConverter x:Key="NumberToDiscountStringConverter"/>
         <converters:DiscountToColorBrushConverter x:Key="DiscountToColorConverter"/>
         <converters:DiscountToTextDecorationConverter x:Key="DiscountToTextDecorationConverter"/>
         <converters:DecimalToStringConverter x:Key="DecimalToStringConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </views:MvxWpfView.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -54,6 +55,10 @@
             <TextBlock Text="{Binding CurrentSelectionAmount}" 
                        Margin="10 0 0 0" 
                        VerticalAlignment="Center"/>
+            
+            <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Visibility="{Binding CanOpenOrder, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Hyperlink>Open order</Hyperlink>
+            </TextBlock>
             
             <TextBlock DockPanel.Dock="Right" 
                        Text="{Binding User.FullName}" 

@@ -20,8 +20,44 @@ public enum SortOrder
 
 public class ProductsViewModel : MvxViewModel<User>
 {
-    private readonly IAlert _alert;
+    public string SortOrderName
+    {
+        get => _sortOrderName;
+        set => SetProperty(ref _sortOrderName, value);
+    }
 
+    public MvxObservableCollection<ProductNotifyObject> Products { get; set; }
+
+    public List<ProductOperation> AvailableProductOperations => GetAvailableOperationsForUser();
+
+    public ICommand ChangeSortOrderCommand => _changeSortOrderCommand ??= new MvxCommand(ChangeSortOrder);
+
+    public ICommand CloseCommand =>
+        _closeCommand ??= new MvxAsyncCommand(async () => await _navigationService.Close(this));
+
+    public bool CanOpenOrder => _viewModelService.CanOpenOrder();
+    
+    public string CurrentSelectionAmount => $"{Products.Count}/{_viewModelService.GetProductsCount()}";
+
+    public string SearchString
+    {
+        get => _searchString;
+        set
+        {
+            SetProperty(ref _searchString, value);
+            UpdateProducts();
+        }
+    }
+
+    public User User { get; set; }
+
+    public ProductNotifyObject? SelectedProduct
+    {
+        get => _selectedProduct;
+        set => SetProperty(ref _selectedProduct, value);
+    }
+    
+    private readonly IAlert _alert;
     private readonly IMvxNavigationService _navigationService;
     private readonly IProductsViewModelService _viewModelService;
     private MvxCommand? _changeSortOrderCommand;
@@ -43,53 +79,14 @@ public class ProductsViewModel : MvxViewModel<User>
         _selectedProduct = Products.FirstOrDefault();
     }
 
-    public string SortOrderName
-    {
-        get => _sortOrderName;
-        set
-        {
-            SetProperty(ref _sortOrderName, value);
-            RaisePropertyChanged(() => SortOrderName);
-        }
-    }
-
-    public MvxObservableCollection<ProductNotifyObject> Products { get; set; }
-
-    public List<ProductOperation> AvailableProductOperations => GetAvailableOperationsForUser();
-
-    public ICommand ChangeSortOrderCommand => _changeSortOrderCommand ??= new MvxCommand(ChangeSortOrder);
-
-    public ICommand CloseCommand =>
-        _closeCommand ??= new MvxAsyncCommand(async () => await _navigationService.Close(this));
-
-    public string CurrentSelectionAmount => $"{Products.Count}/{_viewModelService.GetProductsCount()}";
-
-    public string SearchString
-    {
-        get => _searchString;
-        set
-        {
-            SetProperty(ref _searchString, value);
-            UpdateProducts();
-        }
-    }
-
-    public User User { get; set; }
-
-    public ProductNotifyObject? SelectedProduct
-    {
-        get => _selectedProduct;
-        set
-        {
-            SetProperty(ref _selectedProduct, value);
-            RaisePropertyChanged(() => SelectedProduct);
-        }
-    }
-
     private List<ProductOperation> GetAvailableOperationsForUser()
     {
         var list = new List<ProductOperation>
-            { new("Add To Order", new MvxCommand<ProductNotifyObject>(product => _viewModelService.AddProductToOrder(product))) };
+            { new("Add To Order", new MvxCommand<ProductNotifyObject>(product =>
+            {
+                _viewModelService.AddProductToOrder(product);
+                RaisePropertyChanged(nameof(CanOpenOrder));
+            })) };
 
         if (!User.IsAdmin()) return list;
 

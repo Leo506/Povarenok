@@ -46,4 +46,8 @@ public class ProductsViewModelService : IProductsViewModelService
     public void DeleteProduct(ProductNotifyObject product) => _productsService.DeleteProduct(product);
     
     public void AddProductToOrder(ProductNotifyObject product) => _orderService.AddProductToOrder(product.ProductArticleNumber);
+    public bool CanOpenOrder()
+    {
+        return _orderService.HasProductsInOrder();
+    }
 }

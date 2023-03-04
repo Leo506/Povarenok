@@ -48,4 +48,6 @@ public class OrderService : IOrderService
 
         await _tradeContext.SaveChangesAsync();
     }
+
+    public bool HasProductsInOrder() => _productsInOrder is not null && _productsInOrder.Count > 0;
 }
