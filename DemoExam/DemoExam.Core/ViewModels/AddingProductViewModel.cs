@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Models;
+using DemoExam.Core.NotifyObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices.AddingProduct;
 using MvvmCross.Commands;
@@ -10,7 +11,7 @@ namespace DemoExam.Core.ViewModels;
 
 public class AddingProductViewModel : MvxViewModel
 {
-    public Product Product { get; set; } = new();
+    public ProductNotifyObject Product { get; set; } = new(new Product());
     public ICommand SaveAndCloseCommand => new MvxAsyncCommand(SaveAndClose);
     
 

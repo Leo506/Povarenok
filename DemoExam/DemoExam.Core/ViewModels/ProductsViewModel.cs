@@ -103,7 +103,7 @@ public class ProductsViewModel : MvxViewModel<User>
             _viewModelService.DeleteProduct(product);
             UpdateProducts();
         })));
-        list.Add(new ProductOperation("Add new product", new MvxCommand<ProductNotifyObject>(product => { })));
+        list.Add(new ProductOperation("Add new product", new MvxCommand<ProductNotifyObject>(product => _navigationService.Navigate<AddingProductViewModel>())));
 
         return list;
     }
