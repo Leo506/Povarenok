@@ -9,10 +9,7 @@ public class NullImageConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is null)
-        {
-            return new BitmapImage(new Uri("pack://application:,,,/Resources/Images/default_image.png"));
-        }
+        if (value is null) return new BitmapImage(new Uri("pack://application:,,,/Resources/Images/default_image.png"));
 
         return value;
     }

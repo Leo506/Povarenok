@@ -3,7 +3,6 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:local="clr-namespace:DemoExam.Wpf.Pages"
                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                  xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                  mc:Ignorable="d"
@@ -13,23 +12,24 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center"
                        FontSize="20" Text="Enter a code from picture"
-                       Margin="0 0 0 10"/>
-            
+                       Margin="0 0 0 10" />
+
             <Border Width="100" Height="20" Background="Brown" Margin="0 0 0 10">
-                <TextBlock Text="{Binding CaptchaText}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" 
+                <TextBlock Text="{Binding CaptchaText}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="20"
                            TextDecorations="Strikethrough" Width="Auto" Height="Auto">
                     <TextBlock.RenderTransform>
-                        <RotateTransform Angle="-5"></RotateTransform>
+                        <RotateTransform Angle="-5" />
                     </TextBlock.RenderTransform>
                 </TextBlock>
             </Border>
-            
-            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 10" 
+
+            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 10"
                      Text="{Binding UserInput}"
-                     Width="100"/>
-            
+                     Width="100" />
+
             <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 0"
-                    Content="Verify" Width="100" Command="{Binding VerifyCommand}"/>
+                    Content="Verify" Width="100" Command="{Binding VerifyCommand}" />
         </StackPanel>
     </Grid>
 </views:MvxWindow>

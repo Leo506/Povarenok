@@ -11,7 +11,7 @@ public interface IProductsViewModelService
     IEnumerable<ProductNotifyObject> GetAllProducts();
 
     int GetProductsCount();
-    
+
     void DeleteProduct(ProductNotifyObject product);
 
     void AddProductToOrder(ProductNotifyObject product);

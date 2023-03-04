@@ -7,8 +7,8 @@ namespace DemoExam.Core.Services.ViewModelServices.Products;
 
 public class ProductsViewModelService : IProductsViewModelService
 {
-    private readonly IProductsService _productsService;
     private readonly IOrderService _orderService;
+    private readonly IProductsService _productsService;
 
     public ProductsViewModelService(IProductsService productsService, IOrderService orderService)
     {
@@ -39,13 +39,26 @@ public class ProductsViewModelService : IProductsViewModelService
         return products;
     }
 
-    public IEnumerable<ProductNotifyObject> GetAllProducts() => _productsService.GetAll();
+    public IEnumerable<ProductNotifyObject> GetAllProducts()
+    {
+        return _productsService.GetAll();
+    }
 
-    public int GetProductsCount() => _productsService.Count();
+    public int GetProductsCount()
+    {
+        return _productsService.Count();
+    }
 
-    public void DeleteProduct(ProductNotifyObject product) => _productsService.DeleteProduct(product);
-    
-    public void AddProductToOrder(ProductNotifyObject product) => _orderService.AddProductToOrder(product.ProductArticleNumber);
+    public void DeleteProduct(ProductNotifyObject product)
+    {
+        _productsService.DeleteProduct(product);
+    }
+
+    public void AddProductToOrder(ProductNotifyObject product)
+    {
+        _orderService.AddProductToOrder(product.ProductArticleNumber);
+    }
+
     public bool CanOpenOrder()
     {
         return _orderService.HasProductsInOrder();

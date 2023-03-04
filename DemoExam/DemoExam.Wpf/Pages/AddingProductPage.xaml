@@ -3,139 +3,145 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:local="clr-namespace:DemoExam.Wpf.Pages"
                  xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                  mc:Ignorable="d"
-                 Title="AddingProductPage" Height="650" Width="470" d:DataContext="{d:DesignInstance viewModels:AddingProductViewModel}">
+                 Title="AddingProductPage" Height="650" Width="470"
+                 d:DataContext="{d:DesignInstance viewModels:AddingProductViewModel}">
     <views:MvxWindow.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="16" />
         </Style>
         <Style TargetType="GroupBox">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10"></Setter>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="10" />
         </Style>
     </views:MvxWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <TextBlock Grid.Row="0" Text="New Product"
-                   FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-            
+                   FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
+
         <GroupBox Grid.Row="1" Header="General">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Article number:"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Article number:" />
                 <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10 0 10 0"
-                           Text="{Binding Product.ProductArticleNumber}"/>
-                
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Product name"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10 0 10 0" 
-                         Text="{Binding Product.ProductName}"/>
-                
-                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Product Description:"/>
+                         Text="{Binding Product.ProductArticleNumber}" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Product name" />
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                         Margin="10 0 10 0"
+                         Text="{Binding Product.ProductName}" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Product Description:" />
                 <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10 0 10 5"
-                         Text="{Binding Product.ProductDescription}" TextWrapping="Wrap" AcceptsReturn="True"/>
-                
-                <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Product Category:"/>
-                <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10 0 10 0"
-                         Text="{Binding Product.ProductCategory}"/>
-                
-            </Grid>
-        </GroupBox>
-        
-        <GroupBox Grid.Row="2" Header="Cost and Discount">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Cost"/>
-                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"
-                         Text="{Binding Product.ProductCost}" Width="30"/>
-                
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Current Discount (%):"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"
-                         Text="{Binding Product.CurrentDiscount}" Width="30"/>
-            </Grid>
-        </GroupBox>
-            
-        <GroupBox Grid.Row="3" Header="Manufacture And Supplier">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Manufacture:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10 0 10 0"
-                         Text="{Binding Product.ProductManufacturer}"/>
-                
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Supplier:"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10 0 10 0"
-                         Text="{Binding Product.Supplier}"/>
-            </Grid>
-        </GroupBox>
-        
-        <GroupBox Grid.Row="4" Header="Image">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Image"/>
-                
-                <StackPanel Grid.Column="1">
-                    <Image HorizontalAlignment="Left" 
-                        Source="{Binding Product.ProductPhoto}" Width="30" Height="30"/>
-                    <Button Content="Change photo" Click="OnChangePhotoClick"></Button>
-                </StackPanel>
-            </Grid>
-        </GroupBox>
-        
-        <GroupBox Grid.Row="5" Header="Stock">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Quantity In Stock:"/>
-                <TextBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"
-                         Text="{Binding Product.ProductQuantityInStock}" Width="50"/>
+                         Text="{Binding Product.ProductDescription}" TextWrapping="Wrap" AcceptsReturn="True" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Product Category:" />
+                <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                         Margin="10 0 10 0"
+                         Text="{Binding Product.ProductCategory}" />
+
             </Grid>
         </GroupBox>
 
-        <Button Grid.Row="6" Grid.ColumnSpan="2" Margin="70 20 70 20" Content="Save" 
-                Command="{Binding SaveAndCloseCommand}"/>
+        <GroupBox Grid.Row="2" Header="Cost and Discount">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Cost" />
+                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         Margin="10 0 0 0"
+                         Text="{Binding Product.ProductCost}" Width="30" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Current Discount (%):" />
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         Margin="10 0 0 0"
+                         Text="{Binding Product.CurrentDiscount}" Width="30" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="3" Header="Manufacture And Supplier">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Manufacture:" />
+                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                         Margin="10 0 10 0"
+                         Text="{Binding Product.ProductManufacturer}" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Supplier:" />
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                         Margin="10 0 10 0"
+                         Text="{Binding Product.Supplier}" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="4" Header="Image">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Image" />
+
+                <StackPanel Grid.Column="1">
+                    <Image HorizontalAlignment="Left"
+                           Source="{Binding Product.ProductPhoto}" Width="30" Height="30" />
+                    <Button Content="Change photo" Click="OnChangePhotoClick" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="5" Header="Stock">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Quantity In Stock:" />
+                <TextBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"
+                         Text="{Binding Product.ProductQuantityInStock}" Width="50" />
+            </Grid>
+        </GroupBox>
+
+        <Button Grid.Row="6" Grid.ColumnSpan="2" Margin="70 20 70 20" Content="Save"
+                Command="{Binding SaveAndCloseCommand}" />
     </Grid>
 </views:MvxWindow>

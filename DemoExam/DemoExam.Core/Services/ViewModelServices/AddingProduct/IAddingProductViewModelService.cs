@@ -1,5 +1,4 @@
-﻿using DemoExam.Core.Models;
-using DemoExam.Core.NotifyObjects;
+﻿using DemoExam.Core.NotifyObjects;
 
 namespace DemoExam.Core.Services.ViewModelServices.AddingProduct;
 

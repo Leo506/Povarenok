@@ -4,6 +4,7 @@ using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.ProductEditService;
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.Services.ViewModelServices.AddingProduct;
+using DemoExam.Core.Services.ViewModelServices.Order;
 using DemoExam.Core.Services.ViewModelServices.Products;
 using DemoExam.Core.ViewModels;
 using MvvmCross;
@@ -23,6 +24,7 @@ public class App : MvxApplication
         Mvx.IoCProvider.RegisterType<IProductEditService, ProductEditService>();
         Mvx.IoCProvider.RegisterType<IProductsViewModelService, ProductsViewModelService>();
         Mvx.IoCProvider.RegisterType<IAddingProductViewModelService, AddingProductViewModelService>();
+        Mvx.IoCProvider.RegisterType<IOrderViewModelService, OrderViewModelService>();
 
         RegisterAppStart<AuthViewModel>();
 

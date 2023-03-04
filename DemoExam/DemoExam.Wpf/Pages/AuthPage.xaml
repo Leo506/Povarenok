@@ -3,66 +3,65 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:local="clr-namespace:DemoExam.Wpf.Pages"
                   xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="300">
     <Grid d:DataContext="{x:Type viewModels:AuthViewModel}">
-       <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="0.1*"/>
-       </Grid.RowDefinitions>
-        
-       <TextBlock Text="Login" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35"/>
-        
-       <Grid Grid.Row="1">
-            
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="0.1*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Login" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" />
+
+        <Grid Grid.Row="1">
+
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="0.1*"/>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="0.1*" />
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            <TextBlock Text="Login" 
-                       VerticalAlignment="Center" HorizontalAlignment="Right" 
-                       FontSize="20" 
-                       Margin="10"/>
-            
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Login, Mode=TwoWay}" 
+
+            <TextBlock Text="Login"
+                       VerticalAlignment="Center" HorizontalAlignment="Right"
+                       FontSize="20"
+                       Margin="10" />
+
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Login, Mode=TwoWay}"
                      Height="30"
                      FontSize="20"
-                     Margin="10"/>
-            
+                     Margin="10" />
+
             <TextBlock Grid.Row="1" Grid.Column="0"
                        Text="Password"
                        VerticalAlignment="Center" HorizontalAlignment="Right"
                        FontSize="20"
-                       Margin="10"/>
-            
+                       Margin="10" />
+
             <PasswordBox Grid.Row="1" Grid.Column="1"
                          Height="30"
                          FontSize="20"
                          Margin="10"
-                         PasswordChanged="OnPasswordChanged"/>
-            
+                         PasswordChanged="OnPasswordChanged" />
+
             <Button Grid.Row="2" Grid.ColumnSpan="2"
                     Margin="10"
                     Content="{Binding LoginButtonText}"
                     FontSize="17"
-                    Command="{Binding AuthCommand}"/>
-       </Grid>
-       
-       <TextBlock Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-           <Hyperlink Command="{Binding ContinueAsGuest}">Continue as guest</Hyperlink>
-       </TextBlock>
-       
+                    Command="{Binding AuthCommand}" />
+        </Grid>
+
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Hyperlink Command="{Binding ContinueAsGuest}">Continue as guest</Hyperlink>
+        </TextBlock>
+
     </Grid>
 </views:MvxWpfView>

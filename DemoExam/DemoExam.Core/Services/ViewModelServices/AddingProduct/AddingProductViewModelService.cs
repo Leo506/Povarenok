@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DemoExam.Core.Contexts;
-using DemoExam.Core.Models;
 using DemoExam.Core.NotifyObjects;
 using Microsoft.IdentityModel.Tokens;
 
@@ -22,7 +21,7 @@ public class AddingProductViewModelService : IAddingProductViewModelService
 
         ICollection<ValidationResult> validationResults = new List<ValidationResult>();
         Validator.TryValidateObject(product.Product, new ValidationContext(product.Product), validationResults, true);
-        
+
         return validationResults.IsNullOrEmpty();
     }
 

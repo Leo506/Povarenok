@@ -22,11 +22,11 @@ public partial class AddingProductPage : MvxWindow<AddingProductViewModel>
             Filter = "Image files|*.bmp;*.jpeg;*.jpg;*.png",
             FilterIndex = 1
         };
-        
+
         if (openFileDialog.ShowDialog() is not true) return;
 
         var byteArray = FileToByteArrayConverter.Convert(openFileDialog.FileName);
-        
+
         ViewModel.SetProductPhoto(byteArray);
     }
 }

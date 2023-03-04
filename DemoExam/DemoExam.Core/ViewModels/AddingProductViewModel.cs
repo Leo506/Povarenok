@@ -11,13 +11,11 @@ namespace DemoExam.Core.ViewModels;
 
 public class AddingProductViewModel : MvxViewModel
 {
-    public ProductNotifyObject Product { get; set; } = new(new Product());
-    public ICommand SaveAndCloseCommand => new MvxAsyncCommand(SaveAndClose);
-    
+    private readonly IAlert _alert;
+
 
     private readonly IMvxNavigationService _navigationService;
     private readonly IAddingProductViewModelService _viewModelService;
-    private readonly IAlert _alert;
 
     public AddingProductViewModel(IMvxNavigationService navigationService,
         IAddingProductViewModelService viewModelService, IAlert alert)
@@ -27,6 +25,9 @@ public class AddingProductViewModel : MvxViewModel
         _alert = alert;
     }
 
+    public ProductNotifyObject Product { get; set; } = new(new Product());
+    public ICommand SaveAndCloseCommand => new MvxAsyncCommand(SaveAndClose);
+
     private async Task SaveAndClose()
     {
         if (_viewModelService.IsValidProduct(Product))
@@ -35,9 +36,12 @@ public class AddingProductViewModel : MvxViewModel
             await _navigationService.Close(this);
             return;
         }
-        
+
         _alert.Alert("Invalid data input", "Please check your input data");
     }
 
-    public void SetProductPhoto(byte[] bytes) => Product.ProductPhoto = bytes;
+    public void SetProductPhoto(byte[] bytes)
+    {
+        Product.ProductPhoto = bytes;
+    }
 }

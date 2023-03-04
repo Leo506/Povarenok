@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace DemoExam.Core.Models;
 
-namespace DemoExam.Core.Models;
-
-public partial class PickupPoint
+public class PickupPoint
 {
     public int PointId { get; set; }
 

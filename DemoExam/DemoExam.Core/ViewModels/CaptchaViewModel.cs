@@ -8,6 +8,19 @@ namespace DemoExam.Core.ViewModels;
 
 public class CaptchaViewModel : MvxViewModel<Action<bool>>
 {
+    private readonly IMvxNavigationService _navigationService;
+    private Action<bool> _callBack;
+
+    private string _captchaText;
+    private string _userInput;
+    private MvxCommand? _verifyCommand;
+
+    public CaptchaViewModel(IMvxNavigationService navigationService)
+    {
+        _navigationService = navigationService;
+        CaptchaText = CaptchaTextGenerator.GenerateCaptchaText();
+    }
+
     public string CaptchaText
     {
         get => _captchaText;
@@ -25,18 +38,6 @@ public class CaptchaViewModel : MvxViewModel<Action<bool>>
         await _navigationService.Close(this).ConfigureAwait(false);
         _callBack(UserInput == CaptchaText);
     });
-
-    private string _captchaText;
-    private string _userInput;
-    private MvxCommand? _verifyCommand;
-    private Action<bool> _callBack;
-    private readonly IMvxNavigationService _navigationService;
-    
-    public CaptchaViewModel(IMvxNavigationService navigationService)
-    {
-        _navigationService = navigationService;
-        CaptchaText = CaptchaTextGenerator.GenerateCaptchaText();
-    }
 
     public override void Prepare(Action<bool> parameter)
     {

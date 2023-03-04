@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using DemoExam.Core.ViewModels;
 using MvvmCross.Platforms.Wpf.Views;
-using MvvmCross.ViewModels;
 
 namespace DemoExam.Wpf.Pages;
 

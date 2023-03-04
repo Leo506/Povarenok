@@ -8,22 +8,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MvvmCross.Platforms.Wpf" Version="9.0.9" />
+        <PackageReference Include="MvvmCross.Platforms.Wpf" Version="9.0.9"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DemoExam.Core\DemoExam.Core.csproj" />
+        <ProjectReference Include="..\DemoExam.Core\DemoExam.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Resources\Images" />
+        <Folder Include="Resources\Images"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Resources\Images\default_image.png" />
-      <Resource Include="Resources\Images\default_image.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
+        <None Remove="Resources\Images\default_image.png"/>
+        <Resource Include="Resources\Images\default_image.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Resource>
     </ItemGroup>
 
 </Project>

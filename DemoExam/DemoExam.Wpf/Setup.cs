@@ -6,7 +6,7 @@ using MvvmCross.Platforms.Wpf.Core;
 
 namespace DemoExam.Wpf;
 
-public class Setup : MvxWpfSetup<DemoExam.Core.App>
+public class Setup : MvxWpfSetup<Core.App>
 {
     protected override ILoggerProvider? CreateLogProvider()
     {

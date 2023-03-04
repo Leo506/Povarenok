@@ -5,9 +5,9 @@ using MvvmCross.Platforms.Wpf.Views;
 namespace DemoExam.Wpf.Pages;
 
 [MvxWindowPresentation(Modal = true)]
-public partial class CaptchaPage : MvxWindow<CaptchaViewModel>
+public partial class OrderPage : MvxWindow<OrderViewModel>
 {
-    public CaptchaPage()
+    public OrderPage()
     {
         InitializeComponent();
     }

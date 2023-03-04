@@ -5,6 +5,11 @@ namespace DemoExam.Core.NotifyObjects;
 
 public class ProductNotifyObject : MvxNotifyPropertyChanged
 {
+    public ProductNotifyObject(Product product)
+    {
+        Product = product;
+    }
+
     public string ProductArticleNumber
     {
         get => Product.ProductArticleNumber;
@@ -111,9 +116,4 @@ public class ProductNotifyObject : MvxNotifyPropertyChanged
         CurrentDiscount == 0 ? ProductCost : ProductCost - ProductCost * (CurrentDiscount / 100.0m);
 
     public Product Product { get; init; }
-
-    public ProductNotifyObject(Product product)
-    {
-        Product = product;
-    }
 }

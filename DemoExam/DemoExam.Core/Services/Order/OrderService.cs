@@ -1,13 +1,13 @@
-﻿using DemoExam.Core.Contexts;
+﻿using System.Collections.Immutable;
+using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DemoExam.Core.Services.Order;
 
 public class OrderService : IOrderService
 {
-    private Dictionary<string, int>? _productsInOrder;
     private readonly TradeContext _tradeContext;
+    private Dictionary<string, int>? _productsInOrder;
 
     public OrderService(TradeContext tradeContext)
     {
@@ -34,20 +34,28 @@ public class OrderService : IOrderService
     {
         if (_productsInOrder is null || _productsInOrder.Count == 0)
             throw new InvalidOperationException("Add products in order before saving");
-        
-        var addedOrderEntity =  await _tradeContext.Orders.AddAsync(order);
+
+        var addedOrderEntity = await _tradeContext.Orders.AddAsync(order);
         foreach (var (product, amount) in _productsInOrder)
-        {
-            await _tradeContext.OrderLists.AddAsync(new OrderList()
+            await _tradeContext.OrderLists.AddAsync(new OrderList
             {
                 OrderId = addedOrderEntity.Entity.OrderId,
                 ProductId = product,
                 Amount = amount
             });
-        }
 
         await _tradeContext.SaveChangesAsync();
     }
 
-    public bool HasProductsInOrder() => _productsInOrder is not null && _productsInOrder.Count > 0;
+    public bool HasProductsInOrder()
+    {
+        return _productsInOrder is not null && _productsInOrder.Count > 0;
+    }
+
+    public ImmutableDictionary<string, int> GetOrderList()
+    {
+        if (_productsInOrder is null)
+            throw new InvalidOperationException("Create order first");
+        return _productsInOrder.ToImmutableDictionary();
+    }
 }
