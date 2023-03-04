@@ -49,7 +49,7 @@ public partial class TradeContext : DbContext
 
             entity.HasOne(d => d.OrderPickupPointNavigation).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.OrderPickupPoint)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Order_PickupPoint_null_fk");
         });
 
@@ -63,12 +63,12 @@ public partial class TradeContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderLists)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("OrderList_Order_null_fk");
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderLists)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.SetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("OrderList_Product_null_fk");
         });
 
@@ -120,7 +120,7 @@ public partial class TradeContext : DbContext
 
             entity.HasOne(d => d.UserRoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.UserRole)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__User__UserRole__2F10007B");
         });
 
