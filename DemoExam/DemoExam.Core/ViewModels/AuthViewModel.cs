@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Models;
 using DemoExam.Core.Services.Auth;
+using DemoExam.Core.Services.Order;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
@@ -38,14 +39,16 @@ public class AuthViewModel : MvxViewModel
     private MvxAsyncCommand? _authCommand;
     private MvxAsyncCommand? _continueAsGuestCommand;
     private readonly IAuthService _authService;
+    private readonly IOrderService _orderService;
     private readonly IMvxNavigationService _navigationService;
 
     private bool _isLoginAvailable = true;
     
-    public AuthViewModel(IAuthService authService, IMvxNavigationService navigationService)
+    public AuthViewModel(IAuthService authService, IMvxNavigationService navigationService, IOrderService orderService)
     {
         _authService = authService;
         _navigationService = navigationService;
+        _orderService = orderService;
     }
 
     private async Task Authenticate()
@@ -53,6 +56,7 @@ public class AuthViewModel : MvxViewModel
         try
         {
             var user = await _authService.AuthenticateAsync(Login, Password).ConfigureAwait(false);
+            _orderService.CreateNewOrder();
             await _navigationService.Navigate<ProductsViewModel, User>(user);
         }
         catch (Exception e)
@@ -63,24 +67,23 @@ public class AuthViewModel : MvxViewModel
 
         void CaptchaCallback(bool result)
         {
-            if (result is false)
+            if (result) return;
+            
+            _isLoginAvailable = false;
+            _authCommand?.RaiseCanExecuteChanged();
+            Task.Run(async () =>
             {
-                _isLoginAvailable = false;
-                _authCommand?.RaiseCanExecuteChanged();
-                Task.Run(async () =>
+                var waitTime = DateTime.Now;
+                for (var i = 0; i < 10; i++)
                 {
-                    var waitTime = DateTime.Now;
-                    for (var i = 0; i < 10; i++)
-                    {
-                        LoginButtonText = (10 - (int)(DateTime.Now - waitTime).TotalSeconds).ToString();
-                        await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
-                    }
+                    LoginButtonText = (10 - (int)(DateTime.Now - waitTime).TotalSeconds).ToString();
+                    await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+                }
                     
-                    _isLoginAvailable = true;
-                    LoginButtonText = "Login";
-                    _authCommand?.RaiseCanExecuteChanged();
-                });
-            }
+                _isLoginAvailable = true;
+                LoginButtonText = "Login";
+                _authCommand?.RaiseCanExecuteChanged();
+            });
         }
     }
 }

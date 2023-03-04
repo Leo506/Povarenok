@@ -89,7 +89,7 @@ public class ProductsViewModel : MvxViewModel<User>
     private List<ProductOperation> GetAvailableOperationsForUser()
     {
         var list = new List<ProductOperation>
-            { new("Add To Order", new MvxCommand<ProductNotifyObject>(product => { })) };
+            { new("Add To Order", new MvxCommand<ProductNotifyObject>(product => _viewModelService.AddProductToOrder(product))) };
 
         if (!User.IsAdmin()) return list;
 

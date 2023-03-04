@@ -1,4 +1,5 @@
 ﻿using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.ViewModels;
 
@@ -7,10 +8,12 @@ namespace DemoExam.Core.Services.ViewModelServices.Products;
 public class ProductsViewModelService : IProductsViewModelService
 {
     private readonly IProductsService _productsService;
+    private readonly IOrderService _orderService;
 
-    public ProductsViewModelService(IProductsService productsService)
+    public ProductsViewModelService(IProductsService productsService, IOrderService orderService)
     {
         _productsService = productsService;
+        _orderService = orderService;
     }
 
     public IEnumerable<ProductNotifyObject> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
@@ -41,4 +44,6 @@ public class ProductsViewModelService : IProductsViewModelService
     public int GetProductsCount() => _productsService.Count();
 
     public void DeleteProduct(ProductNotifyObject product) => _productsService.DeleteProduct(product);
+    
+    public void AddProductToOrder(ProductNotifyObject product) => _orderService.AddProductToOrder(product.ProductArticleNumber);
 }
