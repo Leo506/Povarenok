@@ -10,6 +10,6 @@ public interface IProductsService
     IEnumerable<ProductNotifyObject> GetWhere(Func<Product, bool> predicate);
 
     int Count();
-    
-    List<ProductOperation> GetAvailableProductsOperationsForUser(User user);
+
+    void DeleteProduct(ProductNotifyObject product);
 }

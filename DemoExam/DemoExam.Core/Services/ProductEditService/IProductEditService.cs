@@ -5,6 +5,4 @@ namespace DemoExam.Core.Services.ProductEditService;
 public interface IProductEditService
 {
     Task SaveProduct(ProductNotifyObject product);
-
-    void DeleteProduct(ProductNotifyObject product);
 }

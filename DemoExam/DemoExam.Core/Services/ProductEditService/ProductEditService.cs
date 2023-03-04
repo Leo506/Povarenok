@@ -17,10 +17,4 @@ public class ProductEditService : IProductEditService
         _tradeContext.Products.Update(product.Product);
         await _tradeContext.SaveChangesAsync();
     }
-
-    public void DeleteProduct(ProductNotifyObject product)
-    {
-        _tradeContext.Products.Remove(product.Product);
-        _tradeContext.SaveChanges();
-    }
 }
