@@ -11,9 +11,9 @@ namespace DemoExam.Core.ViewModels;
 
 internal enum SortOrder
 {
-    NONE,
-    ASC,
-    DESC
+    None,
+    Asc,
+    Desc
 }
 
 public class ProductsViewModel : MvxViewModel<User>
@@ -86,10 +86,10 @@ public class ProductsViewModel : MvxViewModel<User>
     {
         _sortOrder = _sortOrder switch
         {
-            SortOrder.NONE => SortOrder.ASC,
-            SortOrder.DESC => SortOrder.ASC,
-            SortOrder.ASC => SortOrder.DESC,
-            _ => SortOrder.ASC
+            SortOrder.None => SortOrder.Asc,
+            SortOrder.Desc => SortOrder.Asc,
+            SortOrder.Asc => SortOrder.Desc,
+            _ => SortOrder.Asc
         };
 
         SortOrderName = DetermineSortOrderName();
@@ -126,8 +126,8 @@ public class ProductsViewModel : MvxViewModel<User>
     {
         Products = _sortOrder switch
         {
-            SortOrder.ASC => new MvxObservableCollection<ProductNotifyObject>(Products.OrderBy(x => x.ProductCost)),
-            SortOrder.DESC => new MvxObservableCollection<ProductNotifyObject>(Products.OrderByDescending(x => x.ProductCost)),
+            SortOrder.Asc => new MvxObservableCollection<ProductNotifyObject>(Products.OrderBy(x => x.ProductCost)),
+            SortOrder.Desc => new MvxObservableCollection<ProductNotifyObject>(Products.OrderByDescending(x => x.ProductCost)),
             _ => Products
         };
     }
@@ -136,8 +136,8 @@ public class ProductsViewModel : MvxViewModel<User>
     {
         return _sortOrder switch
         {
-            SortOrder.ASC => "Ascending sorting",
-            SortOrder.DESC => "Descending sorting",
+            SortOrder.Asc => "Ascending sorting",
+            SortOrder.Desc => "Descending sorting",
             _ => "No sorting"
         };
     }
