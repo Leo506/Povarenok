@@ -15,6 +15,20 @@
     <views:MvxWindow.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter" />
         <converters:DiscountToTextDecorationConverter x:Key="DiscountToTextDecorationConverter" />
+        
+        <Style x:Key="RowName" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>
+        </Style>
+        
+        <Style x:Key="RowValue" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+        </Style>
     </views:MvxWindow.Resources>
 
     <Grid>
@@ -50,38 +64,23 @@
             
             <TextBlock Grid.Row="1" Grid.Column="0"
                        Text="Order Status"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="0 0 10 0"/>
+                       Style="{StaticResource RowName}"/>
             
             <TextBlock Grid.Row="1" Grid.Column="1"
                        Text="Новый"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="10 0 0 0"/>
+                       Style="{StaticResource RowValue}"/>
             
             <TextBlock Grid.Row="2" Grid.Column="0"
                        Text="Delivery Date"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="0 0 10 0"/>
+                       Style="{StaticResource RowName}"/>
             
             <TextBlock Grid.Row="2" Grid.Column="1"
                        Text="01.01.2001"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="10 0 0 0"/>
+                       Style="{StaticResource RowValue}"/>
             
             <TextBlock Grid.Row="3" Grid.Column="0"
                        Text="Pickup Point"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="0 0 10 0"/>
+                       Style="{StaticResource RowName}"/>
             
             <ComboBox Grid.Row="3" Grid.Column="1"
                       Margin="10">
@@ -92,10 +91,7 @@
             
             <TextBlock Grid.Row="4" Grid.Column="0"
                        Text="Client Name"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="0 0 10 0"/>
+                       Style="{StaticResource RowName}"/>
             
             <TextBlock Grid.Row="4" Grid.Column="1"
                        Text="Виноградов Ростислав Пантелеймонович"
@@ -105,47 +101,29 @@
             
             <TextBlock Grid.Row="5" Grid.Column="0"
                        Text="Order Date"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="0 0 10 0"/>
+                       Style="{StaticResource RowName}"/>
             
             <TextBlock Grid.Row="5" Grid.Column="1"
                        Text="01.01.2001"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="10 0 0 0"/>
+                       Style="{StaticResource RowValue}"/>
             
             <TextBlock Grid.Row="6" Grid.Column="0"
                        Text="Order Sum"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="0 0 10 0"/>
+                       Style="{StaticResource RowName}"/>
             
             <TextBlock Grid.Row="6" Grid.Column="1"
                        Text="123456789.98"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="20"
                        FontWeight="Bold"
-                       Margin="10 0 0 0"/>
+                       Style="{StaticResource RowValue}"/>
             
             <TextBlock Grid.Row="7" Grid.Column="0"
                        Text="Order Discount"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Margin="0 0 10 0"/>
+                       Style="{StaticResource RowName}"/>
             
             <TextBlock Grid.Row="7" Grid.Column="1"
                        Text="123456789.98"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="20"
                        FontWeight="Bold"
-                       Margin="10 0 0 0"/>
+                       Style="{StaticResource RowValue}"/>
             
             <Button Grid.Row="8" Grid.ColumnSpan="2"
                     Content="Save order ticket as pdf"
