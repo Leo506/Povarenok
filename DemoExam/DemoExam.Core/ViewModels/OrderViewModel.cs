@@ -9,6 +9,19 @@ namespace DemoExam.Core.ViewModels;
 
 public class OrderViewModel : MvxViewModel<User>
 {
+    private readonly IMvxNavigationService _navigationService;
+
+    private readonly IOrderViewModelService _viewModelService;
+    private User _user = default!;
+
+    public OrderViewModel(IOrderViewModelService viewModelService, IMvxNavigationService navigationService)
+    {
+        _viewModelService = viewModelService;
+        _navigationService = navigationService;
+        ProductsInOrder = new MvxObservableCollection<OrderItem>(_viewModelService.GetProductInOrder());
+        PickupPoints = _viewModelService.GetPickupPoints();
+    }
+
     public Order Order { get; set; }
 
     public MvxObservableCollection<OrderItem> ProductsInOrder { get; set; }
@@ -22,18 +35,6 @@ public class OrderViewModel : MvxViewModel<User>
     public ICommand AddProductCommand => new MvxCommand<string>(AddProduct);
 
     public ICommand RemoveProductCommand => new MvxCommand<string>(RemoveProduct);
-    
-    private readonly IOrderViewModelService _viewModelService;
-    private readonly IMvxNavigationService _navigationService;
-    private User _user = default!;
-    
-    public OrderViewModel(IOrderViewModelService viewModelService, IMvxNavigationService navigationService)
-    {
-        _viewModelService = viewModelService;
-        _navigationService = navigationService;
-        ProductsInOrder = new MvxObservableCollection<OrderItem>(_viewModelService.GetProductInOrder());
-        PickupPoints = _viewModelService.GetPickupPoints();
-    }
 
     public override void Prepare(User parameter)
     {
@@ -66,7 +67,7 @@ public class OrderViewModel : MvxViewModel<User>
 
         if (orderItem.Amount == 0) ProductsInOrder.Remove(orderItem);
         if (ProductsInOrder.Any() is false) _navigationService.Close(this);
-        
+
         RaisePropertyChanged(nameof(OrderSum));
         RaisePropertyChanged(nameof(OrderDiscount));
     }

@@ -5,9 +5,9 @@ namespace DemoExam.Core.Models;
 
 public class OrderItem : MvxNotifyPropertyChanged
 {
+    private int _amount;
     public ProductNotifyObject Product { get; set; } = default!;
 
-    private int _amount;
     public int Amount
     {
         get => _amount;

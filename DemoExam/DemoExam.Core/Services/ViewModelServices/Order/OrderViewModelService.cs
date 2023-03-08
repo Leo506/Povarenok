@@ -37,6 +37,13 @@ public class OrderViewModelService : IOrderViewModelService
         return _tradeContext.PickupPoints.ToList();
     }
 
-    public void AddProduct(string productId) => _orderService.AddProductToOrder(productId);
-    public void RemoveProduct(string productId) => _orderService.RemoveProductFromOrder(productId);
+    public void AddProduct(string productId)
+    {
+        _orderService.AddProductToOrder(productId);
+    }
+
+    public void RemoveProduct(string productId)
+    {
+        _orderService.RemoveProductFromOrder(productId);
+    }
 }

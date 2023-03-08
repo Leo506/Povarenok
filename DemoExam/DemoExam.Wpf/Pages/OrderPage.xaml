@@ -7,7 +7,6 @@
                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                  xmlns:models="clr-namespace:DemoExam.Core.Models;assembly=DemoExam.Core"
                  xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
-                 xmlns:system="clr-namespace:System;assembly=System.Runtime"
                  mc:Ignorable="d"
                  Title="OrderPage" Height="450" Width="1000" Language="ru-Ru"
                  d:DataContext="{d:DesignInstance viewModels:OrderViewModel}"
@@ -16,129 +15,129 @@
     <views:MvxWindow.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter" />
         <converters:DiscountToTextDecorationConverter x:Key="DiscountToTextDecorationConverter" />
-        <converters:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter"/>
-        
+        <converters:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter" />
+
         <Style x:Key="RowName" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="0 0 10 0"/>
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="0 0 10 0" />
         </Style>
-        
+
         <Style x:Key="RowValue" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="10 0 0 0"/>
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10 0 0 0" />
         </Style>
     </views:MvxWindow.Resources>
 
     <Grid>
-        
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.45*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.45*" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
+
         <Grid Grid.Column="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
-            
+
             <TextBlock Grid.ColumnSpan="2" Text="{Binding Order.OrderId, StringFormat=Order №{0}}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontSize="25"
-                       FontWeight="Bold"/>
-            
+                       FontWeight="Bold" />
+
             <TextBlock Grid.Row="1" Grid.Column="0"
                        Text="Order Status"
-                       Style="{StaticResource RowName}"/>
-            
+                       Style="{StaticResource RowName}" />
+
             <TextBlock Grid.Row="1" Grid.Column="1"
                        Text="{Binding Order.OrderStatus}"
-                       Style="{StaticResource RowValue}"/>
-            
+                       Style="{StaticResource RowValue}" />
+
             <TextBlock Grid.Row="2" Grid.Column="0"
                        Text="Delivery Date"
-                       Style="{StaticResource RowName}"/>
-            
+                       Style="{StaticResource RowName}" />
+
             <TextBlock Grid.Row="2" Grid.Column="1"
                        Text="{Binding Order.OrderDeliveryDate, StringFormat=dd.MM.yyyy}"
-                       Style="{StaticResource RowValue}"/>
-            
+                       Style="{StaticResource RowValue}" />
+
             <TextBlock Grid.Row="3" Grid.Column="0"
                        Text="Pickup Point"
-                       Style="{StaticResource RowName}"/>
-            
+                       Style="{StaticResource RowName}" />
+
             <ComboBox Grid.Row="3" Grid.Column="1"
                       Margin="10"
-                      ItemsSource="{Binding PickupPoints}"/>
-            
+                      ItemsSource="{Binding PickupPoints}" />
+
             <TextBlock Grid.Row="4" Grid.Column="0"
                        Text="Client Name"
-                       Style="{StaticResource RowName}"/>
-            
+                       Style="{StaticResource RowName}" />
+
             <TextBlock Grid.Row="4" Grid.Column="1"
                        Text="{Binding Order.ClientName}"
                        TextWrapping="Wrap"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
-            
+                       HorizontalAlignment="Center" />
+
             <TextBlock Grid.Row="5" Grid.Column="0"
                        Text="Order Date"
-                       Style="{StaticResource RowName}"/>
-            
+                       Style="{StaticResource RowName}" />
+
             <TextBlock Grid.Row="5" Grid.Column="1"
                        Text="{Binding Order.OrderData, StringFormat=dd.MM.yyyy}"
-                       Style="{StaticResource RowValue}"/>
-            
+                       Style="{StaticResource RowValue}" />
+
             <TextBlock Grid.Row="6" Grid.Column="0"
                        Text="Order Sum"
-                       Style="{StaticResource RowName}"/>
-            
+                       Style="{StaticResource RowName}" />
+
             <TextBlock Grid.Row="6" Grid.Column="1"
                        Text="{Binding OrderSum, StringFormat={}{0:C}}"
                        FontWeight="Bold"
-                       Style="{StaticResource RowValue}"/>
-            
+                       Style="{StaticResource RowValue}" />
+
             <TextBlock Grid.Row="7" Grid.Column="0"
                        Text="Order Discount"
-                       Style="{StaticResource RowName}"/>
-            
+                       Style="{StaticResource RowName}" />
+
             <TextBlock Grid.Row="7" Grid.Column="1"
                        Text="{Binding OrderDiscount, StringFormat={}{0:C}}"
                        FontWeight="Bold"
-                       Style="{StaticResource RowValue}"/>
-            
+                       Style="{StaticResource RowValue}" />
+
             <Button Grid.Row="8" Grid.ColumnSpan="2"
                     Content="Save order ticket as pdf"
-                    Margin="10"/>
-            
+                    Margin="10" />
+
             <Button Grid.Row="9" Grid.ColumnSpan="2"
                     Content="Checkout"
-                    Margin="10"/>
-            
+                    Margin="10" />
+
         </Grid>
-        
+
         <ListBox Grid.Column="1"
-            ItemsSource="{Binding ProductsInOrder, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
-            HorizontalAlignment="Center"
-            BorderBrush="{x:Null}"
-            HorizontalContentAlignment="Stretch">
+                 ItemsSource="{Binding ProductsInOrder, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
+                 HorizontalAlignment="Center"
+                 BorderBrush="{x:Null}"
+                 HorizontalContentAlignment="Stretch">
 
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:OrderItem}">
@@ -171,7 +170,7 @@
                                                TextDecorations="{Binding Product.CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}" />
                                     <TextBlock Text="{Binding Product.ProductCostWithDiscount, StringFormat={}{0:C}}"
                                                Visibility="{Binding Product.CurrentDiscount, Converter={StaticResource NumberToVisibilityConverter}}"
-                                               Margin="15 0 0 0"/>
+                                               Margin="15 0 0 0" />
                                 </StackPanel>
                             </StackPanel>
 
@@ -179,14 +178,14 @@
                                 <Button Height="20" Width="20" Content="-"
                                         Margin="0 0 10 0"
                                         Command="{Binding ElementName=OrderPageWindow, Path=ViewModel.RemoveProductCommand}"
-                                        CommandParameter="{Binding Product.ProductArticleNumber}"/>
+                                        CommandParameter="{Binding Product.ProductArticleNumber}" />
                                 <TextBlock Text="{Binding Amount}"
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
                                            FontSize="20" />
                                 <Button Height="20" Width="20" Content="+"
                                         Margin="10 0 0 0"
                                         Command="{Binding ElementName=OrderPageWindow, Path=ViewModel.AddProductCommand}"
-                                        CommandParameter="{Binding Product.ProductArticleNumber}"/>
+                                        CommandParameter="{Binding Product.ProductArticleNumber}" />
                             </StackPanel>
                         </Grid>
                     </Border>
