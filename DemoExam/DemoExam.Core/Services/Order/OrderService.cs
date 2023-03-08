@@ -58,4 +58,17 @@ public class OrderService : IOrderService
             throw new InvalidOperationException("Create order first");
         return _productsInOrder.ToImmutableDictionary();
     }
+
+    public void RemoveProductFromOrder(string productId)
+    {
+        if (_productsInOrder is null)
+            throw new InvalidOperationException("Create order first");
+
+        if (_productsInOrder.ContainsKey(productId) is false)
+            throw new InvalidOperationException($"There is no product with id {productId} in order");
+
+        _productsInOrder[productId]--;
+        if (_productsInOrder[productId] == 0)
+            _productsInOrder.Remove(productId);
+    }
 }
