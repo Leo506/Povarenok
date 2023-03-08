@@ -11,4 +11,9 @@ public class PickupPoint
     public string Street { get; set; } = null!;
 
     public virtual ICollection<Order> Orders { get; } = new List<Order>();
+
+    public override string ToString()
+    {
+        return $"{PostIndex} {City}, {Street}";
+    }
 }

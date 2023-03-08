@@ -1,5 +1,6 @@
 ﻿using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
+using DemoExam.Core.NotifyObjects;
 using DemoExam.Core.Services.Order;
 
 namespace DemoExam.Core.Services.ViewModelServices.Order;
@@ -23,7 +24,7 @@ public class OrderViewModelService : IOrderViewModelService
             var product = _tradeContext.Products.First(x => x.ProductArticleNumber == productId);
             items.Add(new OrderItem
             {
-                Product = product,
+                Product = new ProductNotifyObject(product),
                 Amount = amount
             });
         }
