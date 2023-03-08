@@ -4,13 +4,14 @@ namespace DemoExam.Core.Services.Order;
 
 public interface IOrderService
 {
-    public void CreateNewOrder();
+    void CreateNewOrder();
 
-    public void AddProductToOrder(string productArticleNumber);
+    void AddProductToOrder(string productArticleNumber);
 
-    public Task SaveOrder(Models.Order order);
+    Task SaveOrder(Models.Order order);
 
     bool HasProductsInOrder();
 
     ImmutableDictionary<string, int> GetOrderList();
+    void RemoveProductFromOrder(string productId);
 }

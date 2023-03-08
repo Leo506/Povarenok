@@ -1,8 +1,16 @@
-﻿namespace DemoExam.Core.Models;
+﻿using DemoExam.Core.NotifyObjects;
+using MvvmCross.ViewModels;
 
-public class OrderItem
+namespace DemoExam.Core.Models;
+
+public class OrderItem : MvxNotifyPropertyChanged
 {
-    public Product Product { get; set; } = default!;
+    private int _amount;
+    public ProductNotifyObject Product { get; set; } = default!;
 
-    public int Amount { get; set; }
+    public int Amount
+    {
+        get => _amount;
+        set => SetProperty(ref _amount, value);
+    }
 }
