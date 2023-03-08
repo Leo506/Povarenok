@@ -7,8 +7,9 @@
                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                  xmlns:models="clr-namespace:DemoExam.Core.Models;assembly=DemoExam.Core"
                  xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
+                 xmlns:system="clr-namespace:System;assembly=System.Runtime"
                  mc:Ignorable="d"
-                 Title="OrderPage" Height="450" Width="800"
+                 Title="OrderPage" Height="450" Width="1000"
                  d:DataContext="{d:DesignInstance viewModels:OrderViewModel}">
 
     <views:MvxWindow.Resources>
@@ -17,7 +18,146 @@
     </views:MvxWindow.Resources>
 
     <Grid>
-        <ListBox
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.45*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.ColumnSpan="2" Text="Order №100"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="25"
+                       FontWeight="Bold"/>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="Order Status"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="0 0 10 0"/>
+            
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       Text="Новый"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="10 0 0 0"/>
+            
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="Delivery Date"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="0 0 10 0"/>
+            
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="01.01.2001"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="10 0 0 0"/>
+            
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="Pickup Point"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="0 0 10 0"/>
+            
+            <ComboBox Grid.Row="3" Grid.Column="1"
+                      Margin="10">
+                <system:String>Street 1</system:String>
+                <system:String>Street 2</system:String>
+                <system:String>Street 3</system:String>
+            </ComboBox>
+            
+            <TextBlock Grid.Row="4" Grid.Column="0"
+                       Text="Client Name"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="0 0 10 0"/>
+            
+            <TextBlock Grid.Row="4" Grid.Column="1"
+                       Text="Виноградов Ростислав Пантелеймонович"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+            
+            <TextBlock Grid.Row="5" Grid.Column="0"
+                       Text="Order Date"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="0 0 10 0"/>
+            
+            <TextBlock Grid.Row="5" Grid.Column="1"
+                       Text="01.01.2001"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="10 0 0 0"/>
+            
+            <TextBlock Grid.Row="6" Grid.Column="0"
+                       Text="Order Sum"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="0 0 10 0"/>
+            
+            <TextBlock Grid.Row="6" Grid.Column="1"
+                       Text="123456789.98"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="10 0 0 0"/>
+            
+            <TextBlock Grid.Row="7" Grid.Column="0"
+                       Text="Order Discount"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="0 0 10 0"/>
+            
+            <TextBlock Grid.Row="7" Grid.Column="1"
+                       Text="123456789.98"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="10 0 0 0"/>
+            
+            <Button Grid.Row="8" Grid.ColumnSpan="2"
+                    Content="Save order ticket as pdf"
+                    Margin="10"/>
+            
+            <Button Grid.Row="9" Grid.ColumnSpan="2"
+                    Content="Checkout"
+                    Margin="10"/>
+            
+        </Grid>
+        
+        <ListBox Grid.Column="1"
             ItemsSource="{Binding ProductsInOrder, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
             HorizontalAlignment="Center"
             BorderBrush="{x:Null}"
@@ -55,9 +195,15 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <TextBlock Grid.Column="2" Text="{Binding Amount}"
-                                       VerticalAlignment="Center" HorizontalAlignment="Center"
-                                       FontSize="20" />
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <Button Height="20" Width="20" Content="+"
+                                        Margin="0 0 10 0"/>
+                                <TextBlock Text="{Binding Amount}"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           FontSize="20" />
+                                <Button Height="20" Width="20" Content="-"
+                                        Margin="10 0 0 0"/>
+                            </StackPanel>
                         </Grid>
                     </Border>
                 </DataTemplate>
