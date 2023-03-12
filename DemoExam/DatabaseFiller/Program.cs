@@ -1,6 +1,6 @@
 ﻿using DemoExam.Core.Contexts;
-using DemoExam.Core.Models;
 using DemoExam.Core.Utils;
+using DemoExam.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Hello, World!");

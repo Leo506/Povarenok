@@ -8,7 +8,7 @@
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                   xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                   xmlns:dataElements="clr-namespace:DemoExam.Wpf.DataElements"
-                  xmlns:models1="clr-namespace:DemoExam.Core.Models;assembly=DemoExam.Domain"
+                  xmlns:entities="clr-namespace:DemoExam.Domain.Entities;assembly=DemoExam.Domain"
                   Tag="ProductPage"
                   mc:Ignorable="d"
                   x:Name="ProductsView"
@@ -79,7 +79,7 @@
                  HorizontalContentAlignment="Stretch">
 
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type models1:Product}">
+                <DataTemplate DataType="{x:Type entities:Product}">
                     <Border CornerRadius="5"
                             BorderThickness="1"
                             BorderBrush="LightBlue"

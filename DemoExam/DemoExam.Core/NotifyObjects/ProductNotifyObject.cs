@@ -1,4 +1,4 @@
-﻿using DemoExam.Core.Models;
+﻿using DemoExam.Domain.Entities;
 using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.NotifyObjects;

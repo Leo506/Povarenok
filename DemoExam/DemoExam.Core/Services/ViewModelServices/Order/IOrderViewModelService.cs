@@ -1,4 +1,5 @@
 ﻿using DemoExam.Core.Models;
+using DemoExam.Domain.Entities;
 
 namespace DemoExam.Core.Services.ViewModelServices.Order;
 

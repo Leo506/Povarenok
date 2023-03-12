@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using DemoExam.Core.Contexts;
-using DemoExam.Core.Models;
+using DemoExam.Domain.Entities;
 
 namespace DemoExam.Core.Services.Order;
 
@@ -30,7 +30,7 @@ public class OrderService : IOrderService
             _productsInOrder[productArticleNumber] = 1;
     }
 
-    public async Task SaveOrder(Models.Order order)
+    public async Task SaveOrder(Domain.Entities.Order order)
     {
         if (_productsInOrder is null || _productsInOrder.Count == 0)
             throw new InvalidOperationException("Add products in order before saving");

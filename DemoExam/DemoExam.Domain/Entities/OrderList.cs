@@ -1,4 +1,4 @@
-﻿namespace DemoExam.Core.Models;
+﻿namespace DemoExam.Domain.Entities;
 
 public class OrderList
 {

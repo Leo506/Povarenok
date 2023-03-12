@@ -1,6 +1,6 @@
 ﻿using DemoExam.Core.Contexts;
-using DemoExam.Core.Models;
 using DemoExam.Core.NotifyObjects;
+using DemoExam.Domain.Entities;
 
 namespace DemoExam.Core.Services.Products;
 

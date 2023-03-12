@@ -2,6 +2,7 @@
 using DemoExam.Core.Models;
 using DemoExam.Core.NotifyObjects;
 using DemoExam.Core.Services.Order;
+using DemoExam.Domain.Entities;
 
 namespace DemoExam.Core.Services.ViewModelServices.Order;
 

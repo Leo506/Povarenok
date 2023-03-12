@@ -1,18 +1,19 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Models;
 using DemoExam.Core.Services.ViewModelServices.Order;
+using DemoExam.Domain.Entities;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
 
-public class OrderViewModel : MvxViewModel<User>
+public class OrderViewModel : MvxViewModel<UserModel>
 {
     private readonly IMvxNavigationService _navigationService;
 
     private readonly IOrderViewModelService _viewModelService;
-    private User _user = default!;
+    private UserModel _user = default!;
 
     public OrderViewModel(IOrderViewModelService viewModelService, IMvxNavigationService navigationService)
     {
@@ -36,12 +37,12 @@ public class OrderViewModel : MvxViewModel<User>
 
     public ICommand RemoveProductCommand => new MvxCommand<string>(RemoveProduct);
 
-    public override void Prepare(User parameter)
+    public override void Prepare(UserModel parameter)
     {
         _user = parameter;
         Order = new Order
         {
-            ClientName = _user.FullName,
+            ClientName = _user.UserFullName,
             OrderData = DateTime.Now,
             OrderDeliveryDate = DateTime.Now.AddDays(3),
             OrderStatus = OrderStatusConstants.NewOrder
