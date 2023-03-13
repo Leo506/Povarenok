@@ -1,11 +1,11 @@
 ﻿using DemoExam.Core.Models;
 using MvvmCross.ViewModels;
 
-namespace DemoExam.Core.NotifyObjects;
+namespace DemoExam.Core.ObservableObjects;
 
-public class ProductNotifyObject : MvxNotifyPropertyChanged
+public class ObservableProduct : MvxNotifyPropertyChanged
 {
-    public ProductNotifyObject(Product product)
+    public ObservableProduct(Product product)
     {
         Product = product;
     }

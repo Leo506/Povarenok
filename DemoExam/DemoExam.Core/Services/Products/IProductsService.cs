@@ -1,15 +1,15 @@
 ﻿using DemoExam.Core.Models;
-using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.ObservableObjects;
 
 namespace DemoExam.Core.Services.Products;
 
 public interface IProductsService
 {
-    IEnumerable<ProductNotifyObject> GetAll();
+    IEnumerable<ObservableProduct> GetAll();
 
-    IEnumerable<ProductNotifyObject> GetWhere(Func<Product, bool> predicate);
+    IEnumerable<ObservableProduct> GetWhere(Func<Product, bool> predicate);
 
     int Count();
 
-    void DeleteProduct(ProductNotifyObject product);
+    void DeleteProduct(ObservableProduct observableProduct);
 }

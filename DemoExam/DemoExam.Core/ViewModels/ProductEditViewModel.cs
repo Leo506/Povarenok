@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.ProductEditService;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -7,7 +7,7 @@ using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
 
-public class ProductEditViewModel : MvxViewModel<ProductNotifyObject>
+public class ProductEditViewModel : MvxViewModel<ObservableProduct>
 {
     private readonly IProductEditService _editService;
 
@@ -21,24 +21,24 @@ public class ProductEditViewModel : MvxViewModel<ProductNotifyObject>
         _editService = editService;
     }
 
-    public ProductNotifyObject Product { get; private set; }
+    public ObservableProduct ObservableProduct { get; private set; }
 
     public ICommand CloseCommand =>
         _closeCommand ??= new MvxAsyncCommand(CloseAndSave);
 
     private async Task CloseAndSave()
     {
-        await _editService.SaveProduct(Product);
+        await _editService.SaveProduct(ObservableProduct);
         await _navigationService.Close(this);
     }
 
-    public override void Prepare(ProductNotifyObject parameter)
+    public override void Prepare(ObservableProduct parameter)
     {
-        Product = parameter;
+        ObservableProduct = parameter;
     }
 
     public void UpdateProductPhoto(byte[] bytes)
     {
-        Product.ProductPhoto = bytes;
+        ObservableProduct.ProductPhoto = bytes;
     }
 }

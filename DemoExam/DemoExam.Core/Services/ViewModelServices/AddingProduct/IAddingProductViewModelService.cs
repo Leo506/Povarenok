@@ -1,9 +1,9 @@
-﻿using DemoExam.Core.NotifyObjects;
+﻿using DemoExam.Core.ObservableObjects;
 
 namespace DemoExam.Core.Services.ViewModelServices.AddingProduct;
 
 public interface IAddingProductViewModelService
 {
-    bool IsValidProduct(ProductNotifyObject product);
-    Task AddProductAsync(ProductNotifyObject product);
+    bool IsValidProduct(ObservableProduct observableProduct);
+    Task AddProductAsync(ObservableProduct observableProduct);
 }

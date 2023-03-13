@@ -1,5 +1,5 @@
 ﻿using DemoExam.Core.Contexts;
-using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.ObservableObjects;
 
 namespace DemoExam.Core.Services.ProductEditService;
 
@@ -12,9 +12,9 @@ public class ProductEditService : IProductEditService
         _tradeContext = tradeContext;
     }
 
-    public async Task SaveProduct(ProductNotifyObject product)
+    public async Task SaveProduct(ObservableProduct observableProduct)
     {
-        _tradeContext.Products.Update(product.Product);
+        _tradeContext.Products.Update(observableProduct.Product);
         await _tradeContext.SaveChangesAsync();
     }
 }

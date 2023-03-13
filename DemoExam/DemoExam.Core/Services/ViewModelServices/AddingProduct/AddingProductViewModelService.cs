@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DemoExam.Core.Contexts;
-using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.ObservableObjects;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DemoExam.Core.Services.ViewModelServices.AddingProduct;
@@ -14,20 +14,20 @@ public class AddingProductViewModelService : IAddingProductViewModelService
         _tradeContext = tradeContext;
     }
 
-    public bool IsValidProduct(ProductNotifyObject product)
+    public bool IsValidProduct(ObservableProduct observableProduct)
     {
-        if (_tradeContext.Products.Any(x => x.ProductArticleNumber == product.ProductArticleNumber))
+        if (_tradeContext.Products.Any(x => x.ProductArticleNumber == observableProduct.ProductArticleNumber))
             return false;
 
         ICollection<ValidationResult> validationResults = new List<ValidationResult>();
-        Validator.TryValidateObject(product.Product, new ValidationContext(product.Product), validationResults, true);
+        Validator.TryValidateObject(observableProduct.Product, new ValidationContext(observableProduct.Product), validationResults, true);
 
         return validationResults.IsNullOrEmpty();
     }
 
-    public async Task AddProductAsync(ProductNotifyObject product)
+    public async Task AddProductAsync(ObservableProduct observableProduct)
     {
-        await _tradeContext.Products.AddAsync(product.Product);
+        await _tradeContext.Products.AddAsync(observableProduct.Product);
         await _tradeContext.SaveChangesAsync();
     }
 }

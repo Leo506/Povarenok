@@ -29,7 +29,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{Binding Product.ProductArticleNumber}"
+        <TextBlock Grid.Row="0" Text="{Binding ObservableProduct.ProductArticleNumber}"
                    FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
 
         <GroupBox Grid.Row="1" Header="General">
@@ -47,21 +47,21 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Article number:" />
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10 0 0 0"
-                           Text="{Binding Product.ProductArticleNumber}" />
+                           Text="{Binding ObservableProduct.ProductArticleNumber}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Product name" />
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
-                         Text="{Binding Product.ProductName}" />
+                         Text="{Binding ObservableProduct.ProductName}" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Product Description:" />
                 <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10 0 10 5"
-                         Text="{Binding Product.ProductDescription}" TextWrapping="Wrap" AcceptsReturn="True" />
+                         Text="{Binding ObservableProduct.ProductDescription}" TextWrapping="Wrap" AcceptsReturn="True" />
 
                 <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Product Category:" />
                 <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
-                         Text="{Binding Product.ProductCategory}" />
+                         Text="{Binding ObservableProduct.ProductCategory}" />
 
             </Grid>
         </GroupBox>
@@ -80,12 +80,12 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Cost" />
                 <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
                          Margin="10 0 0 0"
-                         Text="{Binding Product.ProductCost}" Width="30" />
+                         Text="{Binding ObservableProduct.ProductCost}" Width="30" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Current Discount (%):" />
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
                          Margin="10 0 0 0"
-                         Text="{Binding Product.CurrentDiscount}" Width="30" />
+                         Text="{Binding ObservableProduct.CurrentDiscount}" Width="30" />
             </Grid>
         </GroupBox>
 
@@ -103,12 +103,12 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Manufacture:" />
                 <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
-                         Text="{Binding Product.ProductManufacturer}" />
+                         Text="{Binding ObservableProduct.ProductManufacturer}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Supplier:" />
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
-                         Text="{Binding Product.Supplier}" />
+                         Text="{Binding ObservableProduct.Supplier}" />
             </Grid>
         </GroupBox>
 
@@ -123,7 +123,7 @@
 
                 <StackPanel Grid.Column="1">
                     <Image HorizontalAlignment="Left"
-                           Source="{Binding Product.ProductPhoto}" Width="30" Height="30" />
+                           Source="{Binding ObservableProduct.ProductPhoto}" Width="30" Height="30" />
                     <Button Content="Change photo" Click="OnChangePhotoClick" />
                 </StackPanel>
             </Grid>
@@ -138,7 +138,7 @@
 
                 <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Quantity In Stock:" />
                 <TextBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"
-                         Text="{Binding Product.ProductQuantityInStock}" Width="50" />
+                         Text="{Binding ObservableProduct.ProductQuantityInStock}" Width="50" />
             </Grid>
         </GroupBox>
 

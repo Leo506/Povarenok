@@ -1,4 +1,4 @@
-﻿using DemoExam.Core.NotifyObjects;
+﻿using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.ViewModels;
@@ -16,10 +16,10 @@ public class ProductsViewModelService : IProductsViewModelService
         _orderService = orderService;
     }
 
-    public IEnumerable<ProductNotifyObject> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
+    public IEnumerable<ObservableProduct> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
         Func<double, bool>? discountSelectorPredicate = null)
     {
-        IEnumerable<ProductNotifyObject> products;
+        IEnumerable<ObservableProduct> products;
         if (string.IsNullOrEmpty(search))
             products = _productsService.GetAll();
         else
@@ -39,7 +39,7 @@ public class ProductsViewModelService : IProductsViewModelService
         return products;
     }
 
-    public IEnumerable<ProductNotifyObject> GetAllProducts()
+    public IEnumerable<ObservableProduct> GetAllProducts()
     {
         return _productsService.GetAll();
     }
@@ -49,14 +49,14 @@ public class ProductsViewModelService : IProductsViewModelService
         return _productsService.Count();
     }
 
-    public void DeleteProduct(ProductNotifyObject product)
+    public void DeleteProduct(ObservableProduct observableProduct)
     {
-        _productsService.DeleteProduct(product);
+        _productsService.DeleteProduct(observableProduct);
     }
 
-    public void AddProductToOrder(ProductNotifyObject product)
+    public void AddProductToOrder(ObservableProduct observableProduct)
     {
-        _orderService.AddProductToOrder(product.ProductArticleNumber);
+        _orderService.AddProductToOrder(observableProduct.ProductArticleNumber);
     }
 
     public bool CanOpenOrder()

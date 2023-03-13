@@ -1,6 +1,6 @@
 ﻿using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
-using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.ObservableObjects;
 
 namespace DemoExam.Core.Services.Products;
 
@@ -13,14 +13,14 @@ public class ProductsService : IProductsService
         _tradeContext = tradeContext;
     }
 
-    public IEnumerable<ProductNotifyObject> GetAll()
+    public IEnumerable<ObservableProduct> GetAll()
     {
-        return _tradeContext.Products.Select(product => new ProductNotifyObject(product));
+        return _tradeContext.Products.Select(product => new ObservableProduct(product));
     }
 
-    public IEnumerable<ProductNotifyObject> GetWhere(Func<Product, bool> predicate)
+    public IEnumerable<ObservableProduct> GetWhere(Func<Product, bool> predicate)
     {
-        return _tradeContext.Products.Where(predicate).Select(product => new ProductNotifyObject(product)).ToList();
+        return _tradeContext.Products.Where(predicate).Select(product => new ObservableProduct(product)).ToList();
     }
 
     public int Count()
@@ -28,9 +28,9 @@ public class ProductsService : IProductsService
         return _tradeContext.Products.Count();
     }
 
-    public void DeleteProduct(ProductNotifyObject product)
+    public void DeleteProduct(ObservableProduct observableProduct)
     {
-        _tradeContext.Products.Remove(product.Product);
+        _tradeContext.Products.Remove(observableProduct.Product);
         _tradeContext.SaveChanges();
     }
 }

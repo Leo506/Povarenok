@@ -5,8 +5,8 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
-                 xmlns:models="clr-namespace:DemoExam.Core.Models;assembly=DemoExam.Core"
                  xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
+                 xmlns:observableObjects="clr-namespace:DemoExam.Core.ObservableObjects;assembly=DemoExam.Core"
                  mc:Ignorable="d"
                  Title="OrderPage" Height="450" Width="1000" Language="ru-Ru"
                  d:DataContext="{d:DesignInstance viewModels:OrderViewModel}"
@@ -140,7 +140,7 @@
                  HorizontalContentAlignment="Stretch">
 
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:OrderItem}">
+                <DataTemplate DataType="{x:Type observableObjects:ObservableOrder}">
                     <Border CornerRadius="5"
                             BorderThickness="1"
                             BorderBrush="LightBlue"
@@ -155,21 +155,21 @@
                             </Grid.ColumnDefinitions>
 
                             <Image Grid.Column="0"
-                                   Source="{Binding Product.ProductPhoto, Converter={StaticResource NullImageConverter}}"
+                                   Source="{Binding ObservableProduct.ProductPhoto, Converter={StaticResource NullImageConverter}}"
                                    Width="200" Height="100"
                                    Margin="10" />
 
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding Product.ProductName}"
+                                <TextBlock Text="{Binding ObservableProduct.ProductName}"
                                            FontWeight="Bold" />
-                                <TextBlock Text="{Binding Product.ProductDescription}"
+                                <TextBlock Text="{Binding ObservableProduct.ProductDescription}"
                                            TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding Product.ProductManufacturer}" />
+                                <TextBlock Text="{Binding ObservableProduct.ProductManufacturer}" />
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Product.ProductCost, StringFormat={}{0:C}}"
-                                               TextDecorations="{Binding Product.CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}" />
-                                    <TextBlock Text="{Binding Product.ProductCostWithDiscount, StringFormat={}{0:C}}"
-                                               Visibility="{Binding Product.CurrentDiscount, Converter={StaticResource NumberToVisibilityConverter}}"
+                                    <TextBlock Text="{Binding ObservableProduct.ProductCost, StringFormat={}{0:C}}"
+                                               TextDecorations="{Binding ObservableProduct.CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}" />
+                                    <TextBlock Text="{Binding ObservableProduct.ProductCostWithDiscount, StringFormat={}{0:C}}"
+                                               Visibility="{Binding ObservableProduct.CurrentDiscount, Converter={StaticResource NumberToVisibilityConverter}}"
                                                Margin="15 0 0 0" />
                                 </StackPanel>
                             </StackPanel>
@@ -178,14 +178,14 @@
                                 <Button Height="20" Width="20" Content="-"
                                         Margin="0 0 10 0"
                                         Command="{Binding ElementName=OrderPageWindow, Path=ViewModel.RemoveProductCommand}"
-                                        CommandParameter="{Binding Product.ProductArticleNumber}" />
+                                        CommandParameter="{Binding ObservableProduct.ProductArticleNumber}" />
                                 <TextBlock Text="{Binding Amount}"
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
                                            FontSize="20" />
                                 <Button Height="20" Width="20" Content="+"
                                         Margin="10 0 0 0"
                                         Command="{Binding ElementName=OrderPageWindow, Path=ViewModel.AddProductCommand}"
-                                        CommandParameter="{Binding Product.ProductArticleNumber}" />
+                                        CommandParameter="{Binding ObservableProduct.ProductArticleNumber}" />
                             </StackPanel>
                         </Grid>
                     </Border>

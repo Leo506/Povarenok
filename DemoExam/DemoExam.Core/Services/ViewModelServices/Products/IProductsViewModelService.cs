@@ -1,19 +1,19 @@
-﻿using DemoExam.Core.NotifyObjects;
+﻿using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.ViewModels;
 
 namespace DemoExam.Core.Services.ViewModelServices.Products;
 
 public interface IProductsViewModelService
 {
-    IEnumerable<ProductNotifyObject> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
+    IEnumerable<ObservableProduct> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
         Func<double, bool>? discountSelectorPredicate = null);
 
-    IEnumerable<ProductNotifyObject> GetAllProducts();
+    IEnumerable<ObservableProduct> GetAllProducts();
 
     int GetProductsCount();
 
-    void DeleteProduct(ProductNotifyObject product);
+    void DeleteProduct(ObservableProduct observableProduct);
 
-    void AddProductToOrder(ProductNotifyObject product);
+    void AddProductToOrder(ObservableProduct observableProduct);
     bool CanOpenOrder();
 }

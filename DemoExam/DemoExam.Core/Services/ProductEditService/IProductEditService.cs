@@ -1,8 +1,8 @@
-﻿using DemoExam.Core.NotifyObjects;
+﻿using DemoExam.Core.ObservableObjects;
 
 namespace DemoExam.Core.Services.ProductEditService;
 
 public interface IProductEditService
 {
-    Task SaveProduct(ProductNotifyObject product);
+    Task SaveProduct(ObservableProduct observableProduct);
 }

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Models;
+using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.ViewModelServices.Order;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -18,19 +19,19 @@ public class OrderViewModel : MvxViewModel<User>
     {
         _viewModelService = viewModelService;
         _navigationService = navigationService;
-        ProductsInOrder = new MvxObservableCollection<OrderItem>(_viewModelService.GetProductInOrder());
+        ProductsInOrder = new MvxObservableCollection<ObservableOrder>(_viewModelService.GetProductInOrder());
         PickupPoints = _viewModelService.GetPickupPoints();
     }
 
     public Order Order { get; set; }
 
-    public MvxObservableCollection<OrderItem> ProductsInOrder { get; set; }
+    public MvxObservableCollection<ObservableOrder> ProductsInOrder { get; set; }
 
     public IEnumerable<PickupPoint> PickupPoints { get; set; }
 
-    public decimal OrderSum => ProductsInOrder.Sum(x => x.Product.ProductCostWithDiscount * x.Amount);
+    public decimal OrderSum => ProductsInOrder.Sum(x => x.ObservableProduct.ProductCostWithDiscount * x.Amount);
 
-    public decimal OrderDiscount => ProductsInOrder.Sum(x => x.Product.ProductCost * x.Amount) - OrderSum;
+    public decimal OrderDiscount => ProductsInOrder.Sum(x => x.ObservableProduct.ProductCost * x.Amount) - OrderSum;
 
     public ICommand AddProductCommand => new MvxCommand<string>(AddProduct);
 
@@ -51,7 +52,7 @@ public class OrderViewModel : MvxViewModel<User>
     private void AddProduct(string productId)
     {
         _viewModelService.AddProduct(productId);
-        var orderItem = ProductsInOrder.FirstOrDefault(x => x.Product.ProductArticleNumber == productId);
+        var orderItem = ProductsInOrder.FirstOrDefault(x => x.ObservableProduct.ProductArticleNumber == productId);
         if (orderItem is null) return;
         orderItem.Amount++;
         RaisePropertyChanged(nameof(OrderSum));
@@ -61,7 +62,7 @@ public class OrderViewModel : MvxViewModel<User>
     private void RemoveProduct(string productId)
     {
         _viewModelService.RemoveProduct(productId);
-        var orderItem = ProductsInOrder.FirstOrDefault(x => x.Product.ProductArticleNumber == productId);
+        var orderItem = ProductsInOrder.FirstOrDefault(x => x.ObservableProduct.ProductArticleNumber == productId);
         if (orderItem is null) return;
         orderItem.Amount--;
 

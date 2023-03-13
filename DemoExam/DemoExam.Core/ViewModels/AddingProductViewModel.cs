@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.Models;
-using DemoExam.Core.NotifyObjects;
+using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices.AddingProduct;
 using MvvmCross.Commands;
@@ -25,14 +25,14 @@ public class AddingProductViewModel : MvxViewModel
         _alert = alert;
     }
 
-    public ProductNotifyObject Product { get; set; } = new(new Product());
+    public ObservableProduct ObservableProduct { get; set; } = new(new Product());
     public ICommand SaveAndCloseCommand => new MvxAsyncCommand(SaveAndClose);
 
     private async Task SaveAndClose()
     {
-        if (_viewModelService.IsValidProduct(Product))
+        if (_viewModelService.IsValidProduct(ObservableProduct))
         {
-            await _viewModelService.AddProductAsync(Product);
+            await _viewModelService.AddProductAsync(ObservableProduct);
             await _navigationService.Close(this);
             return;
         }
@@ -42,6 +42,6 @@ public class AddingProductViewModel : MvxViewModel
 
     public void SetProductPhoto(byte[] bytes)
     {
-        Product.ProductPhoto = bytes;
+        ObservableProduct.ProductPhoto = bytes;
     }
 }
