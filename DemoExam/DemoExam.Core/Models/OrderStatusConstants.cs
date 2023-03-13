@@ -2,7 +2,7 @@
 
 public static class OrderStatusConstants
 {
-    public static string NewOrder = "Новый";
+    public const string NewOrder = "Новый";
 
-    public static string Completed = "Завершен";
+    public const string Completed = "Завершен";
 }
