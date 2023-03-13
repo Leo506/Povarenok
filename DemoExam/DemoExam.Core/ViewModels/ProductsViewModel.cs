@@ -19,28 +19,6 @@ public enum SortOrder
 
 public class ProductsViewModel : MvxViewModel<User>
 {
-    private readonly IAlert _alert;
-    private readonly IMvxNavigationService _navigationService;
-    private readonly IProductsViewModelService _viewModelService;
-    private MvxCommand? _changeSortOrderCommand;
-    private MvxAsyncCommand? _closeCommand;
-    private Func<double, bool> _discountSelectorPredicate = _ => true;
-    private string _searchString;
-    private ObservableProduct? _selectedProduct;
-    private SortOrder _sortOrder;
-    private string _sortOrderName;
-
-    public ProductsViewModel(IMvxNavigationService navigationService, IAlert alert,
-        IProductsViewModelService viewModelService)
-    {
-        _navigationService = navigationService;
-        _alert = alert;
-        _viewModelService = viewModelService;
-        Products = new MvxObservableCollection<ObservableProduct>(_viewModelService.GetAllProducts());
-        SortOrderName = DetermineSortOrderName();
-        _selectedProduct = Products.FirstOrDefault();
-    }
-
     public string SortOrderName
     {
         get => _sortOrderName;
@@ -61,7 +39,7 @@ public class ProductsViewModel : MvxViewModel<User>
 
     public bool CanOpenOrder => _viewModelService.CanOpenOrder();
 
-    public string CurrentSelectionAmount => $"{Products.Count}/{_viewModelService.GetProductsCount()}";
+    public string CurrentSelectionAmount => $"{Products.Count}/{_viewModelService.GetProductsCount().Result}";
 
     public string SearchString
     {
@@ -79,6 +57,28 @@ public class ProductsViewModel : MvxViewModel<User>
     {
         get => _selectedProduct;
         set => SetProperty(ref _selectedProduct, value);
+    }
+    
+    private readonly IAlert _alert;
+    private readonly IMvxNavigationService _navigationService;
+    private readonly IProductsViewModelService _viewModelService;
+    private MvxCommand? _changeSortOrderCommand;
+    private MvxAsyncCommand? _closeCommand;
+    private Func<double, bool> _discountSelectorPredicate = _ => true;
+    private string _searchString;
+    private ObservableProduct? _selectedProduct;
+    private SortOrder _sortOrder;
+    private string _sortOrderName;
+
+    public ProductsViewModel(IMvxNavigationService navigationService, IAlert alert,
+        IProductsViewModelService viewModelService)
+    {
+        _navigationService = navigationService;
+        _alert = alert;
+        _viewModelService = viewModelService;
+        SortOrderName = DetermineSortOrderName();
+        Products = new();
+        UpdateProducts();
     }
 
     private List<ProductOperation> GetAvailableOperationsForUser()
@@ -131,10 +131,11 @@ public class ProductsViewModel : MvxViewModel<User>
         UpdateProducts();
     }
 
-    private void UpdateProducts()
+    private async void UpdateProducts()
     {
         Products = new MvxObservableCollection<ObservableProduct>(
-            _viewModelService.SelectProducts(SearchString, _sortOrder, _discountSelectorPredicate));
+            await _viewModelService.SelectProducts(SearchString, _sortOrder, _discountSelectorPredicate)
+                .ConfigureAwait(false));
         RaisePropertyChanged(() => Products);
         RaisePropertyChanged(() => CurrentSelectionAmount);
     }

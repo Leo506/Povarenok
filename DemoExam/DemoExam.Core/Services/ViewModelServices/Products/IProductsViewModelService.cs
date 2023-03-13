@@ -5,15 +5,14 @@ namespace DemoExam.Core.Services.ViewModelServices.Products;
 
 public interface IProductsViewModelService
 {
-    IEnumerable<ObservableProduct> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
+    Task<IEnumerable<ObservableProduct>> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
         Func<double, bool>? discountSelectorPredicate = null);
 
-    IEnumerable<ObservableProduct> GetAllProducts();
+    Task<int> GetProductsCount();
 
-    int GetProductsCount();
+    Task DeleteProduct(ObservableProduct observableProduct);
 
-    void DeleteProduct(ObservableProduct observableProduct);
-
-    void AddProductToOrder(ObservableProduct observableProduct);
+    Task AddProductToOrder(ObservableProduct observableProduct);
+    
     bool CanOpenOrder();
 }

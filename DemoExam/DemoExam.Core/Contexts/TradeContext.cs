@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Core.Contexts;
 
-public partial class TradeContext : DbContext, IUserRepository
+public partial class TradeContext : DbContext, IUserRepository, IProductRepository
 {
     public TradeContext()
     {
@@ -132,5 +132,33 @@ public partial class TradeContext : DbContext, IUserRepository
     {
         return Users.Include(x => x.UserRoleNavigation)
             .FirstOrDefaultAsync(x => x.UserLogin == login && x.UserPassword == password);
+    }
+
+    public Task<List<Product>> GetAllAsync()
+    {
+        return Products.ToListAsync();
+    }
+
+    public async Task AddAsync(Product product)
+    {
+        await Products.AddAsync(product);
+        await SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Product product)
+    {
+        Products.Remove(product);
+        await SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Product product)
+    {
+        Products.Update(product);
+        await SaveChangesAsync();
+    }
+
+    public Task<int> Count()
+    {
+        return Products.CountAsync();
     }
 }

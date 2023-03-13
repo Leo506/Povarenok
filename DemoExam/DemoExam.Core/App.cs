@@ -28,6 +28,7 @@ public class App : MvxApplication
         Mvx.IoCProvider.RegisterType<IOrderViewModelService, OrderViewModelService>();
         
         Mvx.IoCProvider.RegisterType<IUserRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
+        Mvx.IoCProvider.RegisterType<IProductRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
 
         RegisterAppStart<AuthViewModel>();
 

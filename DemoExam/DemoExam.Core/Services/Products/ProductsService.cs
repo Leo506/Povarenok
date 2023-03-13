@@ -1,36 +1,31 @@
-﻿using DemoExam.Core.Contexts;
-using DemoExam.Core.Models;
-using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.ObservableObjects;
+using DemoExam.Core.Repositories;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DemoExam.Core.Services.Products;
 
 public class ProductsService : IProductsService
 {
-    private readonly TradeContext _tradeContext;
+    private readonly IProductRepository _repository;
 
-    public ProductsService(TradeContext tradeContext)
+    public ProductsService(IProductRepository repository)
     {
-        _tradeContext = tradeContext;
+        _repository = repository;
     }
 
-    public IEnumerable<ObservableProduct> GetAll()
+    public async Task<IEnumerable<ObservableProduct>> GetAll()
     {
-        return _tradeContext.Products.Select(product => new ObservableProduct(product));
+        var products = await _repository.GetAllAsync();
+        return products.IsNullOrEmpty()
+            ? new List<ObservableProduct>()
+            : products.Select(product => new ObservableProduct(product));
     }
 
-    public IEnumerable<ObservableProduct> GetWhere(Func<Product, bool> predicate)
-    {
-        return _tradeContext.Products.Where(predicate).Select(product => new ObservableProduct(product)).ToList();
-    }
+    public Task<int> Count() => _repository.Count();
 
-    public int Count()
-    {
-        return _tradeContext.Products.Count();
-    }
+    public Task DeleteProduct(ObservableProduct observableProduct) => _repository.DeleteAsync(observableProduct.Product);
 
-    public void DeleteProduct(ObservableProduct observableProduct)
-    {
-        _tradeContext.Products.Remove(observableProduct.Product);
-        _tradeContext.SaveChanges();
-    }
+    public Task AddProduct(ObservableProduct observableProduct) => _repository.AddAsync(observableProduct.Product);
+
+    public Task UpdateProduct(ObservableProduct observableProduct) => _repository.DeleteAsync(observableProduct.Product);
 }

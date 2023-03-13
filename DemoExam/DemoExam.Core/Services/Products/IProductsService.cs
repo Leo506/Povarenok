@@ -1,15 +1,16 @@
-﻿using DemoExam.Core.Models;
-using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.ObservableObjects;
 
 namespace DemoExam.Core.Services.Products;
 
 public interface IProductsService
 {
-    IEnumerable<ObservableProduct> GetAll();
+    Task<IEnumerable<ObservableProduct>> GetAll();
+    
+    Task<int> Count();
 
-    IEnumerable<ObservableProduct> GetWhere(Func<Product, bool> predicate);
+    Task DeleteProduct(ObservableProduct observableProduct);
 
-    int Count();
+    Task AddProduct(ObservableProduct observableProduct);
 
-    void DeleteProduct(ObservableProduct observableProduct);
+    Task UpdateProduct(ObservableProduct observableProduct);
 }

@@ -16,14 +16,12 @@ public class ProductsViewModelService : IProductsViewModelService
         _orderService = orderService;
     }
 
-    public IEnumerable<ObservableProduct> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
+    public async Task<IEnumerable<ObservableProduct>> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
         Func<double, bool>? discountSelectorPredicate = null)
     {
-        IEnumerable<ObservableProduct> products;
-        if (string.IsNullOrEmpty(search))
-            products = _productsService.GetAll();
-        else
-            products = _productsService.GetWhere(p =>
+        var products = await _productsService.GetAll().ConfigureAwait(false);
+        if (string.IsNullOrEmpty(search) is false)
+            products = products.Where(p =>
                 p.ProductName.ToLowerInvariant().Contains(search.ToLowerInvariant()));
 
         if (discountSelectorPredicate is not null)
@@ -39,24 +37,21 @@ public class ProductsViewModelService : IProductsViewModelService
         return products;
     }
 
-    public IEnumerable<ObservableProduct> GetAllProducts()
-    {
-        return _productsService.GetAll();
-    }
-
-    public int GetProductsCount()
+    public Task<int> GetProductsCount()
     {
         return _productsService.Count();
     }
 
-    public void DeleteProduct(ObservableProduct observableProduct)
+    public Task DeleteProduct(ObservableProduct observableProduct)
     {
-        _productsService.DeleteProduct(observableProduct);
+        return _productsService.DeleteProduct(observableProduct);
     }
 
-    public void AddProductToOrder(ObservableProduct observableProduct)
+    public Task AddProductToOrder(ObservableProduct observableProduct)
     {
         _orderService.AddProductToOrder(observableProduct.ProductArticleNumber);
+        
+        return Task.CompletedTask;
     }
 
     public bool CanOpenOrder()
