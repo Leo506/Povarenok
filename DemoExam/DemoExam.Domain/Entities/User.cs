@@ -1,4 +1,4 @@
-﻿namespace DemoExam.Domain.Entities;
+﻿namespace DemoExam.Core.Models;
 
 public partial class User
 {
@@ -16,5 +16,5 @@ public partial class User
 
     public int UserRole { get; set; }
 
-    public virtual Domain.Entities.Role UserRoleNavigation { get; set; } = null!;
+    public virtual Role UserRoleNavigation { get; set; } = null!;
 }

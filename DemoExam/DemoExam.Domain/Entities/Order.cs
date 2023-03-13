@@ -1,4 +1,4 @@
-﻿namespace DemoExam.Domain.Entities;
+﻿namespace DemoExam.Core.Models;
 
 public class Order
 {

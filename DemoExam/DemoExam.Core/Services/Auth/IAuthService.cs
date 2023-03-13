@@ -4,5 +4,5 @@ namespace DemoExam.Core.Services.Auth;
 
 public interface IAuthService
 {
-    Task<UserModel> AuthenticateAsync(string login, string password);
+    Task<User> AuthenticateAsync(string login, string password);
 }

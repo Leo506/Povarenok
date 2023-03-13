@@ -17,7 +17,7 @@ public enum SortOrder
     Desc
 }
 
-public class ProductsViewModel : MvxViewModel<UserModel>
+public class ProductsViewModel : MvxViewModel<User>
 {
     private readonly IAlert _alert;
     private readonly IMvxNavigationService _navigationService;
@@ -57,7 +57,7 @@ public class ProductsViewModel : MvxViewModel<UserModel>
         _closeCommand ??= new MvxAsyncCommand(async () => await _navigationService.Close(this));
 
     public ICommand OpenOrderCommand =>
-        new MvxAsyncCommand(async () => await _navigationService.Navigate<OrderViewModel, UserModel>(User));
+        new MvxAsyncCommand(async () => await _navigationService.Navigate<OrderViewModel, User>(User));
 
     public bool CanOpenOrder => _viewModelService.CanOpenOrder();
 
@@ -73,7 +73,7 @@ public class ProductsViewModel : MvxViewModel<UserModel>
         }
     }
 
-    public UserModel User { get; set; }
+    public User User { get; set; }
 
     public ProductNotifyObject? SelectedProduct
     {
@@ -149,7 +149,7 @@ public class ProductsViewModel : MvxViewModel<UserModel>
         };
     }
 
-    public override void Prepare(UserModel parameter)
+    public override void Prepare(User parameter)
     {
         User = parameter;
     }

@@ -1,4 +1,4 @@
-﻿using DemoExam.Domain.Entities;
+﻿using DemoExam.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Core.Contexts;
