@@ -1,29 +1,23 @@
 ﻿using System.Security.Authentication;
-using DemoExam.Core.Contexts;
 using DemoExam.Core.Models;
-using Microsoft.EntityFrameworkCore;
+using DemoExam.Core.Repositories;
 
 namespace DemoExam.Core.Services.Auth;
 
 public class AuthService : IAuthService
 {
-    private readonly TradeContext _context;
+    private readonly IUserRepository _repository;
 
-    public AuthService(TradeContext context)
+    public AuthService(IUserRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<User> AuthenticateAsync(string login, string password)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserLogin == login && x.UserPassword == password)
-            .ConfigureAwait(false);
+        var user = await _repository.GetUser(login, password).ConfigureAwait(false);
         if (user is null)
             throw new AuthenticationException("Incorrect login or password");
-
-        user.UserRoleNavigation =
-            await _context.Roles.FirstOrDefaultAsync(x => x.RoleId == user.UserRole).ConfigureAwait(false) ??
-            throw new InvalidDataException("User has no role");
 
         return user;
     }

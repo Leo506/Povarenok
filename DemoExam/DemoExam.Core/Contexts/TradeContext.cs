@@ -1,9 +1,10 @@
 ﻿using DemoExam.Core.Models;
+using DemoExam.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Core.Contexts;
 
-public partial class TradeContext : DbContext
+public partial class TradeContext : DbContext, IUserRepository
 {
     public TradeContext()
     {
@@ -127,4 +128,9 @@ public partial class TradeContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    public Task<User> GetUser(string login, string password)
+    {
+        return Users.Include(x => x.UserRoleNavigation)
+            .FirstOrDefaultAsync(x => x.UserLogin == login && x.UserPassword == password);
+    }
 }

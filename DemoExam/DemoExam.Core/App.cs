@@ -1,4 +1,5 @@
 ﻿using DemoExam.Core.Contexts;
+using DemoExam.Core.Repositories;
 using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.ProductEditService;
@@ -25,6 +26,8 @@ public class App : MvxApplication
         Mvx.IoCProvider.RegisterType<IProductsViewModelService, ProductsViewModelService>();
         Mvx.IoCProvider.RegisterType<IAddingProductViewModelService, AddingProductViewModelService>();
         Mvx.IoCProvider.RegisterType<IOrderViewModelService, OrderViewModelService>();
+        
+        Mvx.IoCProvider.RegisterType<IUserRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
 
         RegisterAppStart<AuthViewModel>();
 
