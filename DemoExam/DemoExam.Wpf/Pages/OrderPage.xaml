@@ -85,7 +85,8 @@
 
             <ComboBox Grid.Row="3" Grid.Column="1"
                       Margin="10"
-                      ItemsSource="{Binding PickupPoints}" />
+                      ItemsSource="{Binding PickupPoints}"
+                      SelectedItem="{Binding SelectedPickupPoint}"/>
 
             <TextBlock Grid.Row="4" Grid.Column="0"
                        Text="Client Name"
@@ -129,7 +130,8 @@
 
             <Button Grid.Row="9" Grid.ColumnSpan="2"
                     Content="Checkout"
-                    Margin="10" />
+                    Margin="10"
+                    Command="{Binding SaveOrderCommand}"/>
 
         </Grid>
 

@@ -21,6 +21,7 @@ public class OrderViewModel : MvxViewModel<User>
         _navigationService = navigationService;
         ProductsInOrder = new MvxObservableCollection<ObservableOrder>(_viewModelService.GetProductInOrder());
         PickupPoints = _viewModelService.GetPickupPoints();
+        SelectedPickupPoint = PickupPoints.First();
     }
 
     public Order Order { get; set; }
@@ -28,6 +29,8 @@ public class OrderViewModel : MvxViewModel<User>
     public MvxObservableCollection<ObservableOrder> ProductsInOrder { get; set; }
 
     public IEnumerable<PickupPoint> PickupPoints { get; set; }
+    
+    public PickupPoint SelectedPickupPoint { get; set; }
 
     public decimal OrderSum => ProductsInOrder.Sum(x => x.ObservableProduct.ProductCostWithDiscount * x.Amount);
 
@@ -36,6 +39,8 @@ public class OrderViewModel : MvxViewModel<User>
     public ICommand AddProductCommand => new MvxCommand<string>(AddProduct);
 
     public ICommand RemoveProductCommand => new MvxCommand<string>(RemoveProduct);
+
+    public ICommand SaveOrderCommand => new MvxAsyncCommand(SaveOrder);
 
     public override void Prepare(User parameter)
     {
@@ -71,5 +76,12 @@ public class OrderViewModel : MvxViewModel<User>
 
         RaisePropertyChanged(nameof(OrderSum));
         RaisePropertyChanged(nameof(OrderDiscount));
+    }
+
+    private async Task SaveOrder()
+    {
+        Order.OrderPickupPoint = SelectedPickupPoint.PointId;
+        await _viewModelService.SaveOrder(Order).ConfigureAwait(false);
+        await _navigationService.Close(this).ConfigureAwait(false);
     }
 }

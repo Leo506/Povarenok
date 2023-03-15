@@ -13,5 +13,6 @@ public interface IOrderService
     bool HasProductsInOrder();
 
     ImmutableDictionary<string, int> GetOrderList();
+    
     void RemoveProductFromOrder(string productId);
 }

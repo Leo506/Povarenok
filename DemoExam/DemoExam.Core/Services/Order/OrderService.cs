@@ -1,17 +1,16 @@
 ﻿using System.Collections.Immutable;
-using DemoExam.Core.Contexts;
-using DemoExam.Core.Models;
+using DemoExam.Core.Repositories;
 
 namespace DemoExam.Core.Services.Order;
 
 public class OrderService : IOrderService
 {
-    private readonly TradeContext _tradeContext;
+    private readonly IOrderRepository _repository;
     private Dictionary<string, int>? _productsInOrder;
 
-    public OrderService(TradeContext tradeContext)
+    public OrderService(IOrderRepository repository)
     {
-        _tradeContext = tradeContext;
+        _repository = repository;
     }
 
     public void CreateNewOrder()
@@ -35,16 +34,12 @@ public class OrderService : IOrderService
         if (_productsInOrder is null || _productsInOrder.Count == 0)
             throw new InvalidOperationException("Add products in order before saving");
 
-        var addedOrderEntity = await _tradeContext.Orders.AddAsync(order);
-        foreach (var (product, amount) in _productsInOrder)
-            await _tradeContext.OrderLists.AddAsync(new OrderList
-            {
-                OrderId = addedOrderEntity.Entity.OrderId,
-                ProductId = product,
-                Amount = amount
-            });
+        var orderEntity = await _repository.CreateOrderAsync(order).ConfigureAwait(false);
 
-        await _tradeContext.SaveChangesAsync();
+        foreach (var (product, amount) in _productsInOrder)
+            await _repository.AddProductPositionToOrder(orderEntity.OrderId, product, amount).ConfigureAwait(false);
+
+        CreateNewOrder();
     }
 
     public bool HasProductsInOrder()

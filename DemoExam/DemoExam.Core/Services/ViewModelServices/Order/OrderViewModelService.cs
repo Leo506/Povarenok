@@ -46,4 +46,9 @@ public class OrderViewModelService : IOrderViewModelService
     {
         _orderService.RemoveProductFromOrder(productId);
     }
+
+    public Task SaveOrder(Models.Order order)
+    {
+        return _orderService.SaveOrder(order);
+    }
 }

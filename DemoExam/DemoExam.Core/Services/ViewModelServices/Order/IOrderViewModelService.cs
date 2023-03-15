@@ -9,4 +9,5 @@ public interface IOrderViewModelService
     IEnumerable<PickupPoint> GetPickupPoints();
     void AddProduct(string productId);
     void RemoveProduct(string productId);
+    Task SaveOrder(Models.Order order);
 }
