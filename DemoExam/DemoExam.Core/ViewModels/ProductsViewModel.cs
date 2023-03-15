@@ -35,7 +35,11 @@ public class ProductsViewModel : MvxViewModel<User>
         _closeCommand ??= new MvxAsyncCommand(async () => await _navigationService.Close(this));
 
     public ICommand OpenOrderCommand =>
-        new MvxAsyncCommand(async () => await _navigationService.Navigate<OrderViewModel, User>(User));
+        new MvxAsyncCommand(async () =>
+        {
+            await _navigationService.Navigate<OrderViewModel, User>(User);
+            RaisePropertyChanged(nameof(CanOpenOrder));
+        });
 
     public bool CanOpenOrder => _viewModelService.CanOpenOrder();
 
