@@ -51,4 +51,9 @@ public class OrderViewModelService : IOrderViewModelService
     {
         return _orderService.SaveOrder(order);
     }
+
+    public int GetNextOrderId()
+    {
+        return _orderService.GetLastOrderId() + 1;
+    }
 }

@@ -48,6 +48,7 @@ public class OrderViewModel : MvxViewModel<User>
         var random = new Random();
         Order = new Order
         {
+            OrderId = _viewModelService.GetNextOrderId(),
             ClientName = _user.FullName,
             OrderData = DateTime.Now,
             OrderDeliveryDate = DateTime.Now.AddDays(3),

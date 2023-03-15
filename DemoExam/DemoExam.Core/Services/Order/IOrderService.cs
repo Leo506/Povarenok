@@ -15,4 +15,5 @@ public interface IOrderService
     ImmutableDictionary<string, int> GetOrderList();
     
     void RemoveProductFromOrder(string productId);
+    int GetLastOrderId();
 }

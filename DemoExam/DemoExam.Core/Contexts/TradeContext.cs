@@ -164,6 +164,7 @@ public partial class TradeContext : DbContext, IUserRepository, IProductReposito
 
     public async Task<Order> CreateOrderAsync(Order order)
     {
+        order.OrderId = 0;
         var orderEntity = await Orders.AddAsync(order).ConfigureAwait(false);
         await SaveChangesAsync().ConfigureAwait(false);
 
@@ -180,5 +181,10 @@ public partial class TradeContext : DbContext, IUserRepository, IProductReposito
         }).ConfigureAwait(false);
 
         await SaveChangesAsync().ConfigureAwait(false);
+    }
+
+    public int GetLastOrderId()
+    {
+        return Orders.OrderBy(x => x.OrderId).Last().OrderId;
     }
 }

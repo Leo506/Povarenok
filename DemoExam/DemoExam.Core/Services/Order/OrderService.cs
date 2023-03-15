@@ -66,4 +66,9 @@ public class OrderService : IOrderService
         if (_productsInOrder[productId] == 0)
             _productsInOrder.Remove(productId);
     }
+
+    public int GetLastOrderId()
+    {
+        return _repository.GetLastOrderId();
+    }
 }
