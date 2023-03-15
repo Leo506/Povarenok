@@ -67,7 +67,7 @@ public class OrderService : IOrderService
             _productsInOrder.Remove(productId);
     }
 
-    public int GetLastOrderId()
+    public Task<int> GetLastOrderId()
     {
         return _repository.GetLastOrderId();
     }

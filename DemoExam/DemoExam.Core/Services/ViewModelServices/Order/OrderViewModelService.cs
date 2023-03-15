@@ -54,6 +54,6 @@ public class OrderViewModelService : IOrderViewModelService
 
     public int GetNextOrderId()
     {
-        return _orderService.GetLastOrderId() + 1;
+        return _orderService.GetLastOrderId().Result + 1;
     }
 }

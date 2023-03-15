@@ -7,5 +7,5 @@ public interface IOrderRepository
     Task<Order> CreateOrderAsync(Order order);
 
     Task AddProductPositionToOrder(int orderId, string productId, int amount);
-    int GetLastOrderId();
+    Task<int> GetLastOrderId();
 }

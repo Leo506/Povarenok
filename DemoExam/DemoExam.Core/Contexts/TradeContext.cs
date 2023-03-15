@@ -183,8 +183,11 @@ public partial class TradeContext : DbContext, IUserRepository, IProductReposito
         await SaveChangesAsync().ConfigureAwait(false);
     }
 
-    public int GetLastOrderId()
+    public Task<int> GetLastOrderId()
     {
-        return Orders.OrderBy(x => x.OrderId).Last().OrderId;
+        return Orders
+            .OrderBy(x => x.OrderId)
+            .Select(x => x.OrderId)
+            .LastAsync();
     }
 }
