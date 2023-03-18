@@ -4,6 +4,6 @@ namespace DemoExam.Core.Services.ViewModelServices.AddingProduct;
 
 public interface IAddingProductViewModelService
 {
-    bool IsValidProduct(ObservableProduct observableProduct);
+    Task<bool> IsValidProduct(ObservableProduct observableProduct);
     Task AddProductAsync(ObservableProduct observableProduct);
 }

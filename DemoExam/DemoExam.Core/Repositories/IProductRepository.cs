@@ -6,6 +6,8 @@ public interface IProductRepository
 {
     Task<List<Product>> GetAllAsync();
 
+    Task<Product?> GetAsync(string articleNumber);
+
     Task AddAsync(Product product);
 
     Task DeleteAsync(Product product);
@@ -13,4 +15,6 @@ public interface IProductRepository
     Task UpdateAsync(Product product);
 
     Task<int> Count();
+
+    Task<bool> Contains(string articleNumber);
 }

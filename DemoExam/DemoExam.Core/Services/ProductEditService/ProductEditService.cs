@@ -1,20 +1,17 @@
-﻿using DemoExam.Core.Contexts;
-using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.ObservableObjects;
+using DemoExam.Core.Repositories;
 
 namespace DemoExam.Core.Services.ProductEditService;
 
 public class ProductEditService : IProductEditService
 {
-    private readonly TradeContext _tradeContext;
+    private readonly IProductRepository _repository;
 
-    public ProductEditService(TradeContext tradeContext)
+    public ProductEditService(IProductRepository repository)
     {
-        _tradeContext = tradeContext;
+        _repository = repository;
     }
 
-    public async Task SaveProduct(ObservableProduct observableProduct)
-    {
-        _tradeContext.Products.Update(observableProduct.Product);
-        await _tradeContext.SaveChangesAsync();
-    }
+    public Task SaveProduct(ObservableProduct observableProduct) => 
+        _repository.UpdateAsync(observableProduct.Product);
 }

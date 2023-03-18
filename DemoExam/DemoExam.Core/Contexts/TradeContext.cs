@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Core.Contexts;
 
-public partial class TradeContext : DbContext, IUserRepository, IProductRepository, IOrderRepository
+public partial class TradeContext : DbContext, IUserRepository, IProductRepository, IOrderRepository, IPickupPointRepository
 {
     public TradeContext()
     {
@@ -139,6 +139,11 @@ public partial class TradeContext : DbContext, IUserRepository, IProductReposito
         return Products.ToListAsync();
     }
 
+    public Task<Product?> GetAsync(string articleNumber)
+    {
+        return Products.FirstOrDefaultAsync(x => x.ProductArticleNumber == articleNumber);
+    }
+
     public async Task AddAsync(Product product)
     {
         await Products.AddAsync(product);
@@ -161,6 +166,9 @@ public partial class TradeContext : DbContext, IUserRepository, IProductReposito
     {
         return Products.CountAsync();
     }
+
+    public Task<bool> Contains(string articleNumber) => 
+        Products.AnyAsync(x => x.ProductArticleNumber == articleNumber);
 
     public async Task<Order> CreateOrderAsync(Order order)
     {
@@ -189,5 +197,10 @@ public partial class TradeContext : DbContext, IUserRepository, IProductReposito
             .OrderBy(x => x.OrderId)
             .Select(x => x.OrderId)
             .LastAsync();
+    }
+
+    Task<List<PickupPoint>> IPickupPointRepository.GetAllAsync()
+    {
+        return PickupPoints.ToListAsync();
     }
 }

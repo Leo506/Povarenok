@@ -1,22 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using DemoExam.Core.Contexts;
 using DemoExam.Core.ObservableObjects;
+using DemoExam.Core.Repositories;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DemoExam.Core.Services.ViewModelServices.AddingProduct;
 
 public class AddingProductViewModelService : IAddingProductViewModelService
 {
-    private readonly TradeContext _tradeContext;
+    private readonly IProductRepository _repository;
 
-    public AddingProductViewModelService(TradeContext tradeContext)
+    public AddingProductViewModelService(IProductRepository repository)
     {
-        _tradeContext = tradeContext;
+        _repository = repository;
     }
 
-    public bool IsValidProduct(ObservableProduct observableProduct)
+    public async Task<bool> IsValidProduct(ObservableProduct observableProduct)
     {
-        if (_tradeContext.Products.Any(x => x.ProductArticleNumber == observableProduct.ProductArticleNumber))
+        if (await _repository.Contains(observableProduct.ProductArticleNumber).ConfigureAwait(false))
             return false;
 
         ICollection<ValidationResult> validationResults = new List<ValidationResult>();
@@ -25,9 +25,6 @@ public class AddingProductViewModelService : IAddingProductViewModelService
         return validationResults.IsNullOrEmpty();
     }
 
-    public async Task AddProductAsync(ObservableProduct observableProduct)
-    {
-        await _tradeContext.Products.AddAsync(observableProduct.Product);
-        await _tradeContext.SaveChangesAsync();
-    }
+    public async Task AddProductAsync(ObservableProduct observableProduct) =>
+        await _repository.AddAsync(observableProduct.Product).ConfigureAwait(false);
 }

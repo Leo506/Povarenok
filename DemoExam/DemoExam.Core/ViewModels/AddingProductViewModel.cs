@@ -30,10 +30,10 @@ public class AddingProductViewModel : MvxViewModel
 
     private async Task SaveAndClose()
     {
-        if (_viewModelService.IsValidProduct(ObservableProduct))
+        if (await _viewModelService.IsValidProduct(ObservableProduct).ConfigureAwait(false))
         {
-            await _viewModelService.AddProductAsync(ObservableProduct);
-            await _navigationService.Close(this);
+            await _viewModelService.AddProductAsync(ObservableProduct).ConfigureAwait(false);
+            await _navigationService.Close(this).ConfigureAwait(false);
             return;
         }
 
