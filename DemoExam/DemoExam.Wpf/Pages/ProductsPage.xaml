@@ -72,6 +72,7 @@
         </DockPanel>
 
         <ListBox Grid.Row="1"
+                 x:Name="ProductsList"
                  SelectedItem="{Binding SelectedProduct}"
                  ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Center"

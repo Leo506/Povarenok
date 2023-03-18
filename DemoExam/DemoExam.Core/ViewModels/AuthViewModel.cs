@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using DemoExam.Core.Extensions;
 using DemoExam.Core.Models;
 using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
@@ -58,7 +59,20 @@ public class AuthViewModel : MvxViewModel
         {
             var user = await _authService.AuthenticateAsync(Login, Password).ConfigureAwait(false);
             _orderService.CreateNewOrder();
-            await _navigationService.Navigate<ProductsViewModelBase, User>(user);
+
+            if (user.IsClientOrGuest())
+            {
+                await _navigationService.Navigate<ClientProductsViewModel, User>(user);
+                return;
+            }
+
+            if (user.IsManager())
+            {
+                await _navigationService.Navigate<ManagerProductsViewModel, User>(user).ConfigureAwait(false);
+                return;
+            }
+
+            await _navigationService.Navigate<AdminProductsViewModel, User>(user).ConfigureAwait(false);
         }
         catch (Exception e)
         {
@@ -91,6 +105,6 @@ public class AuthViewModel : MvxViewModel
     private async Task LoginAsGuest()
     {
         _orderService.CreateNewOrder();
-        await _navigationService.Navigate<ProductsViewModelBase, User>(User.Guest);
+        await _navigationService.Navigate<ClientProductsViewModel, User>(User.Guest);
     }
 }

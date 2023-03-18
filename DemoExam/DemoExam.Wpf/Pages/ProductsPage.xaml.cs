@@ -7,6 +7,12 @@ namespace DemoExam.Wpf.Pages;
 
 public partial class ProductsPage : MvxWpfView<ProductsViewModelBase>
 {
+    public ContextMenu ProductsListContextMenu
+    {
+        get => ProductsList.ContextMenu;
+        set => ProductsList.ContextMenu = value;
+    }
+    
     public ProductsPage()
     {
         InitializeComponent();

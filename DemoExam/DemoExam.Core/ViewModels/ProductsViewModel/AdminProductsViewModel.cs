@@ -7,7 +7,7 @@ using MvvmCross.Navigation;
 
 namespace DemoExam.Core.ViewModels.ProductsViewModel;
 
-public class AdminProductsViewModel : ProductsViewModelBase
+public class AdminProductsViewModel : ManagerProductsViewModel
 {
     private readonly IAlert _alert;
 

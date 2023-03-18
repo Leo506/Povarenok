@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.ViewModelServices.Products;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -8,16 +7,18 @@ namespace DemoExam.Core.ViewModels.ProductsViewModel;
 
 public class ClientProductsViewModel : ProductsViewModelBase
 {
-    public ICommand AddProductToOrderCommand => new MvxAsyncCommand<ObservableProduct>(AddProductToOrder);
+    public ICommand AddProductToOrderCommand => new MvxAsyncCommand(AddProductToOrder);
 
     public ClientProductsViewModel(IMvxNavigationService navigationService,
         IProductsViewModelService viewModelService) : base(navigationService, viewModelService)
     {
     }
     
-    private async Task AddProductToOrder(ObservableProduct product)
+    private async Task AddProductToOrder()
     {
-        await ViewModelService.AddProductToOrder(product);
+        if (SelectedProduct is null) return;
+        
+        await ViewModelService.AddProductToOrder(SelectedProduct);
         await RaisePropertyChanged(nameof(CanOpenOrder)).ConfigureAwait(false);
     }
 }
