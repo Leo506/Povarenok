@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFiller", "DatabaseF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Wpf", "DemoExam.Wpf\DemoExam.Wpf.csproj", "{6889164C-67BA-4A79-A109-72FF9295D4E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Database", "DemoExam.Database\DemoExam.Database.csproj", "{8972BDED-EFBA-4CAE-B918-544642EB1AFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6889164C-67BA-4A79-A109-72FF9295D4E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6889164C-67BA-4A79-A109-72FF9295D4E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6889164C-67BA-4A79-A109-72FF9295D4E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8972BDED-EFBA-4CAE-B918-544642EB1AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8972BDED-EFBA-4CAE-B918-544642EB1AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8972BDED-EFBA-4CAE-B918-544642EB1AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8972BDED-EFBA-4CAE-B918-544642EB1AFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

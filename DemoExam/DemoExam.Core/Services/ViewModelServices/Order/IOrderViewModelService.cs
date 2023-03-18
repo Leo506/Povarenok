@@ -5,8 +5,8 @@ namespace DemoExam.Core.Services.ViewModelServices.Order;
 
 public interface IOrderViewModelService
 {
-    IEnumerable<ObservableOrder> GetProductInOrder();
-    IEnumerable<PickupPoint> GetPickupPoints();
+    Task<IEnumerable<ObservableOrder>> GetProductInOrder();
+    Task<List<PickupPoint>> GetPickupPoints();
     void AddProduct(string productId);
     void RemoveProduct(string productId);
     Task SaveOrder(Models.Order order);

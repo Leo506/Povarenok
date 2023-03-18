@@ -1,7 +1,6 @@
 ﻿using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.Products;
-using DemoExam.Core.ViewModels;
 
 namespace DemoExam.Core.Services.ViewModelServices.Products;
 
@@ -14,27 +13,6 @@ public class ProductsViewModelService : IProductsViewModelService
     {
         _productsService = productsService;
         _orderService = orderService;
-    }
-
-    public async Task<IEnumerable<ObservableProduct>> SelectProducts(string? search = null, SortOrder sortOrder = SortOrder.None,
-        Func<double, bool>? discountSelectorPredicate = null)
-    {
-        var products = await _productsService.GetAll().ConfigureAwait(false);
-        if (string.IsNullOrEmpty(search) is false)
-            products = products.Where(p =>
-                p.ProductName.ToLowerInvariant().Contains(search.ToLowerInvariant()));
-
-        if (discountSelectorPredicate is not null)
-            products = products.Where(x => discountSelectorPredicate(x.CurrentDiscount));
-
-        products = sortOrder switch
-        {
-            SortOrder.Asc => products.OrderBy(x => x.ProductCost),
-            SortOrder.Desc => products.OrderByDescending(x => x.ProductCost),
-            _ => products
-        };
-
-        return products;
     }
 
     public Task<int> GetProductsCount()
@@ -58,4 +36,6 @@ public class ProductsViewModelService : IProductsViewModelService
     {
         return _orderService.HasProductsInOrder();
     }
+
+    public Task<IEnumerable<ObservableProduct>> GetAllProducts() => _productsService.GetAll();
 }

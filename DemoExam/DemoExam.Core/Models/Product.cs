@@ -2,7 +2,7 @@
 
 namespace DemoExam.Core.Models;
 
-public class Product
+public partial class Product
 {
     [Required] public string ProductArticleNumber { get; set; } = null!;
 

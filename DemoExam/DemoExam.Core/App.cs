@@ -1,6 +1,4 @@
-﻿using DemoExam.Core.Contexts;
-using DemoExam.Core.Repositories;
-using DemoExam.Core.Services.Auth;
+﻿using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.ProductEditService;
 using DemoExam.Core.Services.Products;
@@ -18,7 +16,7 @@ public class App : MvxApplication
 {
     public override void Initialize()
     {
-        Mvx.IoCProvider.LazyConstructAndRegisterSingleton(() => new TradeContext());
+        
         Mvx.IoCProvider.LazyConstructAndRegisterSingleton<IOrderService, OrderService>();
         Mvx.IoCProvider.RegisterType<IAuthService, AuthService>();
         Mvx.IoCProvider.RegisterType<IProductsService, ProductsService>();
@@ -26,10 +24,6 @@ public class App : MvxApplication
         Mvx.IoCProvider.RegisterType<IProductsViewModelService, ProductsViewModelService>();
         Mvx.IoCProvider.RegisterType<IAddingProductViewModelService, AddingProductViewModelService>();
         Mvx.IoCProvider.RegisterType<IOrderViewModelService, OrderViewModelService>();
-        
-        Mvx.IoCProvider.RegisterType<IUserRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
-        Mvx.IoCProvider.RegisterType<IProductRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
-        Mvx.IoCProvider.RegisterType<IOrderRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
 
         RegisterAppStart<AuthViewModel>();
 

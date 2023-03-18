@@ -57,7 +57,7 @@ public class AuthViewModel : MvxViewModel
         {
             var user = await _authService.AuthenticateAsync(Login, Password).ConfigureAwait(false);
             _orderService.CreateNewOrder();
-            await _navigationService.Navigate<ProductsViewModel, User>(user);
+            await _navigationService.Navigate<ProductsViewModelBase, User>(user);
         }
         catch (Exception e)
         {
@@ -90,6 +90,6 @@ public class AuthViewModel : MvxViewModel
     private async Task LoginAsGuest()
     {
         _orderService.CreateNewOrder();
-        await _navigationService.Navigate<ProductsViewModel, User>(User.Guest);
+        await _navigationService.Navigate<ProductsViewModelBase, User>(User.Guest);
     }
 }

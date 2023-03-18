@@ -8,12 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Data\"/>
-        <Folder Include="Pictures\"/>
+        <Folder Include="Data\" />
+        <Folder Include="Pictures\" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DemoExam.Core\DemoExam.Core.csproj"/>
+        <ProjectReference Include="..\DemoExam.Core\DemoExam.Core.csproj" />
+        <ProjectReference Include="..\DemoExam.Database\DemoExam.Database.csproj" />
     </ItemGroup>
 
     <ItemGroup>
