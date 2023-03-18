@@ -11,26 +11,21 @@ namespace DemoExam.Core.ViewModels;
 public class OrderViewModel : MvxViewModel<User>
 {
     private readonly IMvxNavigationService _navigationService;
-
     private readonly IOrderViewModelService _viewModelService;
     private User _user = default!;
-
-    public OrderViewModel(IOrderViewModelService viewModelService, IMvxNavigationService navigationService)
-    {
-        _viewModelService = viewModelService;
-        _navigationService = navigationService;
-        ProductsInOrder = new MvxObservableCollection<ObservableOrder>(_viewModelService.GetProductInOrder().Result);
-        //PickupPoints = _viewModelService.GetPickupPoints().Result;
-        //SelectedPickupPoint = PickupPoints.First();
-    }
-
+    private PickupPoint _selectedPickupPoint;
+    
     public Order Order { get; set; }
 
     public MvxObservableCollection<ObservableOrder> ProductsInOrder { get; set; }
 
-    public IEnumerable<PickupPoint> PickupPoints { get; set; }
-    
-    public PickupPoint SelectedPickupPoint { get; set; }
+    public MvxObservableCollection<PickupPoint> PickupPoints { get; set; }
+
+    public PickupPoint SelectedPickupPoint
+    {
+        get => _selectedPickupPoint;
+        set => SetProperty(ref _selectedPickupPoint, value);
+    }
 
     public decimal OrderSum => ProductsInOrder.Sum(x => x.ObservableProduct.ProductCostWithDiscount * x.Amount);
 
@@ -41,6 +36,23 @@ public class OrderViewModel : MvxViewModel<User>
     public ICommand RemoveProductCommand => new MvxCommand<string>(RemoveProduct);
 
     public ICommand SaveOrderCommand => new MvxAsyncCommand(SaveOrder);
+
+    public OrderViewModel(IOrderViewModelService viewModelService, IMvxNavigationService navigationService)
+    {
+        _viewModelService = viewModelService;
+        _navigationService = navigationService;
+    }
+
+    public override async Task Initialize()
+    {
+        ProductsInOrder =
+            new MvxObservableCollection<ObservableOrder>(await _viewModelService.GetProductInOrder()
+                .ConfigureAwait(false));
+        PickupPoints =
+            new MvxObservableCollection<PickupPoint>(await _viewModelService.GetPickupPoints().ConfigureAwait(false));
+        RaisePropertyChanged(nameof(PickupPoints));
+        SelectedPickupPoint = PickupPoints.First();
+    }
 
     public override void Prepare(User parameter)
     {
