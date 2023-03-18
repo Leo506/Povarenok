@@ -30,14 +30,15 @@ public class AddingProductViewModel : MvxViewModel
 
     private async Task SaveAndClose()
     {
-        if (await _viewModelService.IsValidProduct(ObservableProduct).ConfigureAwait(false))
+        try
         {
-            await _viewModelService.AddProductAsync(ObservableProduct).ConfigureAwait(false);
+            await _viewModelService.AddProductAsync(ObservableProduct.Product).ConfigureAwait(false);
             await _navigationService.Close(this).ConfigureAwait(false);
-            return;
         }
-
-        _alert.Alert("Invalid data input", "Please check your input data");
+        catch (Exception e)
+        {
+            _alert.Alert(e.GetType().Name, e.Message);
+        }
     }
 
     public void SetProductPhoto(byte[] bytes)

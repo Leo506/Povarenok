@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.Models;
 using DemoExam.Core.Repositories;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DemoExam.Core.Services.ViewModelServices.AddingProduct;
 
@@ -14,17 +12,9 @@ public class AddingProductViewModelService : IAddingProductViewModelService
         _repository = repository;
     }
 
-    public async Task<bool> IsValidProduct(ObservableProduct observableProduct)
+    public async Task AddProductAsync(Product product)
     {
-        if (await _repository.Contains(observableProduct.ProductArticleNumber).ConfigureAwait(false))
-            return false;
-
-        ICollection<ValidationResult> validationResults = new List<ValidationResult>();
-        Validator.TryValidateObject(observableProduct.Product, new ValidationContext(observableProduct.Product), validationResults, true);
-
-        return validationResults.IsNullOrEmpty();
+        product.Validate();
+        await _repository.AddAsync(product).ConfigureAwait(false);
     }
-
-    public async Task AddProductAsync(ObservableProduct observableProduct) =>
-        await _repository.AddAsync(observableProduct.Product).ConfigureAwait(false);
 }

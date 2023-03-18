@@ -1,4 +1,4 @@
-﻿using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.Models;
 using DemoExam.Core.Repositories;
 
 namespace DemoExam.Core.Services.ProductEditService;
@@ -12,6 +12,9 @@ public class ProductEditService : IProductEditService
         _repository = repository;
     }
 
-    public Task SaveProduct(ObservableProduct observableProduct) => 
-        _repository.UpdateAsync(observableProduct.Product);
+    public Task SaveProduct(Product product)
+    {
+        product.Validate();
+        return _repository.UpdateAsync(product);
+    }
 }
