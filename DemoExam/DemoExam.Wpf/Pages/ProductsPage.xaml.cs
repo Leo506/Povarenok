@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using DemoExam.Core.ViewModels;
+using DemoExam.Core.ViewModels.ProductsViewModel;
 using DemoExam.Wpf.DataElements;
 using MvvmCross.Platforms.Wpf.Views;
 

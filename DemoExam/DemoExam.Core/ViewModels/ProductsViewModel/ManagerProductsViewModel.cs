@@ -1,7 +1,7 @@
 ﻿using DemoExam.Core.Services.ViewModelServices.Products;
 using MvvmCross.Navigation;
 
-namespace DemoExam.Core.ViewModels;
+namespace DemoExam.Core.ViewModels.ProductsViewModel;
 
 public class ManagerProductsViewModel : ProductsViewModelBase
 {

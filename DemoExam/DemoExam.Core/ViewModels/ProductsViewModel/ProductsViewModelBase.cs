@@ -6,7 +6,7 @@ using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 
-namespace DemoExam.Core.ViewModels;
+namespace DemoExam.Core.ViewModels.ProductsViewModel;
 
 public abstract class ProductsViewModelBase : MvxViewModel<User>
 {

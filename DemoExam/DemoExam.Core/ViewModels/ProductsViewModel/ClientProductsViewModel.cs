@@ -4,7 +4,7 @@ using DemoExam.Core.Services.ViewModelServices.Products;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 
-namespace DemoExam.Core.ViewModels;
+namespace DemoExam.Core.ViewModels.ProductsViewModel;
 
 public class ClientProductsViewModel : ProductsViewModelBase
 {

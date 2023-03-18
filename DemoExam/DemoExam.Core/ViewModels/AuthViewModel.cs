@@ -2,6 +2,7 @@
 using DemoExam.Core.Models;
 using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
+using DemoExam.Core.ViewModels.ProductsViewModel;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
