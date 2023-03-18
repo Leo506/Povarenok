@@ -10,29 +10,29 @@ using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
 
-public enum SortOrder
-{
-    None,
-    Asc,
-    Desc
-}
-
 public class ProductsViewModel : MvxViewModel<User>
 {
+    private enum SortOrder
+    {
+        None,
+        Asc,
+        Desc
+    }
+    
     public string SortOrderName
     {
         get => _sortOrderName;
         set => SetProperty(ref _sortOrderName, value);
     }
 
-    public MvxObservableCollection<ObservableProduct> Products { get; set; }
+    public MvxObservableCollection<ObservableProduct>? Products { get; set; }
 
     public List<ProductOperation> AvailableProductOperations => GetAvailableOperationsForUser();
 
-    public ICommand ChangeSortOrderCommand => _changeSortOrderCommand ??= new MvxCommand(ChangeSortOrder);
+    public ICommand ChangeSortOrderCommand => new MvxCommand(ChangeSortOrder);
 
     public ICommand CloseCommand =>
-        _closeCommand ??= new MvxAsyncCommand(async () => await _navigationService.Close(this));
+        new MvxAsyncCommand( () => _navigationService.Close(this));
 
     public ICommand OpenOrderCommand =>
         new MvxAsyncCommand(async () =>
@@ -43,7 +43,7 @@ public class ProductsViewModel : MvxViewModel<User>
 
     public bool CanOpenOrder => _viewModelService.CanOpenOrder();
 
-    public string CurrentSelectionAmount => $"{Products.Count}/{_viewModelService.GetProductsCount().Result}";
+    public string CurrentSelectionAmount => $"{Products?.Count ?? 0}/{_allProducts?.Count() ?? 0}";
 
     public string SearchString
     {
@@ -66,13 +66,12 @@ public class ProductsViewModel : MvxViewModel<User>
     private readonly IAlert _alert;
     private readonly IMvxNavigationService _navigationService;
     private readonly IProductsViewModelService _viewModelService;
-    private MvxCommand? _changeSortOrderCommand;
-    private MvxAsyncCommand? _closeCommand;
     private Func<double, bool> _discountSelectorPredicate = _ => true;
     private string _searchString;
     private ObservableProduct? _selectedProduct;
     private SortOrder _sortOrder;
     private string _sortOrderName;
+    private IEnumerable<ObservableProduct>? _allProducts;
 
     public ProductsViewModel(IMvxNavigationService navigationService, IAlert alert,
         IProductsViewModelService viewModelService)
@@ -81,8 +80,14 @@ public class ProductsViewModel : MvxViewModel<User>
         _alert = alert;
         _viewModelService = viewModelService;
         SortOrderName = DetermineSortOrderName();
-        Products = new();
-        UpdateProducts();
+    }
+
+    public override async Task Initialize()
+    {
+        _allProducts = await _viewModelService.GetAllProducts().ConfigureAwait(false);
+        Products = new(_allProducts);
+        RaisePropertyChanged(nameof(Products));
+        RaisePropertyChanged(nameof(CurrentSelectionAmount));
     }
 
     private List<ProductOperation> GetAvailableOperationsForUser()
@@ -137,11 +142,23 @@ public class ProductsViewModel : MvxViewModel<User>
 
     private async void UpdateProducts()
     {
-        Products = new MvxObservableCollection<ObservableProduct>(
-            await _viewModelService.SelectProducts(SearchString, _sortOrder, _discountSelectorPredicate)
-                .ConfigureAwait(false));
-        RaisePropertyChanged(() => Products);
-        RaisePropertyChanged(() => CurrentSelectionAmount);
+        if (string.IsNullOrEmpty(SearchString))
+            Products = new(_allProducts);
+        else
+            Products = new(_allProducts.Where(p =>
+                p.ProductName.ToLowerInvariant().Contains(SearchString.ToLowerInvariant())));
+
+        Products = new(Products.Where(p => _discountSelectorPredicate(p.CurrentDiscount)));
+
+        Products = _sortOrder switch
+        {
+            SortOrder.Asc => new(Products.OrderBy(p => p.ProductCostWithDiscount)),
+            SortOrder.Desc => new(Products.OrderByDescending(p => p.ProductCostWithDiscount)),
+            _ => Products
+        };
+        
+        RaisePropertyChanged(nameof(Products));
+        RaisePropertyChanged(nameof(CurrentSelectionAmount));
     }
 
     private string DetermineSortOrderName()
