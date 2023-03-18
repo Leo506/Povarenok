@@ -20,8 +20,8 @@ public class OrderViewModel : MvxViewModel<User>
         _viewModelService = viewModelService;
         _navigationService = navigationService;
         ProductsInOrder = new MvxObservableCollection<ObservableOrder>(_viewModelService.GetProductInOrder().Result);
-        PickupPoints = _viewModelService.GetPickupPoints().Result;
-        SelectedPickupPoint = PickupPoints.First();
+        //PickupPoints = _viewModelService.GetPickupPoints().Result;
+        //SelectedPickupPoint = PickupPoints.First();
     }
 
     public Order Order { get; set; }

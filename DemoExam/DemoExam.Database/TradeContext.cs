@@ -2,7 +2,7 @@
 using DemoExam.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoExam.Core.Contexts;
+namespace DemoExam.Database;
 
 public partial class TradeContext : DbContext, IUserRepository, IProductRepository, IOrderRepository, IPickupPointRepository
 {
