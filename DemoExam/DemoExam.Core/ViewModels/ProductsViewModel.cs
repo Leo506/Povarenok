@@ -37,8 +37,8 @@ public class ProductsViewModel : MvxViewModel<User>
     public ICommand OpenOrderCommand =>
         new MvxAsyncCommand(async () =>
         {
-            await _navigationService.Navigate<OrderViewModel, User>(User);
-            RaisePropertyChanged(nameof(CanOpenOrder));
+            await _navigationService.Navigate<OrderViewModel, User>(User).ConfigureAwait(false);
+            await RaisePropertyChanged(nameof(CanOpenOrder)).ConfigureAwait(false);
         });
 
     public bool CanOpenOrder => _viewModelService.CanOpenOrder();
@@ -51,7 +51,7 @@ public class ProductsViewModel : MvxViewModel<User>
         set
         {
             SetProperty(ref _searchString, value);
-            UpdateProducts();
+            SelectProducts();
         }
     }
 
@@ -86,39 +86,54 @@ public class ProductsViewModel : MvxViewModel<User>
     {
         _allProducts = await _viewModelService.GetAllProducts().ConfigureAwait(false);
         Products = new(_allProducts);
-        RaisePropertyChanged(nameof(Products));
-        RaisePropertyChanged(nameof(CurrentSelectionAmount));
+        await RaisePropertyChanged(nameof(Products)).ConfigureAwait(false);
+        await RaisePropertyChanged(nameof(CurrentSelectionAmount)).ConfigureAwait(false);
     }
 
     private List<ProductOperation> GetAvailableOperationsForUser()
     {
         var list = new List<ProductOperation>
         {
-            new("Add To Order", new MvxCommand<ObservableProduct>(product =>
-            {
-                _viewModelService.AddProductToOrder(product);
-                RaisePropertyChanged(nameof(CanOpenOrder));
-            }))
+            new("Add To Order", new MvxAsyncCommand<ObservableProduct>(AddProductToOrder))
         };
 
         if (!User.IsAdmin()) return list;
 
-        list.Add(new ProductOperation("Edit product",
-            new MvxCommand<ObservableProduct>(product =>
-                _navigationService.Navigate<ProductEditViewModel, ObservableProduct>(product))));
-        list.Add(new ProductOperation("Remove product", new MvxCommand<ObservableProduct>(product =>
-        {
-            var choice = _alert.ShowChoice("Deleting product", "Do you shure?");
-            if (choice is not ChoiceResult.Positive) return;
-            _viewModelService.DeleteProduct(product);
-            UpdateProducts();
-        })));
-        list.Add(new ProductOperation("Add new product",
-            new MvxCommand<ObservableProduct>(product => _navigationService.Navigate<AddingProductViewModel>())));
+        list.Add(new ProductOperation("Edit product",new MvxAsyncCommand<ObservableProduct>(OpenEditProductDialog)));
+        list.Add(new ProductOperation("Remove product",new MvxAsyncCommand<ObservableProduct>(DeleteProduct)));
+        list.Add(new ProductOperation("Add new product",new MvxAsyncCommand<ObservableProduct>(OpenAddingProductDialog)));
 
         return list;
     }
+    
+    private async Task AddProductToOrder(ObservableProduct product)
+    {
+        await _viewModelService.AddProductToOrder(product);
+        await RaisePropertyChanged(nameof(CanOpenOrder)).ConfigureAwait(false);
+    }
+    
+    private async Task OpenEditProductDialog(ObservableProduct product)
+    {
+        await _navigationService.Navigate<ProductEditViewModel, ObservableProduct>(product);
+        await RaisePropertyChanged(nameof(Products)).ConfigureAwait(false);
+    }
+    
+    private async Task DeleteProduct(ObservableProduct product)
+    {
+        var choice = _alert.ShowChoice("Deleting product", "Do you shure?");
+        if (choice is ChoiceResult.Negative) return;
+        await _viewModelService.DeleteProduct(product).ConfigureAwait(false);
+        _allProducts = await _viewModelService.GetAllProducts();
+        SelectProducts();
+    }
 
+    private async Task OpenAddingProductDialog(ObservableProduct product)
+    {
+        await _navigationService.Navigate<AddingProductViewModel>().ConfigureAwait(false);
+        _allProducts = await _viewModelService.GetAllProducts().ConfigureAwait(false);
+        SelectProducts();
+    }
+    
     private void ChangeSortOrder()
     {
         _sortOrder = _sortOrder switch
@@ -131,16 +146,26 @@ public class ProductsViewModel : MvxViewModel<User>
 
         SortOrderName = DetermineSortOrderName();
 
-        UpdateProducts();
+        SelectProducts();
+    }
+    
+    private string DetermineSortOrderName()
+    {
+        return _sortOrder switch
+        {
+            SortOrder.Asc => "Ascending sorting",
+            SortOrder.Desc => "Descending sorting",
+            _ => "No sorting"
+        };
     }
 
     public void ChangeDiscountSelector(Func<double, bool> discountSelectorPredicate)
     {
         _discountSelectorPredicate = discountSelectorPredicate;
-        UpdateProducts();
+        SelectProducts();
     }
 
-    private async void UpdateProducts()
+    private async void SelectProducts()
     {
         if (string.IsNullOrEmpty(SearchString))
             Products = new(_allProducts);
@@ -157,20 +182,10 @@ public class ProductsViewModel : MvxViewModel<User>
             _ => Products
         };
         
-        RaisePropertyChanged(nameof(Products));
-        RaisePropertyChanged(nameof(CurrentSelectionAmount));
+        await RaisePropertyChanged(nameof(Products)).ConfigureAwait(false);
+        await RaisePropertyChanged(nameof(CurrentSelectionAmount)).ConfigureAwait(false);
     }
-
-    private string DetermineSortOrderName()
-    {
-        return _sortOrder switch
-        {
-            SortOrder.Asc => "Ascending sorting",
-            SortOrder.Desc => "Descending sorting",
-            _ => "No sorting"
-        };
-    }
-
+    
     public override void Prepare(User parameter)
     {
         User = parameter;
