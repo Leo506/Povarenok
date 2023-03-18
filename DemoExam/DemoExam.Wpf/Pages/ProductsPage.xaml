@@ -12,15 +12,15 @@
                   Tag="ProductPage"
                   mc:Ignorable="d"
                   x:Name="ProductsView"
-                  d:DesignHeight="300" d:DesignWidth="600"
+                  d:DesignHeight="300" d:DesignWidth="600" Language="ru-Ru"
                   d:DataContext="{d:DesignInstance viewModels:ProductsViewModel}">
     <views:MvxWpfView.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter" />
         <converters:NumberToDiscountStringConverter x:Key="NumberToDiscountStringConverter" />
         <converters:DiscountToColorBrushConverter x:Key="DiscountToColorConverter" />
         <converters:DiscountToTextDecorationConverter x:Key="DiscountToTextDecorationConverter" />
-        <converters:DecimalToStringConverter x:Key="DecimalToStringConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter"/>
     </views:MvxWpfView.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -106,10 +106,11 @@
                                            TextWrapping="Wrap" />
                                 <TextBlock Text="{Binding ProductManufacturer}" />
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding ProductCost}"
+                                    <TextBlock Text="{Binding ProductCost, StringFormat={}{0:C}}"
                                                TextDecorations="{Binding CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}" />
                                     <TextBlock
-                                        Text="{Binding ProductCostWithDiscount, Converter={StaticResource DecimalToStringConverter}}"
+                                        Text="{Binding ProductCostWithDiscount, StringFormat={}{0:C}}"
+                                        Visibility="{Binding ProductCostWithDiscount, Converter={StaticResource NumberToVisibilityConverter}}"
                                         Margin="15 0 0 0" />
                                 </StackPanel>
                             </StackPanel>
