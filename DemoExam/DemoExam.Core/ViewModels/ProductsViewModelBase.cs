@@ -1,8 +1,6 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.Extensions;
 using DemoExam.Core.Models;
 using DemoExam.Core.ObservableObjects;
-using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices.Products;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -10,7 +8,7 @@ using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ViewModels;
 
-public class ProductsViewModel : MvxViewModel<User>
+public abstract class ProductsViewModelBase : MvxViewModel<User>
 {
     private enum SortOrder
     {
@@ -26,22 +24,20 @@ public class ProductsViewModel : MvxViewModel<User>
     }
 
     public MvxObservableCollection<ObservableProduct>? Products { get; set; }
-
-    public List<ProductOperation> AvailableProductOperations => GetAvailableOperationsForUser();
-
+    
     public ICommand ChangeSortOrderCommand => new MvxCommand(ChangeSortOrder);
 
     public ICommand CloseCommand =>
-        new MvxAsyncCommand( () => _navigationService.Close(this));
+        new MvxAsyncCommand( () => NavigationService.Close(this));
 
     public ICommand OpenOrderCommand =>
         new MvxAsyncCommand(async () =>
         {
-            await _navigationService.Navigate<OrderViewModel, User>(User).ConfigureAwait(false);
+            await NavigationService.Navigate<OrderViewModel, User>(User).ConfigureAwait(false);
             await RaisePropertyChanged(nameof(CanOpenOrder)).ConfigureAwait(false);
         });
 
-    public bool CanOpenOrder => _viewModelService.CanOpenOrder();
+    public bool CanOpenOrder => ViewModelService.CanOpenOrder();
 
     public string CurrentSelectionAmount => $"{Products?.Count ?? 0}/{_allProducts?.Count() ?? 0}";
 
@@ -51,7 +47,7 @@ public class ProductsViewModel : MvxViewModel<User>
         set
         {
             SetProperty(ref _searchString, value);
-            SelectProducts();
+            UpdateProductsSelection();
         }
     }
 
@@ -63,9 +59,9 @@ public class ProductsViewModel : MvxViewModel<User>
         set => SetProperty(ref _selectedProduct, value);
     }
     
-    private readonly IAlert _alert;
-    private readonly IMvxNavigationService _navigationService;
-    private readonly IProductsViewModelService _viewModelService;
+    protected readonly IMvxNavigationService NavigationService;
+    protected readonly IProductsViewModelService ViewModelService;
+
     private Func<double, bool> _discountSelectorPredicate = _ => true;
     private string _searchString;
     private ObservableProduct? _selectedProduct;
@@ -73,66 +69,25 @@ public class ProductsViewModel : MvxViewModel<User>
     private string _sortOrderName;
     private IEnumerable<ObservableProduct>? _allProducts;
 
-    public ProductsViewModel(IMvxNavigationService navigationService, IAlert alert,
+    public ProductsViewModelBase(IMvxNavigationService navigationService,
         IProductsViewModelService viewModelService)
     {
-        _navigationService = navigationService;
-        _alert = alert;
-        _viewModelService = viewModelService;
+        NavigationService = navigationService;
+        ViewModelService = viewModelService;
         SortOrderName = DetermineSortOrderName();
     }
 
     public override async Task Initialize()
     {
-        _allProducts = await _viewModelService.GetAllProducts().ConfigureAwait(false);
+        _allProducts = await ViewModelService.GetAllProducts().ConfigureAwait(false);
         Products = new(_allProducts);
         await RaisePropertyChanged(nameof(Products)).ConfigureAwait(false);
         await RaisePropertyChanged(nameof(CurrentSelectionAmount)).ConfigureAwait(false);
     }
 
-    private List<ProductOperation> GetAvailableOperationsForUser()
-    {
-        var list = new List<ProductOperation>
-        {
-            new("Add To Order", new MvxAsyncCommand<ObservableProduct>(AddProductToOrder))
-        };
-
-        if (!User.IsAdmin()) return list;
-
-        list.Add(new ProductOperation("Edit product",new MvxAsyncCommand<ObservableProduct>(OpenEditProductDialog)));
-        list.Add(new ProductOperation("Remove product",new MvxAsyncCommand<ObservableProduct>(DeleteProduct)));
-        list.Add(new ProductOperation("Add new product",new MvxAsyncCommand<ObservableProduct>(OpenAddingProductDialog)));
-
-        return list;
-    }
+    /*
     
-    private async Task AddProductToOrder(ObservableProduct product)
-    {
-        await _viewModelService.AddProductToOrder(product);
-        await RaisePropertyChanged(nameof(CanOpenOrder)).ConfigureAwait(false);
-    }
-    
-    private async Task OpenEditProductDialog(ObservableProduct product)
-    {
-        await _navigationService.Navigate<ProductEditViewModel, ObservableProduct>(product);
-        await RaisePropertyChanged(nameof(Products)).ConfigureAwait(false);
-    }
-    
-    private async Task DeleteProduct(ObservableProduct product)
-    {
-        var choice = _alert.ShowChoice("Deleting product", "Do you shure?");
-        if (choice is ChoiceResult.Negative) return;
-        await _viewModelService.DeleteProduct(product).ConfigureAwait(false);
-        _allProducts = await _viewModelService.GetAllProducts();
-        SelectProducts();
-    }
-
-    private async Task OpenAddingProductDialog(ObservableProduct product)
-    {
-        await _navigationService.Navigate<AddingProductViewModel>().ConfigureAwait(false);
-        _allProducts = await _viewModelService.GetAllProducts().ConfigureAwait(false);
-        SelectProducts();
-    }
+    */
     
     private void ChangeSortOrder()
     {
@@ -146,7 +101,7 @@ public class ProductsViewModel : MvxViewModel<User>
 
         SortOrderName = DetermineSortOrderName();
 
-        SelectProducts();
+        UpdateProductsSelection();
     }
     
     private string DetermineSortOrderName()
@@ -162,10 +117,16 @@ public class ProductsViewModel : MvxViewModel<User>
     public void ChangeDiscountSelector(Func<double, bool> discountSelectorPredicate)
     {
         _discountSelectorPredicate = discountSelectorPredicate;
-        SelectProducts();
+        UpdateProductsSelection();
+    }
+    
+    protected async Task UpdateProducts()
+    {
+        _allProducts = await ViewModelService.GetAllProducts().ConfigureAwait(false);
+        UpdateProductsSelection();
     }
 
-    private async void SelectProducts()
+    private async void UpdateProductsSelection()
     {
         if (string.IsNullOrEmpty(SearchString))
             Products = new(_allProducts);

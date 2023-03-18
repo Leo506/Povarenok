@@ -5,7 +5,7 @@ using MvvmCross.Platforms.Wpf.Views;
 
 namespace DemoExam.Wpf.Pages;
 
-public partial class ProductsPage : MvxWpfView<ProductsViewModel>
+public partial class ProductsPage : MvxWpfView<ProductsViewModelBase>
 {
     public ProductsPage()
     {
