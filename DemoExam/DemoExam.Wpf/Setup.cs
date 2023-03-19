@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using DemoExam.Core.Repositories;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.ViewModels.ProductsViewModel;
 using DemoExam.Database;
+using DemoExam.Translation;
 using DemoExam.Wpf.Pages;
 using Microsoft.Extensions.Logging;
 using MvvmCross;
@@ -26,6 +28,8 @@ public class Setup : MvxWpfSetup<Core.App>
 
     protected override void InitializeFirstChance(IMvxIoCProvider iocProvider)
     {
+        Translate.Culture = CultureInfo.GetCultureInfo("en");
+        
         Mvx.IoCProvider.LazyConstructAndRegisterSingleton(() => new TradeContext());
         Mvx.IoCProvider.RegisterType<IUserRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
         Mvx.IoCProvider.RegisterType<IProductRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());

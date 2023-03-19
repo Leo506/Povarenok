@@ -6,15 +6,19 @@
                   xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                   mc:Ignorable="d"
-                  d:DesignHeight="300" d:DesignWidth="300">
-    <Grid d:DataContext="{x:Type viewModels:AuthViewModel}">
+                  d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:AuthViewModel}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition Height="0.1*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Login" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" />
+        <TextBlock 
+            Text="{Binding AuthorizationText}" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            FontSize="35" />
 
         <Grid Grid.Row="1">
 
@@ -30,7 +34,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Login"
+            <TextBlock Text="{Binding LoginText}"
                        VerticalAlignment="Center" HorizontalAlignment="Right"
                        FontSize="20"
                        Margin="10" />
@@ -41,7 +45,7 @@
                      Margin="10" />
 
             <TextBlock Grid.Row="1" Grid.Column="0"
-                       Text="Password"
+                       Text="{Binding PasswordText}"
                        VerticalAlignment="Center" HorizontalAlignment="Right"
                        FontSize="20"
                        Margin="10" />

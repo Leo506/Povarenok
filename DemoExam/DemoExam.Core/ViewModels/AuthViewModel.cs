@@ -4,6 +4,7 @@ using DemoExam.Core.Models;
 using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
 using DemoExam.Core.ViewModels.ProductsViewModel;
+using DemoExam.Translation;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
@@ -17,11 +18,9 @@ public class AuthViewModel : MvxViewModel
     private readonly IOrderService _orderService;
     private MvxAsyncCommand? _authCommand;
     private MvxAsyncCommand? _continueAsGuestCommand;
-
     private bool _isLoginAvailable = true;
-
     private string _login = default!;
-    private string _loginButtonText = "Login";
+    private string _loginButtonText = Translate.Authorize;
     private string _password = default!;
 
     public AuthViewModel(IAuthService authService, IMvxNavigationService navigationService, IOrderService orderService)
@@ -52,6 +51,14 @@ public class AuthViewModel : MvxViewModel
     public ICommand AuthCommand => _authCommand ??= new MvxAsyncCommand(Authenticate, () => _isLoginAvailable);
 
     public ICommand ContinueAsGuest => _continueAsGuestCommand ??= new MvxAsyncCommand(LoginAsGuest);
+
+    public string AuthorizationText => Translate.Authorization;
+    
+    public string LoginText => Translate.Login;
+
+    public string PasswordText => Translate.Password;
+    
+    public string ContinueAsGuestText => Translate.ContinueAsGuest;
 
     private async Task Authenticate()
     {
@@ -96,7 +103,7 @@ public class AuthViewModel : MvxViewModel
                 }
 
                 _isLoginAvailable = true;
-                LoginButtonText = "Login";
+                LoginButtonText = Translate.Authorize;
                 _authCommand?.RaiseCanExecuteChanged();
             });
         }
