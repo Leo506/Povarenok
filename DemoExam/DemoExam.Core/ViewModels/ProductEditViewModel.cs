@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
-using DemoExam.Core.Services.ProductEditService;
+using DemoExam.Core.Services.Products;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
@@ -10,29 +10,26 @@ namespace DemoExam.Core.ViewModels;
 
 public class ProductEditViewModel : MvxViewModel<ObservableProduct>
 {
-    private readonly IProductEditService _editService;
+    private readonly IProductsService _productsService;
     private readonly IMvxNavigationService _navigationService;
-    private IAlert _alert;
-    private IMvxAsyncCommand? _closeCommand;
+    private readonly IAlert _alert;
 
-
-    public ProductEditViewModel(IMvxNavigationService navigationService, IProductEditService editService, IAlert alert)
+    public ProductEditViewModel(IMvxNavigationService navigationService, IProductsService productsService, IAlert alert)
     {
         _navigationService = navigationService;
-        _editService = editService;
+        _productsService = productsService;
         _alert = alert;
     }
 
     public ObservableProduct ObservableProduct { get; private set; }
 
-    public ICommand CloseCommand =>
-        _closeCommand ??= new MvxAsyncCommand(CloseAndSave);
+    public ICommand CloseCommand => new MvxAsyncCommand(CloseAndSave);
 
     private async Task CloseAndSave()
     {
         try
         {
-            await _editService.SaveProduct(ObservableProduct.Product);
+            await _productsService.UpdateProduct(ObservableProduct);
             await _navigationService.Close(this);
         }
         catch (Exception e)
