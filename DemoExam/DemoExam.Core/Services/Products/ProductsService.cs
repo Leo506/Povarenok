@@ -27,5 +27,5 @@ public class ProductsService : IProductsService
 
     public Task AddProduct(ObservableProduct observableProduct) => _repository.AddAsync(observableProduct.Product);
 
-    public Task UpdateProduct(ObservableProduct observableProduct) => _repository.DeleteAsync(observableProduct.Product);
+    public Task UpdateProduct(ObservableProduct observableProduct) => _repository.UpdateAsync(observableProduct.Product);
 }
