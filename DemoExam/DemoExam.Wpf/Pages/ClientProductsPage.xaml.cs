@@ -1,9 +1,6 @@
-﻿using DemoExam.Core.ViewModels.ProductsViewModel;
-using MvvmCross.Platforms.Wpf.Views;
+﻿namespace DemoExam.Wpf.Pages;
 
-namespace DemoExam.Wpf.Pages;
-
-public partial class ClientProductsPage : MvxWpfView<ClientProductsViewModel>
+public partial class ClientProductsPage : ProductsPage
 {
     public ClientProductsPage()
     {

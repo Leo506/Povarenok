@@ -1,9 +1,6 @@
-﻿using DemoExam.Core.ViewModels.ProductsViewModel;
-using MvvmCross.Platforms.Wpf.Views;
+﻿namespace DemoExam.Wpf.Pages;
 
-namespace DemoExam.Wpf.Pages;
-
-public partial class ManagerProductsPage : MvxWpfView<ManagerProductsViewModel>
+public partial class ManagerProductsPage : ProductsPage
 {
     public ManagerProductsPage()
     {

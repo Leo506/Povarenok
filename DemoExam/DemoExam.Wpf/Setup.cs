@@ -1,6 +1,10 @@
-﻿using DemoExam.Core.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using DemoExam.Core.Repositories;
 using DemoExam.Core.Services.Alert;
+using DemoExam.Core.ViewModels.ProductsViewModel;
 using DemoExam.Database;
+using DemoExam.Wpf.Pages;
 using Microsoft.Extensions.Logging;
 using MvvmCross;
 using MvvmCross.IoC;
@@ -29,5 +33,16 @@ public class Setup : MvxWpfSetup<Core.App>
         Mvx.IoCProvider.RegisterType<IPickupPointRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
         Mvx.IoCProvider.RegisterType<IAlert, MessageBoxAlert>();
         base.InitializeFirstChance(iocProvider);
+    }
+
+    protected override IDictionary<Type, Type> InitializeLookupDictionary(IMvxIoCProvider iocProvider)
+    {
+        
+        var dict = base.InitializeLookupDictionary(iocProvider);
+        dict.Add(new KeyValuePair<Type, Type>(typeof(ClientProductsViewModel), typeof(ClientProductsPage)));
+        dict.Add(new KeyValuePair<Type, Type>(typeof(ManagerProductsViewModel), typeof(ManagerProductsPage)));
+        dict.Add(new KeyValuePair<Type, Type>(typeof(AdminProductsViewModel), typeof(AdminProductPage)));
+
+        return dict;
     }
 }
