@@ -9,18 +9,30 @@
                   d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:AuthViewModel}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.45*" />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.2*" />
         </Grid.RowDefinitions>
+        
+        <Button 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center" 
+            Margin="10"
+            BorderBrush="{x:Null}"
+            BorderThickness="0"
+            Background="#F0F0F0"
+            Padding="5"
+            Command="{Binding ChangeLanguageCommand}"
+            Content="{Binding ChangeLanguageButtonText}"/>
 
-        <TextBlock 
+        <TextBlock Grid.Row="1" 
             Text="{Binding AuthorizationText}" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
             FontSize="35" />
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -64,7 +76,9 @@
         </Grid>
 
         <TextBlock Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Hyperlink Command="{Binding ContinueAsGuest}">Continue as guest</Hyperlink>
+            <Hyperlink Command="{Binding ContinueAsGuest}">
+                <TextBlock Text="{Binding ContinueAsGuestText}"/>
+            </Hyperlink>
         </TextBlock>
 
     </Grid>

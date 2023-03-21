@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Globalization;
+using System.Windows.Input;
 using DemoExam.Core.Extensions;
 using DemoExam.Core.Models;
 using DemoExam.Core.Services.Auth;
@@ -22,14 +23,7 @@ public class AuthViewModel : MvxViewModel
     private string _login = default!;
     private string _loginButtonText = Translate.Authorize;
     private string _password = default!;
-
-    public AuthViewModel(IAuthService authService, IMvxNavigationService navigationService, IOrderService orderService)
-    {
-        _authService = authService;
-        _navigationService = navigationService;
-        _orderService = orderService;
-    }
-
+    
     public string Login
     {
         get => _login;
@@ -52,6 +46,8 @@ public class AuthViewModel : MvxViewModel
 
     public ICommand ContinueAsGuest => _continueAsGuestCommand ??= new MvxAsyncCommand(LoginAsGuest);
 
+    public MvxAsyncCommand ChangeLanguageCommand => new(ChangeLanguage);
+
     public string AuthorizationText => Translate.Authorization;
     
     public string LoginText => Translate.Login;
@@ -59,6 +55,15 @@ public class AuthViewModel : MvxViewModel
     public string PasswordText => Translate.Password;
     
     public string ContinueAsGuestText => Translate.ContinueAsGuest;
+
+    public string ChangeLanguageButtonText => Translate.ChangeLanguage;
+    
+    public AuthViewModel(IAuthService authService, IMvxNavigationService navigationService, IOrderService orderService)
+    {
+        _authService = authService;
+        _navigationService = navigationService;
+        _orderService = orderService;
+    }
 
     private async Task Authenticate()
     {
@@ -113,5 +118,12 @@ public class AuthViewModel : MvxViewModel
     {
         _orderService.CreateNewOrder();
         await _navigationService.Navigate<ClientProductsViewModel, User>(User.Guest);
+    }
+    
+    private Task ChangeLanguage()
+    {
+        Translate.Culture = CultureInfo.GetCultureInfo(Translate.Culture.Name == "en" ? "ru" : "en");
+        LoginButtonText = Translate.Authorize;
+        return RaiseAllPropertiesChanged();
     }
 }

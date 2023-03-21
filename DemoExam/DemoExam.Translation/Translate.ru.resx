@@ -150,4 +150,7 @@
     <data name="English" xml:space="preserve">
         <value>Английский</value>
     </data>
+    <data name="ChangeLanguage" xml:space="preserve">
+        <value>Изменить язык</value>
+    </data>
 </root>
