@@ -153,4 +153,10 @@
     <data name="ChangeLanguage" xml:space="preserve">
         <value>Change language</value>
     </data>
+    <data name="AreYouSure" xml:space="preserve">
+        <value>Are you sure?</value>
+    </data>
+    <data name="DeletingProduct" xml:space="preserve">
+        <value>Deleting product</value>
+    </data>
 </root>

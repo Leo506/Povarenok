@@ -29,7 +29,7 @@
         <DockPanel Grid.Row="0">
 
             <Button Command="{Binding CloseCommand}"
-                    Content="Close"
+                    Content="{Binding CloseText}"
                     Height="20"
                     Margin="10 0 0 0" />
 
@@ -57,7 +57,9 @@
 
             <TextBlock Margin="10 0 0 0" VerticalAlignment="Center"
                        Visibility="{Binding CanOpenOrder, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <Hyperlink Command="{Binding OpenOrderCommand}">Open order</Hyperlink>
+                <Hyperlink Command="{Binding OpenOrderCommand}">
+                    <TextBlock Text="{Binding OpenOrderText}"/>
+                </Hyperlink>
             </TextBlock>
 
             <TextBlock DockPanel.Dock="Right"
@@ -125,19 +127,19 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem 
-                        Header="Add to order"
+                        Header="{Binding AddProductToOrderText}"
                         Command="{Binding AddProductToOrderCommand}"/>
                     
                     <MenuItem
-                        Header="Edit product"
+                        Header="{Binding EditProductText}"
                         Command="{Binding OpenEditProductDialogCommand}"/>
                     
                     <MenuItem
-                        Header="Add new product"
+                        Header="{Binding AddProductText}"
                         Command="{Binding OpenAddProductDialogCommand}"/>
                     
                     <MenuItem
-                        Header="Delete product"
+                        Header="{Binding DeleteProductText}"
                         Command="{Binding DeleteProductCommand}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>

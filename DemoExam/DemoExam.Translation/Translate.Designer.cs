@@ -78,6 +78,15 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Article number.
         /// </summary>
         public static string ArticleNumber {
@@ -191,6 +200,15 @@ namespace DemoExam.Translation {
         public static string DeleteProduct {
             get {
                 return ResourceManager.GetString("DeleteProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting product.
+        /// </summary>
+        public static string DeletingProduct {
+            get {
+                return ResourceManager.GetString("DeletingProduct", resourceCulture);
             }
         }
         

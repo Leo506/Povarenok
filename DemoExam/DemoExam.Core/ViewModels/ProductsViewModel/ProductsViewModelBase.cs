@@ -2,6 +2,7 @@
 using DemoExam.Core.Models;
 using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.ViewModelServices.Products;
+using DemoExam.Translation;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
@@ -58,6 +59,10 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
         get => _selectedProduct;
         set => SetProperty(ref _selectedProduct, value);
     }
+
+    public string CloseText => Translate.Close;
+
+    public string OpenOrderText => Translate.OpenOrder;
     
     protected readonly IMvxNavigationService NavigationService;
     protected readonly IProductsViewModelService ViewModelService;
@@ -85,10 +90,6 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
         await RaisePropertyChanged(nameof(CurrentSelectionAmount)).ConfigureAwait(false);
     }
 
-    /*
-    
-    */
-    
     private void ChangeSortOrder()
     {
         _sortOrder = _sortOrder switch
@@ -108,9 +109,9 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
     {
         return _sortOrder switch
         {
-            SortOrder.Asc => "Ascending sorting",
-            SortOrder.Desc => "Descending sorting",
-            _ => "No sorting"
+            SortOrder.Asc => Translate.AscendingSorting,
+            SortOrder.Desc => Translate.DescendingSorting,
+            _ => Translate.NoSorting
         };
     }
 
