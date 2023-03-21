@@ -36,4 +36,118 @@
     <data name="Close" xml:space="preserve">
         <value>Закрыть</value>
     </data>
+    <data name="NoSorting" xml:space="preserve">
+        <value>Без сортировки</value>
+    </data>
+    <data name="AddToOrder" xml:space="preserve">
+        <value>Добавить в заказ</value>
+    </data>
+    <data name="EditProduct" xml:space="preserve">
+        <value>Редактировать товар</value>
+    </data>
+    <data name="AddNewProduct" xml:space="preserve">
+        <value>Добавить новый товар</value>
+    </data>
+    <data name="DeleteProduct" xml:space="preserve">
+        <value>Удалить товар</value>
+    </data>
+    <data name="OpenOrder" xml:space="preserve">
+        <value>Открыть заказ</value>
+    </data>
+    <data name="OrderStatus" xml:space="preserve">
+        <value>Статус заказа</value>
+    </data>
+    <data name="DeliveryDate" xml:space="preserve">
+        <value>Дата доставки</value>
+    </data>
+    <data name="PickupPoint" xml:space="preserve">
+        <value>Пункт выдачи</value>
+    </data>
+    <data name="ClientName" xml:space="preserve">
+        <value>Имя клиента</value>
+    </data>
+    <data name="OrderDate" xml:space="preserve">
+        <value>Дата оформления заказа</value>
+    </data>
+    <data name="OrderDiscount" xml:space="preserve">
+        <value>Скидка заказа</value>
+    </data>
+    <data name="OrderSum" xml:space="preserve">
+        <value>Сумма заказа</value>
+    </data>
+    <data name="Checkout" xml:space="preserve">
+        <value>Оформить</value>
+    </data>
+    <data name="SaveOrderTicket" xml:space="preserve">
+        <value>Сохранить талон на получение как PDF</value>
+    </data>
+    <data name="AscendingSorting" xml:space="preserve">
+        <value>Сначала дешевые</value>
+    </data>
+    <data name="DescendingSorting" xml:space="preserve">
+        <value>Сначала дорогие</value>
+    </data>
+    <data name="ArticleNumber" xml:space="preserve">
+        <value>Артикул</value>
+    </data>
+    <data name="ProductName" xml:space="preserve">
+        <value>Название товара</value>
+    </data>
+    <data name="ProductDescription" xml:space="preserve">
+        <value>Описание товара</value>
+    </data>
+    <data name="ProductCategory" xml:space="preserve">
+        <value>Катерогия</value>
+    </data>
+    <data name="ProductCost" xml:space="preserve">
+        <value>Стоимость</value>
+    </data>
+    <data name="CurrentDiscount" xml:space="preserve">
+        <value>Текущая скидка</value>
+    </data>
+    <data name="ProductManufacture" xml:space="preserve">
+        <value>Производитель</value>
+    </data>
+    <data name="ProductImage" xml:space="preserve">
+        <value>Изображение товара</value>
+    </data>
+    <data name="ChangePhoto" xml:space="preserve">
+        <value>Изменить изображение</value>
+    </data>
+    <data name="QuantityInStock" xml:space="preserve">
+        <value>Количество на складе</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Сохранить</value>
+    </data>
+    <data name="General" xml:space="preserve">
+        <value>Основное</value>
+    </data>
+    <data name="CostAndDiscount" xml:space="preserve">
+        <value>Стоимость и Скидка</value>
+    </data>
+    <data name="Supplier" xml:space="preserve">
+        <value>Поставщик</value>
+    </data>
+    <data name="ManufactureAndSupplier" xml:space="preserve">
+        <value>Производитель и Поставщик</value>
+    </data>
+    <data name="Image" xml:space="preserve">
+        <value>Изображение</value>
+    </data>
+    <data name="Stock" xml:space="preserve">
+        <value>Склад</value>
+    </data>
+    <data name="NewProduct" xml:space="preserve">
+        <value>Новый товар</value>
+    </data>
+    <data name="Order" xml:space="preserve">
+        <value>Заказ</value>
+    </data>
+    <data name="Russian" xml:space="preserve">
+        <value>Русский</value>
+    </data>
+    <data name="English" xml:space="preserve">
+        <value>Английский</value>
+    </data>
 </root>

@@ -36,4 +36,118 @@
     <data name="Close" xml:space="preserve">
         <value>Close</value>
     </data>
+    <data name="NoSorting" xml:space="preserve">
+        <value>No sorting</value>
+    </data>
+    <data name="AddToOrder" xml:space="preserve">
+        <value>Add to order</value>
+    </data>
+    <data name="EditProduct" xml:space="preserve">
+        <value>Edit product</value>
+    </data>
+    <data name="AddNewProduct" xml:space="preserve">
+        <value>Add new product</value>
+    </data>
+    <data name="DeleteProduct" xml:space="preserve">
+        <value>Delete product</value>
+    </data>
+    <data name="OpenOrder" xml:space="preserve">
+        <value>Open order</value>
+    </data>
+    <data name="OrderStatus" xml:space="preserve">
+        <value>Order status</value>
+    </data>
+    <data name="DeliveryDate" xml:space="preserve">
+        <value>Delivery date</value>
+    </data>
+    <data name="PickupPoint" xml:space="preserve">
+        <value>Pickup point</value>
+    </data>
+    <data name="ClientName" xml:space="preserve">
+        <value>Client name</value>
+    </data>
+    <data name="OrderDate" xml:space="preserve">
+        <value>Order date</value>
+    </data>
+    <data name="OrderSum" xml:space="preserve">
+        <value>Order sum</value>
+    </data>
+    <data name="OrderDiscount" xml:space="preserve">
+        <value>Order discount</value>
+    </data>
+    <data name="Checkout" xml:space="preserve">
+        <value>Checkout</value>
+    </data>
+    <data name="SaveOrderTicket" xml:space="preserve">
+        <value>Save order ticker as PDF</value>
+    </data>
+    <data name="AscendingSorting" xml:space="preserve">
+        <value>Ascending sorting</value>
+    </data>
+    <data name="DescendingSorting" xml:space="preserve">
+        <value>Descending sorting</value>
+    </data>
+    <data name="ArticleNumber" xml:space="preserve">
+        <value>Article number</value>
+    </data>
+    <data name="ProductName" xml:space="preserve">
+        <value>Product name</value>
+    </data>
+    <data name="ProductDescription" xml:space="preserve">
+        <value>Product description</value>
+    </data>
+    <data name="ProductCategory" xml:space="preserve">
+        <value>Product category</value>
+    </data>
+    <data name="ProductCost" xml:space="preserve">
+        <value>Product cost</value>
+    </data>
+    <data name="CurrentDiscount" xml:space="preserve">
+        <value>Current discount</value>
+    </data>
+    <data name="ProductManufacture" xml:space="preserve">
+        <value>Product manufacture</value>
+    </data>
+    <data name="ProductImage" xml:space="preserve">
+        <value>Product image</value>
+    </data>
+    <data name="ChangePhoto" xml:space="preserve">
+        <value>Chage photo</value>
+    </data>
+    <data name="QuantityInStock" xml:space="preserve">
+        <value>Quantity in stock</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="General" xml:space="preserve">
+        <value>General</value>
+    </data>
+    <data name="CostAndDiscount" xml:space="preserve">
+        <value>Cost and Discount</value>
+    </data>
+    <data name="Supplier" xml:space="preserve">
+        <value>Supplier</value>
+    </data>
+    <data name="ManufactureAndSupplier" xml:space="preserve">
+        <value>Manufacture and Supplier</value>
+    </data>
+    <data name="Image" xml:space="preserve">
+        <value>Image</value>
+    </data>
+    <data name="Stock" xml:space="preserve">
+        <value>Stock</value>
+    </data>
+    <data name="NewProduct" xml:space="preserve">
+        <value>New Product</value>
+    </data>
+    <data name="Order" xml:space="preserve">
+        <value>Order</value>
+    </data>
+    <data name="Russian" xml:space="preserve">
+        <value>Russian</value>
+    </data>
+    <data name="English" xml:space="preserve">
+        <value>English</value>
+    </data>
 </root>

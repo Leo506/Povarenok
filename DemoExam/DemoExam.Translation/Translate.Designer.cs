@@ -60,6 +60,42 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new product.
+        /// </summary>
+        public static string AddNewProduct {
+            get {
+                return ResourceManager.GetString("AddNewProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to order.
+        /// </summary>
+        public static string AddToOrder {
+            get {
+                return ResourceManager.GetString("AddToOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Article number.
+        /// </summary>
+        public static string ArticleNumber {
+            get {
+                return ResourceManager.GetString("ArticleNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ascending sorting.
+        /// </summary>
+        public static string AscendingSorting {
+            get {
+                return ResourceManager.GetString("AscendingSorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authorization.
         /// </summary>
         public static string Authorization {
@@ -74,6 +110,33 @@ namespace DemoExam.Translation {
         public static string Authorize {
             get {
                 return ResourceManager.GetString("Authorize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chage photo.
+        /// </summary>
+        public static string ChangePhoto {
+            get {
+                return ResourceManager.GetString("ChangePhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checkout.
+        /// </summary>
+        public static string Checkout {
+            get {
+                return ResourceManager.GetString("Checkout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client name.
+        /// </summary>
+        public static string ClientName {
+            get {
+                return ResourceManager.GetString("ClientName", resourceCulture);
             }
         }
         
@@ -96,6 +159,87 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cost and Discount.
+        /// </summary>
+        public static string CostAndDiscount {
+            get {
+                return ResourceManager.GetString("CostAndDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current discount.
+        /// </summary>
+        public static string CurrentDiscount {
+            get {
+                return ResourceManager.GetString("CurrentDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete product.
+        /// </summary>
+        public static string DeleteProduct {
+            get {
+                return ResourceManager.GetString("DeleteProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delivery date.
+        /// </summary>
+        public static string DeliveryDate {
+            get {
+                return ResourceManager.GetString("DeliveryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descending sorting.
+        /// </summary>
+        public static string DescendingSorting {
+            get {
+                return ResourceManager.GetString("DescendingSorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit product.
+        /// </summary>
+        public static string EditProduct {
+            get {
+                return ResourceManager.GetString("EditProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {
@@ -105,11 +249,209 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manufacture and Supplier.
+        /// </summary>
+        public static string ManufactureAndSupplier {
+            get {
+                return ResourceManager.GetString("ManufactureAndSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Product.
+        /// </summary>
+        public static string NewProduct {
+            get {
+                return ResourceManager.GetString("NewProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No sorting.
+        /// </summary>
+        public static string NoSorting {
+            get {
+                return ResourceManager.GetString("NoSorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open order.
+        /// </summary>
+        public static string OpenOrder {
+            get {
+                return ResourceManager.GetString("OpenOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order date.
+        /// </summary>
+        public static string OrderDate {
+            get {
+                return ResourceManager.GetString("OrderDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order discount.
+        /// </summary>
+        public static string OrderDiscount {
+            get {
+                return ResourceManager.GetString("OrderDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order status.
+        /// </summary>
+        public static string OrderStatus {
+            get {
+                return ResourceManager.GetString("OrderStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order sum.
+        /// </summary>
+        public static string OrderSum {
+            get {
+                return ResourceManager.GetString("OrderSum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pickup point.
+        /// </summary>
+        public static string PickupPoint {
+            get {
+                return ResourceManager.GetString("PickupPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product category.
+        /// </summary>
+        public static string ProductCategory {
+            get {
+                return ResourceManager.GetString("ProductCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product cost.
+        /// </summary>
+        public static string ProductCost {
+            get {
+                return ResourceManager.GetString("ProductCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product description.
+        /// </summary>
+        public static string ProductDescription {
+            get {
+                return ResourceManager.GetString("ProductDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product image.
+        /// </summary>
+        public static string ProductImage {
+            get {
+                return ResourceManager.GetString("ProductImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product manufacture.
+        /// </summary>
+        public static string ProductManufacture {
+            get {
+                return ResourceManager.GetString("ProductManufacture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product name.
+        /// </summary>
+        public static string ProductName {
+            get {
+                return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity in stock.
+        /// </summary>
+        public static string QuantityInStock {
+            get {
+                return ResourceManager.GetString("QuantityInStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Russian.
+        /// </summary>
+        public static string Russian {
+            get {
+                return ResourceManager.GetString("Russian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save order ticker as PDF.
+        /// </summary>
+        public static string SaveOrderTicket {
+            get {
+                return ResourceManager.GetString("SaveOrderTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stock.
+        /// </summary>
+        public static string Stock {
+            get {
+                return ResourceManager.GetString("Stock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier.
+        /// </summary>
+        public static string Supplier {
+            get {
+                return ResourceManager.GetString("Supplier", resourceCulture);
             }
         }
     }
