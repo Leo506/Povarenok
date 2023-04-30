@@ -1,5 +1,5 @@
-﻿using System.Security.Authentication;
-using DemoExam.Core.Models;
+﻿
+using System.Security.Authentication;
 using DemoExam.Core.Repositories;
 
 namespace DemoExam.Core.Services.Auth;

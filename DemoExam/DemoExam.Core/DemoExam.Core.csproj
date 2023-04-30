@@ -26,6 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DemoExam.Domain\DemoExam.Domain.csproj" />
+      <ProjectReference Include="..\DemoExam.PdfGenerator\DemoExam.PdfGenerator.csproj" />
       <ProjectReference Include="..\DemoExam.Translation\DemoExam.Translation.csproj" />
     </ItemGroup>
 

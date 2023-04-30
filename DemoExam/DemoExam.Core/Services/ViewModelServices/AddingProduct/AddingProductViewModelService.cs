@@ -1,5 +1,4 @@
-﻿using DemoExam.Core.Models;
-using DemoExam.Core.Repositories;
+﻿using DemoExam.Core.Repositories;
 
 namespace DemoExam.Core.Services.ViewModelServices.AddingProduct;
 

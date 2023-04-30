@@ -1,5 +1,4 @@
-﻿using DemoExam.Core.Models;
-using MvvmCross.ViewModels;
+﻿using MvvmCross.ViewModels;
 
 namespace DemoExam.Core.ObservableObjects;
 

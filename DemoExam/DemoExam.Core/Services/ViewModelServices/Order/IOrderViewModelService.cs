@@ -1,5 +1,4 @@
-﻿using DemoExam.Core.Models;
-using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.ObservableObjects;
 
 namespace DemoExam.Core.Services.ViewModelServices.Order;
 
@@ -9,6 +8,6 @@ public interface IOrderViewModelService
     Task<List<PickupPoint>> GetPickupPoints();
     void AddProduct(string productId);
     void RemoveProduct(string productId);
-    Task SaveOrder(Models.Order order);
+    Task SaveOrder(Domain.Models.Order order);
     int GetNextOrderId();
 }

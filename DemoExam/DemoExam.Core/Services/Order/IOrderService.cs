@@ -8,7 +8,7 @@ public interface IOrderService
 
     void AddProductToOrder(string productArticleNumber);
 
-    Task SaveOrder(Models.Order order);
+    Task SaveOrder(Domain.Models.Order order);
 
     bool HasProductsInOrder();
 

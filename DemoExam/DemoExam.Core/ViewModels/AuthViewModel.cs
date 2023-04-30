@@ -1,10 +1,9 @@
 ﻿using System.Globalization;
 using System.Windows.Input;
-using DemoExam.Core.Extensions;
-using DemoExam.Core.Models;
 using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
 using DemoExam.Core.ViewModels.ProductsViewModel;
+using DemoExam.Domain.Extensions;
 using DemoExam.Translation;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;

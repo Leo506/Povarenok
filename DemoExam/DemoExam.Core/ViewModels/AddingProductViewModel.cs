@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.Models;
 using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices.AddingProduct;

@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DemoExam.Core.Models;
+namespace DemoExam.Domain.Models;
 
 public partial class User
 {
     [NotMapped] public string FullName => $"{UserSurname} {UserName} {UserPatronymic}";
 
-    public static User Guest => new()
+    public static Domain.Models.User Guest => new()
     {
         UserLogin = "Guest",
         UserName = "Guest",
-        UserRoleNavigation = new Role
+        UserRoleNavigation = new Domain.Models.Role
         {
-            RoleName = Role.ClientRoleName
+            RoleName = Domain.Models.Role.ClientRoleName
         }
     };
 }

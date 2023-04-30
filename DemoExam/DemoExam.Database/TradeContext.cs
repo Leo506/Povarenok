@@ -1,5 +1,4 @@
-﻿using DemoExam.Core.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Database;
 

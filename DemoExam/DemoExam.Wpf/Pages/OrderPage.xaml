@@ -126,7 +126,8 @@
 
             <Button Grid.Row="8" Grid.ColumnSpan="2"
                     Content="Save order ticket as pdf"
-                    Margin="10" />
+                    Margin="10"
+                    Command="{Binding SaveOrderTicketCommand}"/>
 
             <Button Grid.Row="9" Grid.ColumnSpan="2"
                     Content="Checkout"

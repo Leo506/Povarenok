@@ -1,6 +1,7 @@
-﻿using System.Windows.Input;
-using DemoExam.Core.Models;
+﻿using System.Diagnostics;
+using System.Windows.Input;
 using DemoExam.Core.ObservableObjects;
+using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices.Order;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -12,6 +13,7 @@ public class OrderViewModel : MvxViewModel<User>
 {
     private readonly IMvxNavigationService _navigationService;
     private readonly IOrderViewModelService _viewModelService;
+    private readonly IAlert _alert;
     private User _user = default!;
     private PickupPoint _selectedPickupPoint;
     
@@ -37,10 +39,13 @@ public class OrderViewModel : MvxViewModel<User>
 
     public ICommand SaveOrderCommand => new MvxAsyncCommand(SaveOrder);
 
-    public OrderViewModel(IOrderViewModelService viewModelService, IMvxNavigationService navigationService)
+    public ICommand SaveOrderTicketCommand => new MvxCommand(SaveOrderTicket);
+
+    public OrderViewModel(IOrderViewModelService viewModelService, IMvxNavigationService navigationService, IAlert alert)
     {
         _viewModelService = viewModelService;
         _navigationService = navigationService;
+        _alert = alert;
     }
 
     public override async Task Initialize()
@@ -98,5 +103,25 @@ public class OrderViewModel : MvxViewModel<User>
         Order.OrderPickupPoint = SelectedPickupPoint.PointId;
         await _viewModelService.SaveOrder(Order).ConfigureAwait(false);
         await _navigationService.Close(this).ConfigureAwait(false);
+    }
+    
+    private void SaveOrderTicket()
+    {
+        try
+        {
+            var ticketPath = PdfGenerator.PdfGenerator.CreatePdfForOrder(Order.OrderId, DateTime.Now, OrderSum, OrderDiscount,
+                SelectedPickupPoint.ToString(), Order.GetCode ?? 0,
+                ProductsInOrder.ToDictionary(x => x.ObservableProduct.Product, x => x.Amount));
+            _alert.Alert("Success", "Success");
+            // TODO replace by interface call
+            new Process()
+            {
+                StartInfo = new ProcessStartInfo(ticketPath) { UseShellExecute = true }
+            }.Start();
+        }
+        catch (Exception e)
+        {
+            _alert.Alert("Error", e.Message);
+        }
     }
 }

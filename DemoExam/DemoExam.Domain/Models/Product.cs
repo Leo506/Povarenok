@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DemoExam.Core.Models;
+namespace DemoExam.Domain.Models;
 
 public partial class Product
 {

@@ -1,4 +1,4 @@
-﻿namespace DemoExam.Core.Models;
+﻿namespace DemoExam.Domain.Models;
 
 public partial class User
 {
@@ -16,5 +16,5 @@ public partial class User
 
     public int UserRole { get; set; }
 
-    public virtual Role UserRoleNavigation { get; set; } = null!;
+    public virtual Domain.Models.Role UserRoleNavigation { get; set; } = null!;
 }

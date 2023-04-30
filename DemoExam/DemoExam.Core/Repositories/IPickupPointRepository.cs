@@ -1,6 +1,4 @@
-﻿using DemoExam.Core.Models;
-
-namespace DemoExam.Core.Repositories;
+﻿namespace DemoExam.Core.Repositories;
 
 public interface IPickupPointRepository
 {

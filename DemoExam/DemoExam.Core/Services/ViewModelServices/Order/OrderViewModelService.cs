@@ -1,5 +1,4 @@
-﻿using DemoExam.Core.Models;
-using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Repositories;
 using DemoExam.Core.Services.Order;
 
@@ -50,7 +49,7 @@ public class OrderViewModelService : IOrderViewModelService
         _orderService.RemoveProductFromOrder(productId);
     }
 
-    public Task SaveOrder(Models.Order order)
+    public Task SaveOrder(Domain.Models.Order order)
     {
         return _orderService.SaveOrder(order);
     }

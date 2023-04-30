@@ -1,6 +1,6 @@
-﻿using DemoExam.Core.Models;
+﻿using DemoExam.Domain.Models;
 
-namespace DemoExam.Core.Extensions;
+namespace DemoExam.Domain.Extensions;
 
 public static class UserExtensions
 {
