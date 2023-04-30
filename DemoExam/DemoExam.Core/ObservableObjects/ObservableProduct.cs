@@ -62,10 +62,10 @@ public class ObservableProduct : MvxNotifyPropertyChanged
 
     public string ProductManufacturer
     {
-        get => Product.ProductManufacturer;
+        get => Product.ManufacturerName;
         set
         {
-            Product.ProductManufacturer = value;
+            Product.ManufacturerName = value;
             RaisePropertyChanged(() => ProductManufacturer);
         }
     }
@@ -104,10 +104,10 @@ public class ObservableProduct : MvxNotifyPropertyChanged
 
     public string Supplier
     {
-        get => Product.Supplier;
+        get => Product.SupplierName;
         set
         {
-            Product.Supplier = value;
+            Product.SupplierName = value;
             RaisePropertyChanged(() => Supplier);
         }
     }

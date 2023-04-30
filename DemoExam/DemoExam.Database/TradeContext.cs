@@ -16,6 +16,8 @@ public partial class TradeContext : DbContext
         Database.EnsureCreated();
     }
 
+    public virtual DbSet<Manufacturer> Manufacturers { get; set; }
+
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderList> OrderLists { get; set; }
@@ -26,20 +28,32 @@ public partial class TradeContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
+    public virtual DbSet<Supplier> Suppliers { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer(
-            "Server=localhost;Database=Trade;User Id=sa;Password=mssql1Ipw;TrustServerCertificate=true");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=Trade;User Id=sa;Password=mssql1Ipw;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Manufacturer>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Manufacturer_pk");
+
+            entity.ToTable("Manufacturer");
+
+            entity.Property(e => e.ManufacturerName).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.OrderId).HasName("PK__Order__C3905BAFA031FC03");
 
             entity.ToTable("Order");
+
+            entity.HasIndex(e => e.OrderPickupPoint, "IX_Order_OrderPickupPoint");
 
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.ClientName).HasMaxLength(100);
@@ -57,6 +71,10 @@ public partial class TradeContext : DbContext
             entity.HasKey(e => e.Id).HasName("OrderList_pk");
 
             entity.ToTable("OrderList");
+
+            entity.HasIndex(e => e.OrderId, "IX_OrderList_OrderId");
+
+            entity.HasIndex(e => e.ProductId, "IX_OrderList_ProductId");
 
             entity.Property(e => e.ProductId).HasMaxLength(100);
 
@@ -93,7 +111,16 @@ public partial class TradeContext : DbContext
             entity.Property(e => e.ProductArticleNumber).HasMaxLength(100);
             entity.Property(e => e.ProductCost).HasColumnType("decimal(19, 4)");
             entity.Property(e => e.ProductPhoto).HasColumnType("image");
-            entity.Property(e => e.Supplier).HasMaxLength(50);
+
+            entity.HasOne(d => d.Manufacturer).WithMany(p => p.Products)
+                .HasForeignKey(d => d.ManufacturerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Product_Manufacturer_Id_fk");
+
+            entity.HasOne(d => d.Supplier).WithMany(p => p.Products)
+                .HasForeignKey(d => d.SupplierId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Product_Supplier_Id_fk");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -106,11 +133,22 @@ public partial class TradeContext : DbContext
             entity.Property(e => e.RoleName).HasMaxLength(100);
         });
 
+        modelBuilder.Entity<Supplier>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Supplier_pk");
+
+            entity.ToTable("Supplier");
+
+            entity.Property(e => e.SupplierName).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK__User__1788CCACD83B2744");
 
             entity.ToTable("User");
+
+            entity.HasIndex(e => e.UserRole, "IX_User_UserRole");
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.UserName).HasMaxLength(100);

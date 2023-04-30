@@ -40,14 +40,34 @@ if (context.Orders.Any() is false)
 if (context.Products.Any() is false)
     await ImportData("Data/Product.csv", ';', async data =>
     {
+        var manufacturer = await context.Manufacturers.FirstOrDefaultAsync(x => x.ManufacturerName == data[4]);
+        if (manufacturer is null)
+        {
+            manufacturer = (await context.Manufacturers.AddAsync(new Manufacturer()
+            {
+                ManufacturerName = data[4]
+            })).Entity;
+            await context.SaveChangesAsync();
+        }
+
+        var supplier = await context.Suppliers.FirstOrDefaultAsync(x => x.SupplierName == data[5]);
+        if (supplier is null)
+        {
+            supplier = (await context.Suppliers.AddAsync(new Supplier()
+            {
+                SupplierName = data[5]
+            })).Entity;
+            await context.SaveChangesAsync();
+        }
+        
         await context.Products.AddAsync(new Product
         {
             ProductArticleNumber = data[0],
             ProductName = data[1],
             ProductCost = int.Parse(data[2]),
-            ProductDiscountAmount = byte.Parse(data[3]),
-            ProductManufacturer = data[4],
-            Supplier = data[5],
+            MaxDiscount = byte.Parse(data[3]),
+            ManufacturerId = manufacturer.Id,
+            SupplierId = supplier.Id,
             ProductCategory = data[6],
             CurrentDiscount = byte.Parse(data[7]),
             ProductQuantityInStock = int.Parse(data[8]),
