@@ -61,6 +61,9 @@
                     <TextBlock Text="{Binding OpenOrderText}"/>
                 </Hyperlink>
             </TextBlock>
+            
+            <Button Height="20" Width="100" Content="К заказам"
+                    Command="{Binding OpenOrdersPageCommand}" />
 
             <TextBlock DockPanel.Dock="Right"
                        Text="{Binding User.FullName}"

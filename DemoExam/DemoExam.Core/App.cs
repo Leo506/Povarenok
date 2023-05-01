@@ -1,5 +1,6 @@
 ﻿using DemoExam.Core.Services.Auth;
 using DemoExam.Core.Services.Order;
+using DemoExam.Core.Services.Orders;
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.Services.ViewModelServices.AddingProduct;
 using DemoExam.Core.Services.ViewModelServices.Order;
@@ -22,6 +23,7 @@ public class App : MvxApplication
         Mvx.IoCProvider.RegisterType<IProductsViewModelService, ProductsViewModelService>();
         Mvx.IoCProvider.RegisterType<IAddingProductViewModelService, AddingProductViewModelService>();
         Mvx.IoCProvider.RegisterType<IOrderViewModelService, OrderViewModelService>();
+        Mvx.IoCProvider.RegisterType<IOrdersService, OrdersService>();
 
         RegisterAppStart<AuthViewModel>();
 

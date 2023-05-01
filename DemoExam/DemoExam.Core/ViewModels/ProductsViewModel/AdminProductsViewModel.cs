@@ -18,6 +18,8 @@ public class AdminProductsViewModel : ManagerProductsViewModel
 
     public ICommand DeleteProductCommand => new MvxAsyncCommand(DeleteProduct);
 
+    public ICommand OpenOrdersPageCommand => new MvxAsyncCommand(() => NavigationService.Navigate<OrdersViewModel>());
+
     public string EditProductText => Translate.EditProduct;
 
     public string AddProductText => Translate.AddNewProduct;
