@@ -56,6 +56,7 @@ public class OrderViewModel : MvxViewModel<User>
         PickupPoints =
             new MvxObservableCollection<PickupPoint>(await _viewModelService.GetPickupPoints().ConfigureAwait(false));
         RaisePropertyChanged(nameof(PickupPoints));
+        RaisePropertyChanged(nameof(ProductsInOrder));
         SelectedPickupPoint = PickupPoints.First();
     }
 

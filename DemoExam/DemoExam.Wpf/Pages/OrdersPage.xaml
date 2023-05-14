@@ -5,6 +5,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
+                  xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                   mc:Ignorable="d"
                   Height="400" Width="500"
                   d:DesignHeight="400" d:DesignWidth="500" d:DataContext="{d:DesignInstance viewModels:OrdersViewModel}">
@@ -14,6 +15,7 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        <converters:ProductsAmountInStockToColorBrushConverter x:Key="OrderColorConverter"/>
     </views:MvxWindow.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,10 +25,11 @@
         
         <ListBox 
                  ItemsSource="{Binding Orders}"
-                 SelectedItem="{Binding SelectedOrder}">
+                 SelectedItem="{Binding SelectedOrder}"
+                 HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel Background="{Binding Converter={StaticResource OrderColorConverter}}">
                         <TextBlock Text="{Binding OrderId, StringFormat=Заказ №{0}}" FontSize="20"/>
                         <TextBlock Text="{Binding OrderData}" FontSize="15"/>
                     </StackPanel>
