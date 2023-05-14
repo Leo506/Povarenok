@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using DemoExam.Translation;
 
 namespace DemoExam.Domain.Models;
 
@@ -6,13 +7,13 @@ public partial class User
 {
     [NotMapped] public string FullName => $"{UserSurname} {UserName} {UserPatronymic}";
 
-    public static Domain.Models.User Guest => new()
+    public static User Guest => new()
     {
-        UserLogin = "Guest",
-        UserName = "Guest",
-        UserRoleNavigation = new Domain.Models.Role
+        UserLogin = Translate.Guest,
+        UserName = Translate.Guest,
+        UserRoleNavigation = new Role
         {
-            RoleName = Domain.Models.Role.ClientRoleName
+            RoleName = Role.ClientRoleName
         }
     };
 }

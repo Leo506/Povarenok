@@ -159,4 +159,16 @@
     <data name="DeletingProduct" xml:space="preserve">
         <value>Deleting product</value>
     </data>
+    <data name="All" xml:space="preserve">
+        <value>All</value>
+    </data>
+    <data name="AndMore" xml:space="preserve">
+        <value> and more</value>
+    </data>
+    <data name="ToOrders" xml:space="preserve">
+        <value>To orders</value>
+    </data>
+    <data name="Guest" xml:space="preserve">
+        <value>Guest</value>
+    </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using System;
+using DemoExam.Translation;
 
 namespace DemoExam.Wpf.DataElements;
 
@@ -20,7 +21,7 @@ public class DiscountSelectableItem
     public override string ToString()
     {
         if (MinDiscount is null && MaxDiscount is null)
-            return "All";
-        return $"{MinDiscount}%{(MaxDiscount is null ? " and more" : $" - {MaxDiscount}%")}";
+            return Translate.All;
+        return $"{MinDiscount}%{(MaxDiscount is null ? Translate.AndMore : $" - {MaxDiscount}%")}";
     }
 }

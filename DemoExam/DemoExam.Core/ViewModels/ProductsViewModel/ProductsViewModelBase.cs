@@ -59,10 +59,6 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
         set => SetProperty(ref _selectedProduct, value);
     }
 
-    public string CloseText => Translate.Close;
-
-    public string OpenOrderText => Translate.OpenOrder;
-    
     protected readonly IMvxNavigationService NavigationService;
     protected readonly IProductsViewModelService ViewModelService;
 

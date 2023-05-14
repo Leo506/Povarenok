@@ -28,7 +28,7 @@ namespace DemoExam.Translation {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Translate() {
+        public Translate() {
         }
         
         /// <summary>
@@ -74,6 +74,24 @@ namespace DemoExam.Translation {
         public static string AddToOrder {
             get {
                 return ResourceManager.GetString("AddToOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  and more.
+        /// </summary>
+        public static string AndMore {
+            get {
+                return ResourceManager.GetString("AndMore", resourceCulture);
             }
         }
         
@@ -254,6 +272,15 @@ namespace DemoExam.Translation {
         public static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guest.
+        /// </summary>
+        public static string Guest {
+            get {
+                return ResourceManager.GetString("Guest", resourceCulture);
             }
         }
         
@@ -479,6 +506,15 @@ namespace DemoExam.Translation {
         public static string Supplier {
             get {
                 return ResourceManager.GetString("Supplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To orders.
+        /// </summary>
+        public static string ToOrders {
+            get {
+                return ResourceManager.GetString("ToOrders", resourceCulture);
             }
         }
     }

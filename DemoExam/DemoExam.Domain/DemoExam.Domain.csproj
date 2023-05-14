@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DemoExam.Translation\DemoExam.Translation.csproj" />
+    </ItemGroup>
+
 </Project>

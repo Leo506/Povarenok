@@ -159,4 +159,16 @@
     <data name="DeletingProduct" xml:space="preserve">
         <value>Удаление товара</value>
     </data>
+    <data name="All" xml:space="preserve">
+        <value>Все</value>
+    </data>
+    <data name="AndMore" xml:space="preserve">
+        <value>и больше</value>
+    </data>
+    <data name="ToOrders" xml:space="preserve">
+        <value>К заказам</value>
+    </data>
+    <data name="Guest" xml:space="preserve">
+        <value>Гость</value>
+    </data>
 </root>

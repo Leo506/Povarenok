@@ -9,8 +9,9 @@
                     xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                     xmlns:dataElements="clr-namespace:DemoExam.Wpf.DataElements"
                     xmlns:observableObjects="clr-namespace:DemoExam.Core.ObservableObjects;assembly=DemoExam.Core"
+                    xmlns:translation="clr-namespace:DemoExam.Translation;assembly=DemoExam.Translation"
                     mc:Ignorable="d"
-                    d:DesignHeight="300" d:DesignWidth="600" Language="ru-Ru" d:DataContext="{d:DesignInstance viewModels:ManagerProductsViewModel }">
+                    d:DesignHeight="300" d:DesignWidth="900" Language="ru-Ru" d:DataContext="{d:DesignInstance viewModels:ManagerProductsViewModel }">
     
     <views:MvxWpfView.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter" />
@@ -19,59 +20,73 @@
         <converters:DiscountToTextDecorationConverter x:Key="DiscountToTextDecorationConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter"/>
+        <translation:Translate x:Key="Translate"/>
     </views:MvxWpfView.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.25*" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <DockPanel Grid.Row="0">
-
-            <Button Command="{Binding CloseCommand}"
-                    Content="{Binding CloseText}"
-                    Height="20"
-                    Margin="10 0 0 0" />
-
+<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.25*"/>
+            <ColumnDefinition Width="0.75*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Button Command="{Binding CloseCommand}"
+                Content="{Binding Source={StaticResource Translate}, Path=Close}"
+                VerticalAlignment="Center"
+                Padding="10 0 10 0"
+                HorizontalAlignment="Left"
+                Margin="10 0 0 0" />
+        
+        <StackPanel Grid.Row="1" Grid.Column="0">
             <TextBox TextChanged="OnSearchTextChange"
-                     Width="150" Height="20"
-                     HorizontalAlignment="Left"
-                     Margin="10 0 0 0" />
-
+                     Width="150" FontSize="15"
+                     Margin="10 10 10 10"
+                     HorizontalAlignment="Left"/>
+            
             <Button Height="20" Width="100"
                     Command="{Binding ChangeSortOrderCommand}"
-                    Content="{Binding SortOrderName}" />
-
+                    Content="{Binding SortOrderName}"
+                    Margin="10 0 0 10"
+                    HorizontalAlignment="Left"/>
+            
             <ComboBox SelectionChanged="OnDiscountSelectorChange"
                       SelectedIndex="0"
-                      Height="20" Width="100">
+                      Height="20" Width="100"
+                      HorizontalAlignment="Left"
+                      Margin="10 0 0 10">
                 <dataElements:DiscountSelectableItem />
                 <dataElements:DiscountSelectableItem MinDiscount="0" MaxDiscount="9.99" />
                 <dataElements:DiscountSelectableItem MinDiscount="10" MaxDiscount="14.99" />
                 <dataElements:DiscountSelectableItem MinDiscount="15" />
             </ComboBox>
-
+            
+            <Button Height="20" Width="100" Content="{Binding Source={StaticResource Translate}, Path=ToOrders}"
+                    Command="{Binding OpenOrdersPageCommand}"
+                    HorizontalAlignment="Left"
+                    Margin="10 0 0 10"/>
+            
             <TextBlock Text="{Binding CurrentSelectionAmount}"
-                       Margin="10 0 0 0"
+                       Margin="10 0 0 10"
                        VerticalAlignment="Center" />
-
+            
             <TextBlock Margin="10 0 0 0" VerticalAlignment="Center"
                        Visibility="{Binding CanOpenOrder, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Hyperlink Command="{Binding OpenOrderCommand}">
-                    <TextBlock Text="{Binding OpenOrderText}"/>
+                    <TextBlock Text="{Binding Source={StaticResource Translate}, Path=OpenOrder}"/>
                 </Hyperlink>
             </TextBlock>
-
-            <TextBlock DockPanel.Dock="Right"
+        </StackPanel>
+        
+        <TextBlock Grid.Row="0" Grid.Column="1"
                        Text="{Binding User.FullName}"
                        HorizontalAlignment="Right" VerticalAlignment="Center"
                        Margin="0 0 30 0"
                        FontWeight="Bold"
                        FontSize="15" />
 
-        </DockPanel>
-
-        <ListBox Grid.Row="1"
+        <ListBox Grid.Row="1" Grid.Column="1"
                  x:Name="ProductsList"
                  SelectedItem="{Binding SelectedProduct}"
                  ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
@@ -127,7 +142,7 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem 
-                        Header="{Binding AddProductToOrderText}"
+                        Header="{Binding Source={StaticResource Translate}, Path=AddToOrder}"
                         Command="{Binding AddProductToOrderCommand}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
