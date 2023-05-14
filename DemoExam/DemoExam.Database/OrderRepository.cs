@@ -33,4 +33,10 @@ public partial class TradeContext : IOrderRepository
             .Select(x => x.OrderId)
             .LastAsync();
     }
+
+    public Task UpdateOrder(Order order)
+    {
+        Orders.Update(order);
+        return SaveChangesAsync();
+    }
 }

@@ -12,4 +12,8 @@ public class OrdersService : IOrdersService
     }
 
     public Task<IEnumerable<Domain.Models.Order>> GetAllOrders() => _ordersRepository.GetAllAsync();
+    public Task UpdateOrder(Domain.Models.Order order)
+    {
+        return _ordersRepository.UpdateOrder(order);
+    }
 }
