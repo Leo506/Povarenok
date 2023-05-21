@@ -171,4 +171,13 @@
     <data name="Guest" xml:space="preserve">
         <value>Гость</value>
     </data>
+    <data name="Captcha" xml:space="preserve">
+        <value>Капча</value>
+    </data>
+    <data name="EnterCodeFromPicture" xml:space="preserve">
+        <value>Введите код с картинки</value>
+    </data>
+    <data name="Verify" xml:space="preserve">
+        <value>Проверить</value>
+    </data>
 </root>

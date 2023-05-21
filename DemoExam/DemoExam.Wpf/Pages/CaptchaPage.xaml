@@ -5,13 +5,19 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                  xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
+                 xmlns:translation="clr-namespace:DemoExam.Translation;assembly=DemoExam.Translation"
                  mc:Ignorable="d"
+                 Title="{x:Static translation:Translate.Captcha}"
                  d:DesignHeight="300" d:DesignWidth="300"
-                 Height="300" Width="300">
+                 Height="300" Width="300" d:DataContext="{d:DesignInstance viewModels:CaptchaViewModel }">
+    <views:MvxWindow.Resources>
+        <translation:Translate x:Key="Translate"/>
+    </views:MvxWindow.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center"
-                       FontSize="20" Text="Enter a code from picture"
+                       FontSize="20" 
+                       Text="{Binding Source={StaticResource Translate}, Path=EnterCodeFromPicture}"
                        Margin="0 0 0 10" />
 
             <Border Width="100" Height="20" Background="Brown" Margin="0 0 0 10">
@@ -29,7 +35,8 @@
                      Width="100" />
 
             <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 0"
-                    Content="Verify" Width="100" Command="{Binding VerifyCommand}" />
+                    Content="{Binding Source={StaticResource Translate}, Path=Verify}" 
+                    Width="100" Command="{Binding VerifyCommand}" />
         </StackPanel>
     </Grid>
 </views:MvxWindow>

@@ -141,6 +141,15 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Captcha.
+        /// </summary>
+        public static string Captcha {
+            get {
+                return ResourceManager.GetString("Captcha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change language.
         /// </summary>
         public static string ChangeLanguage {
@@ -263,6 +272,15 @@ namespace DemoExam.Translation {
         public static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter code from picture.
+        /// </summary>
+        public static string EnterCodeFromPicture {
+            get {
+                return ResourceManager.GetString("EnterCodeFromPicture", resourceCulture);
             }
         }
         
@@ -515,6 +533,15 @@ namespace DemoExam.Translation {
         public static string ToOrders {
             get {
                 return ResourceManager.GetString("ToOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
             }
         }
     }
