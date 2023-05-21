@@ -3,7 +3,6 @@ using System.Windows.Input;
 using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices.Order;
-using DemoExam.Translation;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
@@ -19,9 +18,7 @@ public class OrderViewModel : MvxViewModel<User>
     private PickupPoint _selectedPickupPoint;
     
     public Order Order { get; set; }
-
-    public string OrderNumberTitle => $"{Translate.Order} №{Order.OrderId}";
-
+    
     public MvxObservableCollection<ObservableOrder> ProductsInOrder { get; set; }
 
     public MvxObservableCollection<PickupPoint> PickupPoints { get; set; }

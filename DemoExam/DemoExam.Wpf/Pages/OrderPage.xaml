@@ -60,7 +60,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.ColumnSpan="2" Text="{Binding OrderNumberTitle}"
+            <TextBlock Grid.ColumnSpan="2" 
+                       Text="{Binding Order.OrderId, StringFormat={x:Static translation:Translate.OrderTitle}}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontSize="25"
