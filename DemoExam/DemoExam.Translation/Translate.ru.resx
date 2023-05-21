@@ -180,4 +180,16 @@
     <data name="Verify" xml:space="preserve">
         <value>Проверить</value>
     </data>
+    <data name="GetCode" xml:space="preserve">
+        <value>Код получения</value>
+    </data>
+    <data name="Product" xml:space="preserve">
+        <value>Товар</value>
+    </data>
+    <data name="Quantity" xml:space="preserve">
+        <value>Количество</value>
+    </data>
+    <data name="OrderTitle" xml:space="preserve">
+        <value>Заказ №{0}</value>
+    </data>
 </root>

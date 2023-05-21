@@ -19,11 +19,11 @@ public class OrdersViewModel : MvxViewModel
                 return;
             
             ProductsInOrder = value.OrderLists.ToDictionary(x => x.Product, x => x.Amount);
-            RaisePropertyChanged(nameof(ProductsInOrder));
             SetProperty(ref _selectedOrder, value);
+            RaisePropertyChanged(nameof(ProductsInOrder));
         }
     }
-
+    
     public List<string> OrderStatuses => new() { OrderStatusConstants.NewOrder, OrderStatusConstants.Completed };
     public Dictionary<Product, int> ProductsInOrder { get; private set; }
 

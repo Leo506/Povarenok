@@ -6,9 +6,10 @@
                   xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                   xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
                   xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
+                  xmlns:translation="clr-namespace:DemoExam.Translation;assembly=DemoExam.Translation"
                   mc:Ignorable="d"
-                  Height="400" Width="500"
-                  d:DesignHeight="400" d:DesignWidth="500" d:DataContext="{d:DesignInstance viewModels:OrdersViewModel}">
+                  Height="400" Width="700"
+                  d:DesignHeight="400" d:DesignWidth="700" d:DataContext="{d:DesignInstance viewModels:OrdersViewModel}">
     <views:MvxWindow.Resources>
         <Style x:Key="EditFieldName" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -16,6 +17,8 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <converters:ProductsAmountInStockToColorBrushConverter x:Key="OrderColorConverter"/>
+        <converters:NotNullConverter x:Key="NotNullConverter" />
+        <translation:Translate x:Key="Translate"/>
     </views:MvxWindow.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,8 +33,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Background="{Binding Converter={StaticResource OrderColorConverter}}">
-                        <TextBlock Text="{Binding OrderId, StringFormat=Заказ №{0}}" FontSize="20"/>
-                        <TextBlock Text="{Binding OrderData}" FontSize="15"/>
+                        <TextBlock Text="{Binding OrderId, StringFormat={x:Static translation:Translate.OrderTitle}}" FontSize="20"/>
+                        <TextBlock Text="{Binding OrderData, StringFormat=dd.MM.yyyy}" FontSize="15"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -55,42 +58,72 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 
-                <TextBlock Grid.ColumnSpan="2" Text="{Binding SelectedOrder.OrderId, StringFormat=Заказ №{0}, FallbackValue=Заказ №23}"
-                           HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                <TextBlock Grid.ColumnSpan="2" 
+                           Text="{Binding SelectedOrder.OrderId, StringFormat={x:Static translation:Translate.OrderTitle}}"
+                           HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Статус заказа" Style="{StaticResource EditFieldName}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" 
+                           Text="{Binding Source={StaticResource Translate}, Path=OrderStatus}" 
+                           Style="{StaticResource EditFieldName}"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 <ComboBox Grid.Row="1" Grid.Column="1" Margin="10"
                           ItemsSource="{Binding OrderStatuses}"
-                          SelectedItem="{Binding SelectedOrder.OrderStatus, FallbackValue=Новый}"/>
+                          SelectedItem="{Binding SelectedOrder.OrderStatus, FallbackValue=Новый}"
+                          Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата оформления" Style="{StaticResource EditFieldName}"/>
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SelectedOrder.OrderData}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" 
+                           Text="{Binding Source={StaticResource Translate}, Path=OrderDate}" 
+                           Style="{StaticResource EditFieldName}"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" 
+                           Text="{Binding SelectedOrder.OrderData, StringFormat=dd.MM.yyyy}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Дата доставки" Style="{StaticResource EditFieldName}"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" 
+                           Text="{Binding Source={StaticResource Translate}, Path=DeliveryDate}" 
+                           Style="{StaticResource EditFieldName}"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding SelectedOrder.OrderDeliveryDate}"
-                            VerticalAlignment="Center" Margin="10 0 10 0"/>
+                            VerticalAlignment="Center" Margin="10 0 10 0"
+                            Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="Пункт выдачи" Style="{StaticResource EditFieldName}"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" 
+                           Text="{Binding Source={StaticResource Translate}, Path=PickupPoint}" 
+                           Style="{StaticResource EditFieldName}"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding SelectedOrder.OrderPickupPointNavigation}"
                            Margin="10 0 10 0" TextWrapping="Wrap"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 
-                <TextBlock Grid.Row="5" Grid.Column="0" Text="Имя клиента" Style="{StaticResource EditFieldName}"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ClientName}" 
+                           Style="{StaticResource EditFieldName}"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedOrder.ClientName, FallbackValue=Guest}"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 
-                <TextBlock Grid.Row="6" Grid.Column="0" Text="Код получения" Style="{StaticResource EditFieldName}"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" 
+                           Text="{Binding Source={StaticResource Translate}, Path=GetCode}" 
+                           Style="{StaticResource EditFieldName}"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding SelectedOrder.GetCode, FallbackValue=000}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}"/>
                 
                 <DataGrid Grid.Row="7" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
                           ItemsSource="{Binding ProductsInOrder}"
                           ColumnWidth="*"
-                          GridLinesVisibility="None">
+                          GridLinesVisibility="None"
+                          Visibility="{Binding SelectedOrder, Converter={StaticResource NotNullConverter}}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Товар" Binding="{Binding Key.ProductName}"/>
-                        <DataGridTextColumn Header="Количество" Binding="{Binding Value}" />
+                        <DataGridTextColumn Header="{Binding Source={StaticResource Translate}, Path=Product}" 
+                                            Binding="{Binding Key.ProductName}"/>
+                        <DataGridTextColumn Header="{Binding Source={StaticResource Translate}, Path=Quantity}" 
+                                            Binding="{Binding Value}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
