@@ -5,8 +5,9 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
                  xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels;assembly=DemoExam.Core"
+                 xmlns:translation="clr-namespace:DemoExam.Translation;assembly=DemoExam.Translation"
                  mc:Ignorable="d"
-                 Title="ProductEditPage" Height="650" Width="470"
+                 Title="{x:Static translation:Translate.EditProduct}" Height="650" Width="470"
                  d:DataContext="{d:DesignInstance viewModels:ProductEditViewModel}">
     <views:MvxWindow.Resources>
         <Style TargetType="TextBlock">
@@ -16,6 +17,8 @@
             <Setter Property="Margin" Value="5" />
             <Setter Property="Padding" Value="10" />
         </Style>
+        
+        <translation:Translate x:Key="Translate"/>
     </views:MvxWindow.Resources>
 
     <Grid>
@@ -32,7 +35,7 @@
         <TextBlock Grid.Row="0" Text="{Binding ObservableProduct.ProductArticleNumber}"
                    FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
 
-        <GroupBox Grid.Row="1" Header="General">
+        <GroupBox Grid.Row="1" Header="{Binding Source={StaticResource Translate}, Path=General}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -45,20 +48,24 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Article number:" />
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ArticleNumber}" />
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10 0 0 0"
                            Text="{Binding ObservableProduct.ProductArticleNumber}" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Product name" />
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ProductName}" />
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
                          Text="{Binding ObservableProduct.ProductName}" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Product Description:" />
+                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ProductDescription}" />
                 <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10 0 10 5"
                          Text="{Binding ObservableProduct.ProductDescription}" TextWrapping="Wrap" AcceptsReturn="True" />
 
-                <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Product Category:" />
+                <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ProductCategory}" />
                 <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
                          Text="{Binding ObservableProduct.ProductCategory}" />
@@ -66,7 +73,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="2" Header="Cost and Discount">
+        <GroupBox Grid.Row="2" Header="{Binding Source={StaticResource Translate}, Path=CostAndDiscount}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -77,19 +84,21 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Cost" />
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ProductCost}" />
                 <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
                          Margin="10 0 0 0"
                          Text="{Binding ObservableProduct.ProductCost}" Width="30" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Current Discount (%):" />
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=CurrentDiscount}" />
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
                          Margin="10 0 0 0"
                          Text="{Binding ObservableProduct.CurrentDiscount}" Width="30" />
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="3" Header="Manufacture And Supplier">
+        <GroupBox Grid.Row="3" Header="{Binding Source={StaticResource Translate}, Path=ManufactureAndSupplier}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -100,49 +109,54 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Product Manufacture:" />
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ProductManufacture}" />
                 <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
                          Text="{Binding ObservableProduct.ProductManufacturer}" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Supplier:" />
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=Supplier}" />
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
                          Text="{Binding ObservableProduct.Supplier}" />
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="4" Header="Image">
+        <GroupBox Grid.Row="4" Header="{Binding Source={StaticResource Translate}, Path=Image}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Image" />
+                <TextBlock Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=ProductImage}" />
 
                 <StackPanel Grid.Column="1">
                     <Image HorizontalAlignment="Left"
                            Source="{Binding ObservableProduct.ProductPhoto}" Width="30" Height="30" />
-                    <Button Content="Change photo" Click="OnChangePhotoClick" />
+                    <Button Content="{Binding Source={StaticResource Translate}, Path=ChangePhoto}" Click="OnChangePhotoClick" />
                 </StackPanel>
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="5" Header="Stock">
+        <GroupBox Grid.Row="5" Header="{Binding Source={StaticResource Translate}, Path=Stock}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" HorizontalAlignment="Right" Text="Product Quantity In Stock:" />
+                <TextBlock Grid.Column="0" HorizontalAlignment="Right" 
+                           Text="{Binding Source={StaticResource Translate}, Path=QuantityInStock}" />
                 <TextBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"
                          Text="{Binding ObservableProduct.ProductQuantityInStock}" Width="50" />
             </Grid>
         </GroupBox>
 
-        <Button Grid.Row="6" Grid.ColumnSpan="2" Margin="70 20 70 20" Content="Save"
+        <Button Grid.Row="6" Grid.ColumnSpan="2" Margin="70 20 70 20" 
+                Content="{Binding Source={StaticResource Translate}, Path=Save}"
                 Command="{Binding CloseCommand}" />
 
     </Grid>
