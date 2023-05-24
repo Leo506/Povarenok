@@ -24,6 +24,9 @@ public partial class Product
         set => _supplierName = value;
     }
     
+    [NotMapped]
+    public decimal ProductCostWithDiscount => CurrentDiscount == 0 ? ProductCost : ProductCost - ProductCost * (CurrentDiscount / 100.0m);
+    
     public void Validate()
     {
         var validationResults = new List<ValidationResult>();

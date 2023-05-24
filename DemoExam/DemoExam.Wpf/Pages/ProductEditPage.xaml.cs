@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using DemoExam.Core.Utils;
 using DemoExam.Core.ViewModels;
+using DemoExam.Wpf.Utils;
 using Microsoft.Win32;
 using MvvmCross.Platforms.Wpf.Presenters.Attributes;
 using MvvmCross.Platforms.Wpf.Views;
@@ -28,5 +29,7 @@ public partial class ProductEditPage : MvxWindow<ProductEditViewModel>
         var byteArray = FileToByteArrayConverter.Convert(openFileDialog.FileName);
 
         ViewModel.UpdateProductPhoto(byteArray);
+
+        ProductPhoto.Source = BytesToBitmapConverter.Convert(byteArray);
     }
 }

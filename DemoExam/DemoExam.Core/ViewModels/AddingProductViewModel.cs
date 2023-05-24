@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Products;
 using MvvmCross.Commands;
@@ -24,14 +23,15 @@ public class AddingProductViewModel : MvxViewModel
         _alert = alert;
     }
 
-    public ObservableProduct ObservableProduct { get; set; } = new(new Product());
+    public Product Product { get; set; } = new();
+    
     public ICommand SaveAndCloseCommand => new MvxAsyncCommand(SaveAndClose);
 
     private async Task SaveAndClose()
     {
         try
         {
-            await _productsService.AddProduct(ObservableProduct.Product).ConfigureAwait(false);
+            await _productsService.AddProduct(Product).ConfigureAwait(false);
             await _navigationService.Close(this).ConfigureAwait(false);
         }
         catch (Exception e)
@@ -42,6 +42,6 @@ public class AddingProductViewModel : MvxViewModel
 
     public void SetProductPhoto(byte[] bytes)
     {
-        ObservableProduct.ProductPhoto = bytes;
+        Product.ProductPhoto = bytes;
     }
 }

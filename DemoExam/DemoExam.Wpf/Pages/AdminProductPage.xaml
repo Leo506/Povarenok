@@ -6,10 +6,10 @@
                     xmlns:local="clr-namespace:DemoExam.Wpf.Pages"
                     xmlns:viewModels="clr-namespace:DemoExam.Core.ViewModels.ProductsViewModel;assembly=DemoExam.Core"
                     xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
-                    xmlns:observableObjects="clr-namespace:DemoExam.Core.ObservableObjects;assembly=DemoExam.Core"
                     xmlns:dataElements="clr-namespace:DemoExam.Wpf.DataElements"
                     xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                     xmlns:translation="clr-namespace:DemoExam.Translation;assembly=DemoExam.Translation"
+                    xmlns:models="clr-namespace:DemoExam.Domain.Models;assembly=DemoExam.Domain"
                     mc:Ignorable="d"
                     d:DesignHeight="300" d:DesignWidth="900" Language="ru-Ru" d:DataContext="{d:DesignInstance viewModels:AdminProductsViewModel }">
     
@@ -95,7 +95,7 @@
                  HorizontalContentAlignment="Stretch">
 
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type observableObjects:ObservableProduct}">
+                <DataTemplate DataType="{x:Type models:Product}">
                     <Border CornerRadius="5"
                             BorderThickness="1"
                             BorderBrush="LightBlue"

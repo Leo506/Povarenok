@@ -51,7 +51,7 @@ public class OrderViewModel : MvxViewModel<User>
     public override async Task Initialize()
     {
         ProductsInOrder =
-            new MvxObservableCollection<ObservableOrder>(await _viewModelService.GetProductInOrder()
+            new MvxObservableCollection<ObservableOrder>(await _viewModelService.GetProductsInOrder()
                 .ConfigureAwait(false));
         PickupPoints =
             new MvxObservableCollection<PickupPoint>(await _viewModelService.GetPickupPoints().ConfigureAwait(false));
@@ -112,7 +112,7 @@ public class OrderViewModel : MvxViewModel<User>
         {
             var ticketPath = PdfGenerator.PdfGenerator.CreatePdfForOrder(Order.OrderId, DateTime.Now, OrderSum, OrderDiscount,
                 SelectedPickupPoint.ToString(), Order.GetCode ?? 0,
-                ProductsInOrder.ToDictionary(x => x.ObservableProduct.Product, x => x.Amount));
+                ProductsInOrder.ToDictionary(x => x.ObservableProduct, x => x.Amount));
             _alert.Alert("Success", "Success");
             // TODO replace by interface call
             new Process()

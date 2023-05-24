@@ -5,7 +5,7 @@ namespace DemoExam.Core.ObservableObjects;
 public class ObservableOrder : MvxNotifyPropertyChanged
 {
     private int _amount;
-    public ObservableProduct ObservableProduct { get; set; } = default!;
+    public Product ObservableProduct { get; set; } = default!;
 
     public int Amount
     {

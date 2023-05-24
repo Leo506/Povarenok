@@ -18,7 +18,7 @@ public class ClientProductsViewModel : ProductsViewModelBase
     {
         if (SelectedProduct is null) return;
         
-        await ProductsService.AddProductToOrder(SelectedProduct.Product);
+        await ProductsService.AddProductToOrder(SelectedProduct);
         await RaisePropertyChanged(nameof(CanOpenOrder)).ConfigureAwait(false);
     }
 }

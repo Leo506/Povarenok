@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Products;
 using DemoExam.Translation;
@@ -29,8 +28,8 @@ public class AdminProductsViewModel : ManagerProductsViewModel
     {
         if (SelectedProduct is null) return;
         
-        await NavigationService.Navigate<ProductEditViewModel, ObservableProduct>(SelectedProduct);
-        await RaisePropertyChanged(nameof(Products)).ConfigureAwait(false);
+        await NavigationService.Navigate<ProductEditViewModel, Product>(SelectedProduct);
+        await UpdateProducts().ConfigureAwait(false);
     }
     
     private async Task OpenAddProductDialog()
@@ -47,7 +46,7 @@ public class AdminProductsViewModel : ManagerProductsViewModel
         
         var choice = _alert.ShowChoice(Translate.DeleteProduct, Translate.AreYouSure);
         if (choice is ChoiceResult.Negative) return;
-        await ProductsService.DeleteProduct(SelectedProduct.Product).ConfigureAwait(false);
+        await ProductsService.DeleteProduct(SelectedProduct).ConfigureAwait(false);
         await UpdateProducts().ConfigureAwait(false);
     }
 }

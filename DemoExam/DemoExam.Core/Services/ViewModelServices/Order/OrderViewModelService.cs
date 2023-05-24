@@ -18,7 +18,7 @@ public class OrderViewModelService : IOrderViewModelService
         _pickupPointRepository = pickupPointRepository;
     }
 
-    public async Task<IEnumerable<ObservableOrder>> GetProductInOrder()
+    public async Task<IEnumerable<ObservableOrder>> GetProductsInOrder()
     {
         var items = new List<ObservableOrder>();
         foreach (var (productId, amount) in _orderService.GetOrderList())
@@ -26,7 +26,7 @@ public class OrderViewModelService : IOrderViewModelService
             var product = await _productRepository.GetAsync(productId).ConfigureAwait(false);
             items.Add(new ObservableOrder
             {
-                ObservableProduct = new ObservableProduct(product!),
+                ObservableProduct = product!, // TODO red flag!
                 Amount = amount
             });
         }

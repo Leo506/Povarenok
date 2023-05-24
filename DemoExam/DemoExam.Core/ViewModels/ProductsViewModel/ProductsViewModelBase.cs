@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Products;
 using DemoExam.Translation;
 using MvvmCross.Commands;
@@ -23,7 +22,7 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
         set => SetProperty(ref _sortOrderName, value);
     }
 
-    public MvxObservableCollection<ObservableProduct>? Products { get; set; }
+    public MvxObservableCollection<Product>? Products { get; set; }
     
     public ICommand ChangeSortOrderCommand => new MvxCommand(ChangeSortOrder);
 
@@ -53,7 +52,7 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
 
     public User User { get; set; }
 
-    public ObservableProduct? SelectedProduct
+    public Product? SelectedProduct
     {
         get => _selectedProduct;
         set => SetProperty(ref _selectedProduct, value);
@@ -64,10 +63,10 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
 
     private Func<double, bool> _discountSelectorPredicate = _ => true;
     private string _searchString;
-    private ObservableProduct? _selectedProduct;
+    private Product? _selectedProduct;
     private SortOrder _sortOrder;
     private string _sortOrderName;
-    private IEnumerable<ObservableProduct>? _allProducts;
+    private IEnumerable<Product>? _allProducts;
 
     public ProductsViewModelBase(IMvxNavigationService navigationService,
         IProductsService productsService)
@@ -79,8 +78,7 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
 
     public override async Task Initialize()
     {
-        var products = await ProductsService.GetAll().ConfigureAwait(false);
-        _allProducts = products.Select(x => new ObservableProduct(x));
+        _allProducts = await ProductsService.GetAll().ConfigureAwait(false);
         Products = new(_allProducts);
         await RaisePropertyChanged(nameof(Products)).ConfigureAwait(false);
         await RaisePropertyChanged(nameof(CurrentSelectionAmount)).ConfigureAwait(false);
@@ -119,8 +117,7 @@ public abstract class ProductsViewModelBase : MvxViewModel<User>
     
     protected async Task UpdateProducts()
     {
-        var products = await ProductsService.GetAll().ConfigureAwait(false);
-        _allProducts = products.Select(x => new ObservableProduct(x));
+        _allProducts = await ProductsService.GetAll().ConfigureAwait(false);
         UpdateProductsSelection();
     }
 
