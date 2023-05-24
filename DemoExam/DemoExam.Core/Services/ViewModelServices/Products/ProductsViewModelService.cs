@@ -22,7 +22,7 @@ public class ProductsViewModelService : IProductsViewModelService
 
     public Task DeleteProduct(ObservableProduct observableProduct)
     {
-        return _productsService.DeleteProduct(observableProduct);
+        return _productsService.DeleteProduct(observableProduct.Product);
     }
 
     public Task AddProductToOrder(ObservableProduct observableProduct)
@@ -37,5 +37,9 @@ public class ProductsViewModelService : IProductsViewModelService
         return _orderService.HasProductsInOrder();
     }
 
-    public Task<IEnumerable<ObservableProduct>> GetAllProducts() => _productsService.GetAll();
+    public async Task<IEnumerable<ObservableProduct>> GetAllProducts()
+    {
+        var products = await _productsService.GetAll().ConfigureAwait(false);
+        return products.Select(x => new ObservableProduct(x));
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
-using DemoExam.Core.Services.ViewModelServices.AddingProduct;
+using DemoExam.Core.Services.Products;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
@@ -14,13 +14,13 @@ public class AddingProductViewModel : MvxViewModel
 
 
     private readonly IMvxNavigationService _navigationService;
-    private readonly IAddingProductViewModelService _viewModelService;
+    private readonly IProductsService _productsService;
 
     public AddingProductViewModel(IMvxNavigationService navigationService,
-        IAddingProductViewModelService viewModelService, IAlert alert)
+        IProductsService productsService, IAlert alert)
     {
         _navigationService = navigationService;
-        _viewModelService = viewModelService;
+        _productsService = productsService;
         _alert = alert;
     }
 
@@ -31,7 +31,7 @@ public class AddingProductViewModel : MvxViewModel
     {
         try
         {
-            await _viewModelService.AddProductAsync(ObservableProduct.Product).ConfigureAwait(false);
+            await _productsService.AddProduct(ObservableProduct.Product).ConfigureAwait(false);
             await _navigationService.Close(this).ConfigureAwait(false);
         }
         catch (Exception e)

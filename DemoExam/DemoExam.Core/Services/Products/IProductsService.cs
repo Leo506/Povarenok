@@ -1,16 +1,14 @@
-﻿using DemoExam.Core.ObservableObjects;
-
-namespace DemoExam.Core.Services.Products;
+﻿namespace DemoExam.Core.Services.Products;
 
 public interface IProductsService
 {
-    Task<IEnumerable<ObservableProduct>> GetAll();
+    Task<IEnumerable<Product>> GetAll();
     
     Task<int> Count();
 
-    Task DeleteProduct(ObservableProduct observableProduct);
+    Task DeleteProduct(Product product);
 
-    Task AddProduct(ObservableProduct observableProduct);
+    Task AddProduct(Product product);
 
-    Task UpdateProduct(ObservableProduct observableProduct);
+    Task UpdateProduct(Product product);
 }

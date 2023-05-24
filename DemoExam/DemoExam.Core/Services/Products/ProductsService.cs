@@ -1,5 +1,4 @@
-﻿using DemoExam.Core.ObservableObjects;
-using DemoExam.Core.Repositories;
+﻿using DemoExam.Core.Repositories;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DemoExam.Core.Services.Products;
@@ -13,19 +12,23 @@ public class ProductsService : IProductsService
         _repository = repository;
     }
 
-    public async Task<IEnumerable<ObservableProduct>> GetAll()
+    public async Task<IEnumerable<Product>> GetAll()
     {
         var products = await _repository.GetAllAsync();
         return products.IsNullOrEmpty()
-            ? new List<ObservableProduct>()
-            : products.Select(product => new ObservableProduct(product));
+            ? Enumerable.Empty<Product>()
+            : products;
     }
 
     public Task<int> Count() => _repository.Count();
 
-    public Task DeleteProduct(ObservableProduct observableProduct) => _repository.DeleteAsync(observableProduct.Product);
+    public Task DeleteProduct(Product product) => _repository.DeleteAsync(product);
 
-    public Task AddProduct(ObservableProduct observableProduct) => _repository.AddAsync(observableProduct.Product);
+    public Task AddProduct(Product product)
+    {
+        product.Validate();
+        return _repository.AddAsync(product);
+    }
 
-    public Task UpdateProduct(ObservableProduct observableProduct) => _repository.UpdateAsync(observableProduct.Product);
+    public Task UpdateProduct(Product product) => _repository.UpdateAsync(product);
 }

@@ -29,7 +29,7 @@ public class ProductEditViewModel : MvxViewModel<ObservableProduct>
     {
         try
         {
-            await _productsService.UpdateProduct(ObservableProduct);
+            await _productsService.UpdateProduct(ObservableProduct.Product);
             await _navigationService.Close(this);
         }
         catch (Exception e)
