@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Services.Alert;
-using DemoExam.Core.Services.ViewModelServices.Products;
+using DemoExam.Core.Services.Products;
 using DemoExam.Translation;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -18,9 +18,9 @@ public class AdminProductsViewModel : ManagerProductsViewModel
 
     public ICommand DeleteProductCommand => new MvxAsyncCommand(DeleteProduct);
 
-    public AdminProductsViewModel(IMvxNavigationService navigationService, IProductsViewModelService viewModelService,
+    public AdminProductsViewModel(IMvxNavigationService navigationService, IProductsService productsService,
         IAlert alert) :
-        base(navigationService, viewModelService)
+        base(navigationService, productsService)
     {
         _alert = alert;
     }
@@ -47,7 +47,7 @@ public class AdminProductsViewModel : ManagerProductsViewModel
         
         var choice = _alert.ShowChoice(Translate.DeleteProduct, Translate.AreYouSure);
         if (choice is ChoiceResult.Negative) return;
-        await ViewModelService.DeleteProduct(SelectedProduct).ConfigureAwait(false);
+        await ProductsService.DeleteProduct(SelectedProduct.Product).ConfigureAwait(false);
         await UpdateProducts().ConfigureAwait(false);
     }
 }

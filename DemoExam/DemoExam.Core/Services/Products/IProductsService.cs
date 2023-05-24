@@ -11,4 +11,8 @@ public interface IProductsService
     Task AddProduct(Product product);
 
     Task UpdateProduct(Product product);
+    
+    Task AddProductToOrder(Product product);
+    
+    bool CanOpenOrder();
 }

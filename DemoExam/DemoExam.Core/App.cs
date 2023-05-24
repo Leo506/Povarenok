@@ -3,7 +3,6 @@ using DemoExam.Core.Services.Order;
 using DemoExam.Core.Services.Orders;
 using DemoExam.Core.Services.Products;
 using DemoExam.Core.Services.ViewModelServices.Order;
-using DemoExam.Core.Services.ViewModelServices.Products;
 using DemoExam.Core.ViewModels;
 using MvvmCross;
 using MvvmCross.IoC;
@@ -19,7 +18,6 @@ public class App : MvxApplication
         Mvx.IoCProvider.LazyConstructAndRegisterSingleton<IOrderService, OrderService>();
         Mvx.IoCProvider.RegisterType<IAuthService, AuthService>();
         Mvx.IoCProvider.RegisterType<IProductsService, ProductsService>();
-        Mvx.IoCProvider.RegisterType<IProductsViewModelService, ProductsViewModelService>();
         Mvx.IoCProvider.RegisterType<IOrderViewModelService, OrderViewModelService>();
         Mvx.IoCProvider.RegisterType<IOrdersService, OrdersService>();
 

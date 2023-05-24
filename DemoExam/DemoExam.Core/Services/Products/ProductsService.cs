@@ -1,4 +1,5 @@
 ﻿using DemoExam.Core.Repositories;
+using DemoExam.Core.Services.Order;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DemoExam.Core.Services.Products;
@@ -6,10 +7,12 @@ namespace DemoExam.Core.Services.Products;
 public class ProductsService : IProductsService
 {
     private readonly IProductRepository _repository;
+    private readonly IOrderService _orderService;
 
-    public ProductsService(IProductRepository repository)
+    public ProductsService(IProductRepository repository, IOrderService orderService)
     {
         _repository = repository;
+        _orderService = orderService;
     }
 
     public async Task<IEnumerable<Product>> GetAll()
@@ -31,4 +34,12 @@ public class ProductsService : IProductsService
     }
 
     public Task UpdateProduct(Product product) => _repository.UpdateAsync(product);
+    public Task AddProductToOrder(Product product)
+    {
+        _orderService.AddProductToOrder(product.ProductArticleNumber);
+        
+        return Task.CompletedTask;
+    }
+
+    public bool CanOpenOrder() => _orderService.HasProductsInOrder();
 }
