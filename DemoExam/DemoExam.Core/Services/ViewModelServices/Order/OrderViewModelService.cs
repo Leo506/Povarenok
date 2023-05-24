@@ -1,4 +1,5 @@
-﻿using DemoExam.Core.ObservableObjects;
+﻿using DemoExam.Core.Extensions;
+using DemoExam.Core.ObservableObjects;
 using DemoExam.Core.Repositories;
 using DemoExam.Core.Services.Order;
 
@@ -20,20 +21,28 @@ public class OrderViewModelService : IOrderViewModelService
 
     public async Task<IEnumerable<ObservableOrder>> GetProductsInOrder()
     {
-        var items = new List<ObservableOrder>();
+        var orders = new List<ObservableOrder>();
         foreach (var (productId, amount) in _orderService.GetOrderList())
         {
-            var product = await _productRepository.GetAsync(productId).ConfigureAwait(false);
-            items.Add(new ObservableOrder
-            {
-                ObservableProduct = product!, // TODO red flag!
-                Amount = amount
-            });
+            orders.AddIfNotNull(await CreateObservableOrder(productId, amount).ConfigureAwait(false));
         }
 
-        return items;
+        return orders;
     }
 
+    private async Task<ObservableOrder?> CreateObservableOrder(string productId, int amount)
+    {
+        var product = await _productRepository.GetAsync(productId).ConfigureAwait(false);
+        if (product is null)
+            return null;
+
+        return new ObservableOrder
+        {
+            ObservableProduct = product,
+            Amount = amount
+        };
+    }
+    
     public Task<List<PickupPoint>> GetPickupPoints()
     {
         return _pickupPointRepository.GetAllAsync();
