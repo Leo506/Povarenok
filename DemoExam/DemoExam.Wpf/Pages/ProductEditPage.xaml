@@ -66,8 +66,10 @@
 
                 <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" 
                            Text="{Binding Source={StaticResource Translate}, Path=ProductCategory}" />
-                <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                <ComboBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
+                         IsEditable="True"
+                         ItemsSource="{Binding Categories}"
                          Text="{Binding Product.ProductCategory}" />
 
             </Grid>
@@ -88,13 +90,13 @@
                            Text="{Binding Source={StaticResource Translate}, Path=ProductCost}" />
                 <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
                          Margin="10 0 0 0"
-                         Text="{Binding Product.ProductCost}" Width="30" />
+                         Text="{Binding Product.ProductCost}" Width="Auto" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" 
                            Text="{Binding Source={StaticResource Translate}, Path=CurrentDiscount}" />
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"
                          Margin="10 0 0 0"
-                         Text="{Binding Product.CurrentDiscount}" Width="30" />
+                         Text="{Binding Product.CurrentDiscount}" Width="Auto" />
             </Grid>
         </GroupBox>
 
@@ -111,15 +113,19 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" 
                            Text="{Binding Source={StaticResource Translate}, Path=ProductManufacture}" />
-                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
-                         Text="{Binding Product.ManufacturerName}" />
+                         IsEditable="True"
+                         ItemsSource="{Binding Manufacturers}"
+                         Text="{Binding ManufacturerName}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" 
                            Text="{Binding Source={StaticResource Translate}, Path=Supplier}" />
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                <ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Margin="10 0 10 0"
-                         Text="{Binding Product.SupplierName}" />
+                         IsEditable="True"
+                         ItemsSource="{Binding Suppliers}"
+                         Text="{Binding SupplierName}" />
             </Grid>
         </GroupBox>
 
@@ -151,7 +157,7 @@
                 <TextBlock Grid.Column="0" HorizontalAlignment="Right" 
                            Text="{Binding Source={StaticResource Translate}, Path=QuantityInStock}" />
                 <TextBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"
-                         Text="{Binding Product.ProductQuantityInStock}" Width="50" />
+                         Text="{Binding Product.ProductQuantityInStock}" Width="Auto" />
             </Grid>
         </GroupBox>
 

@@ -7,4 +7,9 @@ public class Manufacturer
     public string ManufacturerName { get; set; } = null!;
 
     public virtual ICollection<Product> Products { get; } = new List<Product>();
+
+    public override string ToString()
+    {
+        return ManufacturerName;
+    }
 }

@@ -36,6 +36,9 @@ public class Setup : MvxWpfSetup<Core.App>
         Mvx.IoCProvider.RegisterType<IOrderRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
         Mvx.IoCProvider.RegisterType<IPickupPointRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
         Mvx.IoCProvider.RegisterType<IOrdersRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
+        Mvx.IoCProvider.RegisterType<IManufacturerRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
+        Mvx.IoCProvider.RegisterType<ISupplierRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
+        Mvx.IoCProvider.RegisterType<ICategoriesRepository>(() => Mvx.IoCProvider.Resolve<TradeContext>());
         Mvx.IoCProvider.RegisterType<IAlert, MessageBoxAlert>();
         base.InitializeFirstChance(iocProvider);
     }

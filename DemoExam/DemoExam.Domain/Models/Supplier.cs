@@ -7,4 +7,9 @@ public class Supplier
     public string SupplierName { get; set; } = null!;
 
     public virtual ICollection<Domain.Models.Product> Products { get; } = new List<Domain.Models.Product>();
+
+    public override string ToString()
+    {
+        return SupplierName;
+    }
 }
