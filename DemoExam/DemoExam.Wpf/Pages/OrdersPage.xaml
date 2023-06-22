@@ -8,6 +8,7 @@
                   xmlns:converters="clr-namespace:DemoExam.Wpf.Converters"
                   xmlns:translation="clr-namespace:DemoExam.Translation;assembly=DemoExam.Translation"
                   mc:Ignorable="d"
+                  ResizeMode="NoResize"
                   Height="400" Width="700"
                   d:DesignHeight="400" d:DesignWidth="700" d:DataContext="{d:DesignInstance viewModels:OrdersViewModel}">
     <views:MvxWindow.Resources>

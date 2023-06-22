@@ -9,6 +9,7 @@
                  xmlns:observableObjects="clr-namespace:DemoExam.Core.ObservableObjects;assembly=DemoExam.Core"
                  xmlns:translation="clr-namespace:DemoExam.Translation;assembly=DemoExam.Translation"
                  mc:Ignorable="d"
+                 ResizeMode="NoResize"
                  Title="{x:Static translation:Translate.Order}" Height="450" Width="1000" Language="ru-Ru"
                  d:DataContext="{d:DesignInstance viewModels:OrderViewModel}"
                  x:Name="OrderPageWindow">
