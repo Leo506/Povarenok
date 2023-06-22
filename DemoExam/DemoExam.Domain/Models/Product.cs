@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DemoExam.Domain.Attributes;
 
 namespace DemoExam.Domain.Models;
 
 public partial class Product
 {
-    [Required] public string ProductArticleNumber { get; set; } = null!;
+    [Required] [ProductArticleNumber] public string ProductArticleNumber { get; set; } = null!;
 
     [Required] public string ProductName { get; set; } = null!;
 
@@ -39,4 +40,8 @@ public partial class Product
     public virtual ICollection<OrderList> OrderLists { get; } = new List<OrderList>();
 
     public virtual Supplier Supplier { get; set; } = null!;
+
+    public Product()
+    {
+    }
 }

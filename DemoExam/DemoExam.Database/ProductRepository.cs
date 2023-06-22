@@ -36,8 +36,10 @@ public partial class TradeContext : IProductRepository
         await SetManufacturerToProduct(product);
 
         await SetSupplierToProduct(product);
-        
-        Products.Update(product);
+
+        var dbProduct = await Products.FirstOrDefaultAsync(x => x.ProductArticleNumber == product.ProductArticleNumber);
+        dbProduct?.Update(product);
+        Products.Update(dbProduct!);
         await SaveChangesAsync();
     }
 

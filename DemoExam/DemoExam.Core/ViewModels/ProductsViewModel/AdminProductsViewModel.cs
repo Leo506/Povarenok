@@ -28,7 +28,7 @@ public class AdminProductsViewModel : ManagerProductsViewModel
     {
         if (SelectedProduct is null) return;
         
-        await NavigationService.Navigate<ProductEditViewModel, Product>(SelectedProduct);
+        await NavigationService.Navigate<ProductEditViewModel, Product>(new(SelectedProduct));
         await UpdateProducts().ConfigureAwait(false);
     }
     

@@ -222,6 +222,15 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current discount must be more or equals to 0.
+        /// </summary>
+        public static string CurrentDiscountMustBeMoreOrEqualToZero {
+            get {
+                return ResourceManager.GetString("CurrentDiscountMustBeMoreOrEqualToZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete product.
         /// </summary>
         public static string DeleteProduct {
@@ -339,6 +348,15 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manufacturer is required.
+        /// </summary>
+        public static string ManufacturerIsRequired {
+            get {
+                return ResourceManager.GetString("ManufacturerIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Product.
         /// </summary>
         public static string NewProduct {
@@ -447,11 +465,47 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product article number is required.
+        /// </summary>
+        public static string ProductArticleNumberIsRequired {
+            get {
+                return ResourceManager.GetString("ProductArticleNumberIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product article number must contains only digits and latin uppercase letters.
+        /// </summary>
+        public static string ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters {
+            get {
+                return ResourceManager.GetString("ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product article number must have 6 letters.
+        /// </summary>
+        public static string ProductArticlleNumberMustHaveSixLetters {
+            get {
+                return ResourceManager.GetString("ProductArticlleNumberMustHaveSixLetters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product category.
         /// </summary>
         public static string ProductCategory {
             get {
                 return ResourceManager.GetString("ProductCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product category is required.
+        /// </summary>
+        public static string ProductCategoryIsRequired {
+            get {
+                return ResourceManager.GetString("ProductCategoryIsRequired", resourceCulture);
             }
         }
         
@@ -470,6 +524,15 @@ namespace DemoExam.Translation {
         public static string ProductDescription {
             get {
                 return ResourceManager.GetString("ProductDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product description is requried.
+        /// </summary>
+        public static string ProductDescriptionIsRequired {
+            get {
+                return ResourceManager.GetString("ProductDescriptionIsRequired", resourceCulture);
             }
         }
         
@@ -497,6 +560,24 @@ namespace DemoExam.Translation {
         public static string ProductName {
             get {
                 return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product name is required.
+        /// </summary>
+        public static string ProductNameIsRequired {
+            get {
+                return ResourceManager.GetString("ProductNameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product quantity in stock must be more or equals to zero.
+        /// </summary>
+        public static string ProductQuantityInStockMustBeMoreOrEqualToZero {
+            get {
+                return ResourceManager.GetString("ProductQuantityInStockMustBeMoreOrEqualToZero", resourceCulture);
             }
         }
         
@@ -560,6 +641,15 @@ namespace DemoExam.Translation {
         public static string Supplier {
             get {
                 return ResourceManager.GetString("Supplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier is required.
+        /// </summary>
+        public static string SupplierIsRequired {
+            get {
+                return ResourceManager.GetString("SupplierIsRequired", resourceCulture);
             }
         }
         

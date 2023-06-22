@@ -10,4 +10,8 @@
       <ProjectReference Include="..\DemoExam.Translation\DemoExam.Translation.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.5.2" />
+    </ItemGroup>
+
 </Project>

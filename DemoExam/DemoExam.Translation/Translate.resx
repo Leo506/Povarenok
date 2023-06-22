@@ -192,4 +192,34 @@
     <data name="OrderTitle" xml:space="preserve">
         <value>Order №{0}</value>
     </data>
+    <data name="ProductArticleNumberIsRequired" xml:space="preserve">
+        <value>Product article number is required</value>
+    </data>
+    <data name="ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters" xml:space="preserve">
+        <value>Product article number must contains only digits and latin uppercase letters</value>
+    </data>
+    <data name="ProductArticlleNumberMustHaveSixLetters" xml:space="preserve">
+        <value>Product article number must have 6 letters</value>
+    </data>
+    <data name="ProductNameIsRequired" xml:space="preserve">
+        <value>Product name is required</value>
+    </data>
+    <data name="ProductDescriptionIsRequired" xml:space="preserve">
+        <value>Product description is requried</value>
+    </data>
+    <data name="ProductCategoryIsRequired" xml:space="preserve">
+        <value>Product category is required</value>
+    </data>
+    <data name="ProductQuantityInStockMustBeMoreOrEqualToZero" xml:space="preserve">
+        <value>Product quantity in stock must be more or equals to zero</value>
+    </data>
+    <data name="CurrentDiscountMustBeMoreOrEqualToZero" xml:space="preserve">
+        <value>Current discount must be more or equals to 0</value>
+    </data>
+    <data name="ManufacturerIsRequired" xml:space="preserve">
+        <value>Manufacturer is required</value>
+    </data>
+    <data name="SupplierIsRequired" xml:space="preserve">
+        <value>Supplier is required</value>
+    </data>
 </root>

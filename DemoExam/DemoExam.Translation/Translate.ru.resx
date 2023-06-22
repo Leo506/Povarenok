@@ -192,4 +192,34 @@
     <data name="OrderTitle" xml:space="preserve">
         <value>Заказ №{0}</value>
     </data>
+    <data name="ProductArticleNumberIsRequired" xml:space="preserve">
+        <value>Необходим артукул товара</value>
+    </data>
+    <data name="ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters" xml:space="preserve">
+        <value>Артикул товара должен содержать только цифр и заглавные латинские буквы</value>
+    </data>
+    <data name="ProductArticlleNumberMustHaveSixLetters" xml:space="preserve">
+        <value>Артикул товара должен быть из 6 символов</value>
+    </data>
+    <data name="ProductNameIsRequired" xml:space="preserve">
+        <value>Необходимо название товара</value>
+    </data>
+    <data name="ProductDescriptionIsRequired" xml:space="preserve">
+        <value>Необходимо описание товара</value>
+    </data>
+    <data name="ProductCategoryIsRequired" xml:space="preserve">
+        <value>Необходима категория товара</value>
+    </data>
+    <data name="ProductQuantityInStockMustBeMoreOrEqualToZero" xml:space="preserve">
+        <value>Количество товара на складе должно быть больше или рано 0</value>
+    </data>
+    <data name="CurrentDiscountMustBeMoreOrEqualToZero" xml:space="preserve">
+        <value>Текущая скидка должна быть больше или равна 0</value>
+    </data>
+    <data name="ManufacturerIsRequired" xml:space="preserve">
+        <value>Неоьходим производитель</value>
+    </data>
+    <data name="SupplierIsRequired" xml:space="preserve">
+        <value>Необходим поставщик</value>
+    </data>
 </root>

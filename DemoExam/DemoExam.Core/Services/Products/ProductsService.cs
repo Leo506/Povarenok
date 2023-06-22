@@ -1,4 +1,5 @@
 ﻿using DemoExam.Core.Repositories;
+using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.Order;
 using Microsoft.IdentityModel.Tokens;
 
@@ -8,11 +9,13 @@ public class ProductsService : IProductsService
 {
     private readonly IProductRepository _repository;
     private readonly IOrderService _orderService;
+    private readonly IAlert _alert;
 
-    public ProductsService(IProductRepository repository, IOrderService orderService)
+    public ProductsService(IProductRepository repository, IOrderService orderService, IAlert alert)
     {
         _repository = repository;
         _orderService = orderService;
+        _alert = alert;
     }
 
     public async Task<IEnumerable<Product>> GetAll()
@@ -33,7 +36,12 @@ public class ProductsService : IProductsService
         return _repository.AddAsync(product);
     }
 
-    public Task UpdateProduct(Product product) => _repository.UpdateAsync(product);
+    public Task UpdateProduct(Product product)
+    {
+        product.Validate();
+        return _repository.UpdateAsync(product);
+    }
+
     public Task AddProductToOrder(Product product)
     {
         _orderService.AddProductToOrder(product.ProductArticleNumber);
