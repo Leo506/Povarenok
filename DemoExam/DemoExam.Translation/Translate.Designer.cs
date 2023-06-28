@@ -546,6 +546,15 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product cost must be more or equals to 0.
+        /// </summary>
+        public static string ProductCostMustBeMoreOrEqualsToZero {
+            get {
+                return ResourceManager.GetString("ProductCostMustBeMoreOrEqualsToZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product description.
         /// </summary>
         public static string ProductDescription {

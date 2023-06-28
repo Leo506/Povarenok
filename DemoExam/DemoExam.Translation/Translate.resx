@@ -231,4 +231,7 @@
     <data name="Povarenok" xml:space="preserve">
         <value>Povarenok</value>
     </data>
+    <data name="ProductCostMustBeMoreOrEqualsToZero" xml:space="preserve">
+        <value>Product cost must be more or equals to 0</value>
+    </data>
 </root>

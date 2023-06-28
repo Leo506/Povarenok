@@ -21,17 +21,24 @@ public partial class ProductValidator : AbstractValidator<Product>
             .WithMessage(Translate.ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters);
 
         RuleFor(x => x.ProductName).NotEmpty().WithMessage(Translate.ProductNameIsRequired);
+        
         RuleFor(x => x.ProductDescription).NotEmpty().WithMessage(Translate.ProductDescriptionIsRequired);
+        
         RuleFor(x => x.ProductCategory).NotEmpty().WithMessage(Translate.ProductCategoryIsRequired);
+        
         RuleFor(x => x.ProductQuantityInStock).GreaterThanOrEqualTo(0)
             .WithMessage(Translate.ProductQuantityInStockMustBeMoreOrEqualToZero);
+        
         RuleFor(x => x.CurrentDiscount).GreaterThanOrEqualTo((byte)0)
             .WithMessage(Translate.CurrentDiscountMustBeMoreOrEqualToZero);
         RuleFor(x => x.CurrentDiscount).LessThanOrEqualTo((byte)100)
             .WithMessage(Translate.CurrentDiscountMustBeLessOrEqualsToOneHundred);
 
         RuleFor(x => x.ManufacturerName).NotEmpty().WithMessage(Translate.ManufacturerIsRequired);
+        
         RuleFor(x => x.SupplierName).NotEmpty().WithMessage(Translate.SupplierIsRequired);
+
+        RuleFor(x => x.ProductCost).GreaterThanOrEqualTo(0).WithMessage(Translate.ProductCostMustBeMoreOrEqualsToZero);
     }
 
     [GeneratedRegex("\\p{IsCyrillic}")]
