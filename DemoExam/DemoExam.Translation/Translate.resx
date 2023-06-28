@@ -228,4 +228,7 @@
     <data name="CurrentDiscountMustBeLessOrEqualsToOneHundred" xml:space="preserve">
         <value>Current discount must be less or equals to 100</value>
     </data>
+    <data name="Povarenok" xml:space="preserve">
+        <value>Povarenok</value>
+    </data>
 </root>

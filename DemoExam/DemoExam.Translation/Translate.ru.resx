@@ -228,4 +228,7 @@
     <data name="CurrentDiscountMustBeLessOrEqualsToOneHundred" xml:space="preserve">
         <value>Текущая скидка должна быть меньше или равна 100</value>
     </data>
+    <data name="Povarenok" xml:space="preserve">
+        <value>Поваренок</value>
+    </data>
 </root>

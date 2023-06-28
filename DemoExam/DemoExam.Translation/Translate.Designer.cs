@@ -474,6 +474,15 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Povarenok.
+        /// </summary>
+        public static string Povarenok {
+            get {
+                return ResourceManager.GetString("Povarenok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product.
         /// </summary>
         public static string Product {
