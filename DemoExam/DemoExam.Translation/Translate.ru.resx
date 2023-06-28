@@ -222,4 +222,7 @@
     <data name="SupplierIsRequired" xml:space="preserve">
         <value>Необходим поставщик</value>
     </data>
+    <data name="Discount" xml:space="preserve">
+        <value>Скидка {0}%</value>
+    </data>
 </root>

@@ -222,4 +222,7 @@
     <data name="SupplierIsRequired" xml:space="preserve">
         <value>Supplier is required</value>
     </data>
+    <data name="Discount" xml:space="preserve">
+        <value>Discount {0}%</value>
+    </data>
 </root>

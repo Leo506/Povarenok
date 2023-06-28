@@ -15,7 +15,6 @@
     
     <views:MvxWpfView.Resources>
         <converters:NullImageConverter x:Key="NullImageConverter" />
-        <converters:NumberToDiscountStringConverter x:Key="NumberToDiscountStringConverter" />
         <converters:DiscountToColorBrushConverter x:Key="DiscountToColorConverter" />
         <converters:DiscountToTextDecorationConverter x:Key="DiscountToTextDecorationConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -115,7 +114,7 @@
                                            FontWeight="Bold" />
                                 <TextBlock Text="{Binding ProductDescription}"
                                            TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding ProductManufacturer}" />
+                                <TextBlock Text="{Binding ManufacturerName}" />
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding ProductCost, StringFormat={}{0:C}}"
                                                TextDecorations="{Binding CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}" />
@@ -127,7 +126,7 @@
                             </StackPanel>
 
                             <TextBlock Grid.Column="2"
-                                       Text="{Binding CurrentDiscount, Converter={StaticResource NumberToDiscountStringConverter}}"
+                                       Text="{Binding CurrentDiscount, StringFormat={x:Static translation:Translate.Discount}}" 
                                        VerticalAlignment="Center" HorizontalAlignment="Center"
                                        FontSize="20" />
                         </Grid>
