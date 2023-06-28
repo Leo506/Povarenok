@@ -225,4 +225,7 @@
     <data name="Discount" xml:space="preserve">
         <value>Discount {0}%</value>
     </data>
+    <data name="CurrentDiscountMustBeLessOrEqualsToOneHundred" xml:space="preserve">
+        <value>Current discount must be less or equals to 100</value>
+    </data>
 </root>

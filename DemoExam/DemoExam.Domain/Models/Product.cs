@@ -1,38 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DemoExam.Domain.Attributes;
-
-namespace DemoExam.Domain.Models;
+﻿namespace DemoExam.Domain.Models;
 
 public partial class Product
 {
-    [Required] [ProductArticleNumber] public string ProductArticleNumber { get; set; } = null!;
+    public string ProductArticleNumber { get; set; } = null!;
 
-    [Required] public string ProductName { get; set; } = null!;
+    public string ProductName { get; set; } = null!;
 
-    [Required] public string ProductDescription { get; set; } = null!;
+    public string ProductDescription { get; set; } = null!;
 
-    [Required] public string ProductCategory { get; set; } = null!;
+    public string ProductCategory { get; set; } = null!;
 
     public byte[]? ProductPhoto { get; set; }
 
     public decimal ProductCost { get; set; }
 
     public byte? MaxDiscount { get; set; }
-
-    [Required]
-    [Range(0, int.MaxValue)]
+    
     public int ProductQuantityInStock { get; set; }
-
-    [Required]
-    [Range(0, byte.MaxValue)]
+    
     public byte CurrentDiscount { get; set; }
-
-    [Required]
-    [Range(0, int.MaxValue)]
+    
     public int ManufacturerId { get; set; }
-
-    [Required]
-    [Range(0, int.MaxValue)]
+    
     public int SupplierId { get; set; }
 
     public virtual Manufacturer Manufacturer { get; set; } = null!;

@@ -225,4 +225,7 @@
     <data name="Discount" xml:space="preserve">
         <value>Скидка {0}%</value>
     </data>
+    <data name="CurrentDiscountMustBeLessOrEqualsToOneHundred" xml:space="preserve">
+        <value>Текущая скидка должна быть меньше или равна 100</value>
+    </data>
 </root>

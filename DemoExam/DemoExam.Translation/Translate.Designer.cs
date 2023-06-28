@@ -222,6 +222,15 @@ namespace DemoExam.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current discount must be less or equals to 100.
+        /// </summary>
+        public static string CurrentDiscountMustBeLessOrEqualsToOneHundred {
+            get {
+                return ResourceManager.GetString("CurrentDiscountMustBeLessOrEqualsToOneHundred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current discount must be more or equals to 0.
         /// </summary>
         public static string CurrentDiscountMustBeMoreOrEqualToZero {
