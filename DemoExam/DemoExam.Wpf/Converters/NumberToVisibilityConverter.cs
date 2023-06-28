@@ -11,7 +11,7 @@ public class NumberToVisibilityConverter : IValueConverter
     {
         try
         {
-            var number = (double)value;
+            var number = System.Convert.ToDouble(value);
             return number == 0 ? Visibility.Hidden : Visibility.Visible;
         }
         catch (Exception e)

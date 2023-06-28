@@ -125,13 +125,14 @@
                                                TextDecorations="{Binding CurrentDiscount, Converter={StaticResource DiscountToTextDecorationConverter}}" />
                                     <TextBlock
                                         Text="{Binding ProductCostWithDiscount, StringFormat={}{0:C}}"
-                                        Visibility="{Binding ProductCostWithDiscount, Converter={StaticResource NumberToVisibilityConverter}}"
+                                        Visibility="{Binding CurrentDiscount, Converter={StaticResource NumberToVisibilityConverter}}"
                                         Margin="15 0 0 0" />
                                 </StackPanel>
                             </StackPanel>
 
                             <TextBlock Grid.Column="2"
                                        Text="{Binding CurrentDiscount, StringFormat={x:Static translation:Translate.Discount}}"
+                                       Visibility="{Binding CurrentDiscount, Converter={StaticResource NumberToVisibilityConverter}}"
                                        VerticalAlignment="Center" HorizontalAlignment="Center"
                                        FontSize="20" />
                         </Grid>
