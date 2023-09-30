@@ -1,0 +1,77 @@
+﻿@page "/Catalog"
+@using DemoExam.Blazor.Services.Basket
+@using DemoExam.Blazor.Components
+@inject HttpClient HttpClient
+@inject IBasketService BasketService
+
+<PageTitle>Каталог</PageTitle>
+
+<link rel="stylesheet" href="css/catalog.css"/>
+<link rel="stylesheet" href="css/open-iconic/font/css/open-iconic-bootstrap.min.css"/>
+
+
+<h2>Каталог товаров</h2>
+<div class="d-flex flex-row gap-5">
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="oi oi-magnifying-glass"></i>
+        </span>
+        <input class="form-control" type="text" placeholder="Поиск по названию" id="searchString" @oninput="OnSearchInputChanged"/>
+    </div>
+    <select class="form-select" name="category">
+        <option value="-1">Все категории</option>
+        <option value="1">Вилки</option>
+        <option value="2">Ложки</option>
+    </select>
+</div>
+
+<div class="cards-layout">
+    @if (_products is null)
+    {
+        for (var i = 0; i < 8; i++)
+        {
+            <ProductCardSkeleton />
+        }
+    }
+    else if (_products.Any())
+    {
+        foreach (var product in _products)
+        {
+            <ProductCard Product="product"/>
+        }
+    }
+    else
+    {
+        <p>Нет товаров</p>
+    }
+</div>
+
+@if (BasketService.TotalProductsCount > 0)
+{
+    <a href="#" class="btn btn-primary fab d-flex align-items-center justify-content-center">
+        <i class="oi oi-basket" style="font-size: 35px"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            @BasketService.TotalProductsCount
+        </span>
+    </a>
+}
+
+@code {
+
+    private IEnumerable<ProductDto>? _products;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _products = await HttpClient.GetFromJsonAsync<List<ProductDto>>("catalog") ?? new List<ProductDto>();
+        BasketService.BasketContentChanged += StateHasChanged;
+    }
+
+    private async Task OnSearchInputChanged(ChangeEventArgs args)
+    {
+        var searchString = args.Value as string;
+        var newProducts = await HttpClient.GetFromJsonAsync<List<ProductDto>>($"search?searchString={searchString}");
+        if (newProducts?.Any() is true)
+            _products = newProducts;
+    }
+
+}

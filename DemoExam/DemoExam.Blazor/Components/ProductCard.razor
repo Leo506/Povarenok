@@ -1,0 +1,42 @@
+﻿@using DemoExam.Blazor.Services.Basket
+@inject IBasketService BasketService
+
+<div class="card shadow">
+    <a href="#">
+        <img class="card-img-top" src="@ImageSource" alt=""/>
+    </a>
+    <div class="card-body">
+        <h5 class="card-title">@Product.ProductName</h5>
+        <p class="card-text">@Product.ProductDescription</p>
+        <div class="add-panel">
+            <p class="card-text price d-block">@Product.ProductCost руб.</p>
+            @if (BasketService.GetProductAmount(Product) > 0)
+            {
+                <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button" 
+                        @onclick="() => BasketService.RemoveProduct(Product)">
+                    <i class="oi oi-minus"></i>
+                </button>
+                <p class="d-block">@BasketService.GetProductAmount(Product)</p>
+                <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button"
+                        @onclick="() => BasketService.AddProduct(Product)">
+                    <i class="oi oi-plus"></i>
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-outline-primary" @onclick="() => BasketService.AddProduct(Product)">
+                    В корзину
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private string ImageSource => $"data:image/jpg;base64, {Product.ProductPhoto}";
+
+    [Parameter]
+    public ProductDto Product { get; set; } = default!;
+
+}
