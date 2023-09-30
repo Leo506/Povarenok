@@ -5,74 +5,22 @@ namespace DemoExam.Web.Models;
 public class CatalogViewModel
 {
     public string SearchString { get; set; } = default!;
-    
-    public List<Product> Products { get; set; } = new()
+
+    public List<Product> Products { get; set; }
+
+    public CatalogViewModel()
     {
-        new Product()
+        Products = new List<Product>();
+        for (int i = 0; i < 10; i++)
         {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
-        },
-        new Product()
-        {
-            ProductName = "Вилка",
-            ProductDescription = "gegegegegegegeg",
-            ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
+            Products.Add(new()
+            {
+                ProductArticleNumber = $"{i}",
+                ProductName = "Вилка",
+                ProductDescription = "gegegegegegegeg",
+                ProductCost = 153,
+                ProductPhoto = File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg")
+            });
         }
-    };
+    }
 }

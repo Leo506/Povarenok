@@ -41,7 +41,7 @@ div.card:hover {
     justify-content: space-between;
 }
 
-.add-panel button {
+.change-amount-button {
     width: 35px;
     height: 35px;
 }

@@ -12,50 +12,106 @@
 }
 
 <h2>Каталог товаров</h2>
-<form asp-action="Index">
-    <div class="d-flex flex-row gap-5">
-        <div class="input-group">
-            <span class="input-group-text">
-                <i class="bi bi-search"></i>
-            </span>
-            <input class="form-control" type="text" placeholder="Поиск по названию" name="SearchString"/>
-        </div>
-        <select class="form-select" name="category">
-            <option value="-1">Все категории</option>
-            <option value="1">Вилки</option>
-            <option value="2">Ложки</option>
-        </select>
+<div class="d-flex flex-row gap-5">
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input class="form-control" type="text" placeholder="Поиск по названию" id="searchString"/>
     </div>
-</form>
-
-<div class="cards-layout">
-    @foreach (var product in Model.Products)
-    {
-        var base64 = Convert.ToBase64String(product.ProductPhoto!);
-        var imageSrc = $"data:image/jpg;base64, {base64}";
-        <div class="card shadow">
-            <a href="#">
-                <img class="card-img-top" src="@imageSrc" alt=""/>
-                <div class="card-body">
-                    <h5 class="card-title">@product.ProductName</h5>
-                    <p class="card-text">@product.ProductDescription</p>
-                    <div class="add-panel">
-                        <p class="card-text price d-block">@product.ProductCost руб.</p>
-                        <button class="btn btn-outline-dark rounded-circle p-0">
-                            <i class="bi bi-dash-lg"></i>
-                        </button>
-                        <p class="d-block">1</p>
-                        <button class="btn btn-outline-dark rounded-circle p-0">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
-                    </div>
-                </div>
-            </a>
-        </div>
-    }
+    <select class="form-select" name="category">
+        <option value="-1">Все категории</option>
+        <option value="1">Вилки</option>
+        <option value="2">Ложки</option>
+    </select>
 </div>
 
-<a href="#" class="btn btn-primary fab d-flex align-items-center justify-content-center">
-    <i class="bi bi-bag"></i>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1</span>
-</a>
+<div class="cards-layout">
+</div>
+
+<script>
+const products = @Json.Serialize(Model.Products);
+let productsForRender = products.copyWithin();
+const basket = {};
+window.onload = () => {
+    $('#searchString')[0].addEventListener('input', onSearchChanged);
+    renderProducts();
+};
+
+function onSearchChanged(event) {
+    const searchString = event.target.value.toLowerCase();
+    productsForRender = products.filter(x => x['productName'].toLowerCase().includes(searchString));
+    renderProducts();
+}
+
+function addProductToBasket(articul) {
+    console.log(`Add product with articul ${articul} to basket`);
+    if (basket[articul] === null || basket[articul] === undefined)
+        basket[articul] = 1;
+    else
+        basket[articul]++;
+    console.log(`Products with articul ${articul} in basket: ${basket[articul]}`);
+    renderProducts();
+}
+
+function removeProductFromBusket(articul) {
+    if (basket[articul] === null || basket[articul] === undefined)
+        return;
+    basket[articul]--;
+    renderProducts();
+}
+
+function renderProducts() {
+    let newCardsLayout = '';
+    productsForRender.forEach(product => {
+        const imageSrc = `data:image/jpg;base64, ${product['productPhoto']}`;
+        newCardsLayout += `
+            <div class="card shadow">
+                <a href="#">
+                    <img class="card-img-top" src="${imageSrc}" alt=""/>
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">${product['productName']}</h5>
+                        <p class="card-text">${product['productDescription']}</p>
+                        <div class="add-panel">
+                            <p class="card-text price d-block">${product['productCost']} руб.</p>`;
+        const amountInBasket = basket[product['productArticleNumber']];
+        if (amountInBasket) {
+            newCardsLayout += `
+                <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button" onclick="removeProductFromBusket(${product['productArticleNumber']})">
+                    <i class="bi bi-dash-lg"></i>
+                </button>
+                <p class="d-block">${amountInBasket}</p>
+                <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button" onclick="addProductToBasket(${product['productArticleNumber']})">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            `;
+        } else {
+            newCardsLayout += `
+            <button class="btn btn-outline-primary" onclick="addProductToBasket(${product['productArticleNumber']})">
+                В корзину
+            </button>
+            `;
+        }
+        newCardsLayout += `
+                    </div>
+                </div>
+        </div>
+        `;
+    });
+    newCardsLayout += '</div>';
+    
+    const totalCount = Object.values(basket).reduce((a, b) => a + b, 0);
+    if (totalCount > 0) {
+        newCardsLayout += `
+            <a href="#" class="btn btn-primary fab d-flex align-items-center justify-content-center" id="basketButton">
+                <i class="bi bi-bag"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">${totalCount}</span>
+            </a>
+        `;
+    }
+    
+    const cardsLayout = $('.cards-layout')[0];
+    cardsLayout.innerHTML = newCardsLayout;
+}
+</script>
