@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.PdfGenerator", "De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Domain", "DemoExam.Domain\DemoExam.Domain.csproj", "{390F358E-3984-4F56-B21F-8BD66C841BF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Web", "DemoExam.Web\DemoExam.Web.csproj", "{B3E47F93-CD81-4339-AB06-AF0806329624}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{390F358E-3984-4F56-B21F-8BD66C841BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{390F358E-3984-4F56-B21F-8BD66C841BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{390F358E-3984-4F56-B21F-8BD66C841BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E47F93-CD81-4339-AB06-AF0806329624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E47F93-CD81-4339-AB06-AF0806329624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E47F93-CD81-4339-AB06-AF0806329624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E47F93-CD81-4339-AB06-AF0806329624}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
