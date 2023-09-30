@@ -5,9 +5,9 @@ namespace DemoExam.Web.Controllers;
 
 public class CatalogController : Controller
 {
-    // GET
-    public IActionResult Index()
+    public IActionResult Index(string searchString, int category)
     {
-        return View(new ListOfProductsViewModel());
+        var model = new CatalogViewModel();
+        return View(model);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace DemoExam.Web.Models;
 
-public class ListOfProductsViewModel
+public class CatalogViewModel
 {
+    public string SearchString { get; set; } = default!;
+    
     public List<Product> Products { get; set; } = new()
     {
         new Product()

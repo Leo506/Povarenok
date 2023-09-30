@@ -1,4 +1,4 @@
-﻿@model ListOfProductsViewModel
+﻿@model CatalogViewModel
 
 @{
     ViewData["Title"] = "Каталог";
@@ -12,6 +12,21 @@
 }
 
 <h2>Каталог товаров</h2>
+<form asp-action="Index">
+    <div class="d-flex flex-row gap-5">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+            <input class="form-control" type="text" placeholder="Поиск по названию" name="SearchString"/>
+        </div>
+        <select class="form-select" name="category">
+            <option value="-1">Все категории</option>
+            <option value="1">Вилки</option>
+            <option value="2">Ложки</option>
+        </select>
+    </div>
+</form>
 
 <div class="cards-layout">
     @foreach (var product in Model.Products)
