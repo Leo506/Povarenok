@@ -1,11 +1,11 @@
-﻿div.card {
+﻿::deep div.card {
     width: 18rem;
     margin-top: 10px;
     margin-bottom: 10px;
     transition: all 0.3s;
 }
 
-div.card a {
+::deep div.card a {
     text-decoration: none;
     color: black;
 }
@@ -17,11 +17,11 @@ div.card a {
     justify-content: space-between;
 }
 
-div.card:hover {
+::deep div.card:hover {
     transform: scale(1.05);
 }
 
-.price {
+::deep .price {
     font-weight: 500;
     font-size: x-large;
 }
@@ -35,22 +35,19 @@ div.card:hover {
     border-radius: 50%;
 }
 
-.add-panel {
+::deep .add-panel {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.change-amount-button {
+::deep .change-amount-button {
     width: 35px;
     height: 35px;
 }
 
-.bi {
-    font-size: x-large !important;
-}
 
-.image-placeholder {
+::deep .image-placeholder {
     background-color: #868e96;
     height: 240px;
 }

@@ -1,0 +1,29 @@
+﻿@using DemoExam.Blazor.Services.Basket
+@inject IBasketService BasketService
+
+@if (BasketService.GetProductAmount(Product) > 0)
+{
+    <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button"
+            @onclick="() => BasketService.RemoveProduct(Product)">
+        <i class="oi oi-minus"></i>
+    </button>
+    <p class="d-block">@BasketService.GetProductAmount(Product)</p>
+    <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button"
+            @onclick="() => BasketService.AddProduct(Product)">
+        <i class="oi oi-plus"></i>
+    </button>
+}
+else
+{
+    <button class="btn btn-outline-primary" @onclick="() => BasketService.AddProduct(Product)">
+        В корзину
+    </button>
+}
+
+
+@code {
+
+    [Parameter]
+    public ProductDto Product { get; set; } = default!;
+
+}

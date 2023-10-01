@@ -1,0 +1,80 @@
+﻿@page "/catalog/{article}"
+@using DemoExam.Blazor.Services.Basket
+@inject HttpClient HttpClient
+@inject IBasketService BasketService
+
+<link rel="stylesheet" href=""/>
+
+@if (_product is null)
+{
+    // Show skeleton
+}
+else
+{
+    <a href="/catalog" class="btn btn-outline-info mb-2">
+        <i class="oi oi-arrow-left"/>
+        <span>Назад</span>
+    </a>
+    <div class="row">
+        <div class="col-md">
+            <img src="@ImageSource" alt="" class="product-image shadow rounded"/>
+        </div>
+        <div class="col-md">
+            <h1>@_product.ProductName</h1>
+            <p>@_product.ProductDescription</p>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Произодитель</th>
+                    <td>@_product.ManufacturerName</td>
+                </tr>
+                <tr>
+                    <th>Категория</th>
+                    <td>@_product.ProductCategory</td>
+                </tr>
+                <tr class="cost-row">
+                    <th>Стоимость</th>
+                    <td>@_product.ProductCost руб.</td>
+                </tr>
+
+                </tbody>
+            </table>
+            <div class="d-flex flex-row">
+                @if (BasketService.GetProductAmount(_product) > 0)
+                {
+                    <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button"
+                            @onclick="() => BasketService.RemoveProduct(_product)">
+                        <i class="oi oi-minus"></i>
+                    </button>
+                    <p class="d-block amount-text">@BasketService.GetProductAmount(_product)</p>
+                    <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button"
+                            @onclick="() => BasketService.AddProduct(_product)">
+                        <i class="oi oi-plus"></i>
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-outline-primary" @onclick="() => BasketService.AddProduct(_product)">
+                        В корзину
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    private ProductDto? _product;
+    private string? ImageSource => $"data:image/jpg;base64, {_product?.ProductPhoto}";
+
+    [Parameter]
+    public string Article { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _product = await HttpClient.GetFromJsonAsync<ProductDto>($"catalog/{Article}");
+        StateHasChanged();
+    }
+
+}

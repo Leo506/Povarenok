@@ -1,0 +1,26 @@
+﻿.change-amount-button {
+    width: 40px;
+    height: 40px;
+}
+
+.oi {
+    font-size: 20px;
+}
+
+.amount-text {
+    font-size: 30px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.product-image {
+    width: 30rem;
+}
+
+.cost-row {
+    font-size: 30px;
+}
+
+.btn {
+    font-size: 20px;
+}

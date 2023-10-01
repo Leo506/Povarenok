@@ -49,4 +49,16 @@ public class CatalogController : ControllerBase
         
         return Ok(products);
     }
+    
+    [HttpGet("{article}")]
+    public IActionResult FindProducts(string article)
+    {
+        return Ok(new ProductDto()
+        {
+            ProductArticleNumber = article,
+            ProductName = "Вилка",
+            ProductCost = 153,
+            ProductPhoto = Convert.ToBase64String(System.IO.File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg"))
+        });
+    }
 }
