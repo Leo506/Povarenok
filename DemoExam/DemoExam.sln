@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.PdfGenerator", "De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Domain", "DemoExam.Domain\DemoExam.Domain.csproj", "{390F358E-3984-4F56-B21F-8BD66C841BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Web", "DemoExam.Web\DemoExam.Web.csproj", "{B3E47F93-CD81-4339-AB06-AF0806329624}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Blazor", "DemoExam.Blazor\DemoExam.Blazor.csproj", "{3F9E256F-870A-48E7-B059-7D6B52EBC958}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoExam.Blazor.Server", "DemoExam.Blazor.Server\DemoExam.Blazor.Server.csproj", "{69BCE022-D6B9-4088-A4C3-C58980A4449C}"
@@ -59,10 +57,6 @@ Global
 		{390F358E-3984-4F56-B21F-8BD66C841BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{390F358E-3984-4F56-B21F-8BD66C841BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{390F358E-3984-4F56-B21F-8BD66C841BF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3E47F93-CD81-4339-AB06-AF0806329624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3E47F93-CD81-4339-AB06-AF0806329624}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3E47F93-CD81-4339-AB06-AF0806329624}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3E47F93-CD81-4339-AB06-AF0806329624}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F9E256F-870A-48E7-B059-7D6B52EBC958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F9E256F-870A-48E7-B059-7D6B52EBC958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F9E256F-870A-48E7-B059-7D6B52EBC958}.Release|Any CPU.ActiveCfg = Release|Any CPU

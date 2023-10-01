@@ -20,6 +20,7 @@ public class CatalogController : ControllerBase
                 ProductArticleNumber = i.ToString(),
                 ProductName = "Вилка",
                 ProductCost = 153,
+                ProductCategory = "Вилки",
                 ProductPhoto = Convert.ToBase64String(System.IO.File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg"))
             });
 
@@ -28,8 +29,8 @@ public class CatalogController : ControllerBase
         return Ok(products);
     }
     
-    [HttpGet("/search")]
-    public IActionResult FindProducts([FromQuery] string searchString)
+    [HttpGet("search")]
+    public IActionResult FindProducts([FromQuery] string searchString, [FromQuery] string category)
     {
         Thread.Sleep(2_000);
         
