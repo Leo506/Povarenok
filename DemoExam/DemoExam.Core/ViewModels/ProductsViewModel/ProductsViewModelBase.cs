@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.Services.Products;
+using DemoExam.Domain.Services.Products;
 using DemoExam.Translation;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;

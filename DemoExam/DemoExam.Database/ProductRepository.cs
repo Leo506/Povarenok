@@ -1,4 +1,4 @@
-﻿using DemoExam.Core.Repositories;
+﻿using DemoExam.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Database;
@@ -75,4 +75,18 @@ public partial class TradeContext : IProductRepository
 
     public Task<bool> Contains(string articleNumber) => 
         Products.AnyAsync(x => x.ProductArticleNumber == articleNumber);
+
+    public async Task<IEnumerable<Product>> Find(string searchString, string category)
+    {
+        var products = await GetAllAsync().ConfigureAwait(false);
+        return products.Where(x =>
+            x.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase) && x.ProductCategory == category);
+    }
+
+    public async Task<IEnumerable<Product>> Find(string searchString)
+    {
+        var products = await GetAllAsync().ConfigureAwait(false);
+        return products.Where(x =>
+            x.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+    }
 }

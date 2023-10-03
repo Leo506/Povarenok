@@ -1,3 +1,9 @@
+using DemoExam.Blazor.Server.Mapping;
+using DemoExam.Database;
+using DemoExam.Domain.Repositories;
+using DemoExam.Domain.Services.Order;
+using DemoExam.Domain.Services.Products;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +16,13 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policyBuilder => policyBuilder.AllowAnyOrigin());
 });
+
+builder.Services
+    .AddTransient<IProductRepository, TradeContext>()
+    .AddTransient<IOrderRepository, TradeContext>()
+    .AddTransient<IOrderService, OrderService>()
+    .AddTransient<IProductsService, ProductsService>()
+    .AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 

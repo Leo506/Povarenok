@@ -3,13 +3,20 @@
 
 <div class="card shadow">
     <a href="/catalog/@Product.ProductArticleNumber">
-        <img class="card-img-top" src="@ImageSource" alt=""/>
+        @if (Product.ProductPhoto is null)
+        {
+            <img class="card-img-top p-5" src="images/default_image.png" alt=""/>
+        }
+        else
+        {
+            <img class="card-img-top @Product.ProductPhoto" src="@ImageSource" alt=""/>
+        }
     </a>
     <div class="card-body">
         <h5 class="card-title">@Product.ProductName</h5>
         <p class="card-text">@Product.ProductDescription</p>
         <div class="add-panel">
-            <p class="card-text price d-block">@Product.ProductCost руб.</p>
+            <p class="card-text price d-block">@Product.ProductCost.ToString("F2") руб.</p>
             <AddToBasketPanel Product="Product"/>
         </div>
     </div>

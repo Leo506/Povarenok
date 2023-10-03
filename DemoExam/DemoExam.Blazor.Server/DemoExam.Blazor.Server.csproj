@@ -7,12 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DemoExam.Blazor.Shared\DemoExam.Blazor.Shared.csproj" />
+      <ProjectReference Include="..\DemoExam.Database\DemoExam.Database.csproj" />
+      <ProjectReference Include="..\DemoExam.Domain\DemoExam.Domain.csproj" />
     </ItemGroup>
 
 </Project>

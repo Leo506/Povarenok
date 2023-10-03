@@ -1,4 +1,4 @@
-﻿using DemoExam.Core.Repositories;
+﻿using DemoExam.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Database;

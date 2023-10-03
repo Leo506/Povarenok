@@ -1,4 +1,6 @@
-﻿using DemoExam.Blazor.Shared;
+﻿using AutoMapper;
+using DemoExam.Blazor.Shared;
+using DemoExam.Domain.Services.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoExam.Blazor.Server.Controllers;
@@ -7,58 +9,37 @@ namespace DemoExam.Blazor.Server.Controllers;
 [Route("[controller]")]
 public class CatalogController : ControllerBase
 {
-    [HttpGet("")]
-    public IActionResult GetCatalog()
+    private readonly IProductsService _productsService;
+    private readonly IMapper _mapper;
+    
+    public CatalogController(IProductsService productsService, IMapper mapper)
     {
-        Thread.Sleep(2_000);
-        
-        var products = new List<ProductDto>();
-        for (int i = 0; i < 10; i++)
-        {
-            products.Add(new()
-            {
-                ProductArticleNumber = i.ToString(),
-                ProductName = "Вилка",
-                ProductCost = 153,
-                ProductCategory = "Вилки",
-                ProductPhoto = Convert.ToBase64String(System.IO.File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg"))
-            });
+        _productsService = productsService;
+        _mapper = mapper;
+    }
 
-        }
-        
-        return Ok(products);
+    [HttpGet("")]
+    public async Task<IActionResult> GetCatalog()
+    {
+        await Task.Delay(2_000).ConfigureAwait(false);
+
+        var products = await _productsService.GetAll().ConfigureAwait(false);
+        var productDtos = products.Select(x => _mapper.Map<ProductDto>(x));
+        return Ok(productDtos);
     }
     
     [HttpGet("search")]
-    public IActionResult FindProducts([FromQuery] string searchString, [FromQuery] string category)
+    public async Task<IActionResult> FindProducts([FromQuery, ] string searchString = "", [FromQuery] string category = "all")
     {
-        Thread.Sleep(2_000);
-        
-        var products = new List<ProductDto>();
-        for (int i = 0; i < 3; i++)
-        {
-            products.Add(new()
-            {
-                ProductArticleNumber = i.ToString(),
-                ProductName = "Вилка",
-                ProductCost = 153,
-                ProductPhoto = Convert.ToBase64String(System.IO.File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg"))
-            });
-
-        }
-        
-        return Ok(products);
+        var products = await _productsService.FindProduct(searchString, category);
+        var productDtos = products.Select(x => _mapper.Map<ProductDto>(x));
+        return Ok(productDtos);
     }
     
     [HttpGet("{article}")]
-    public IActionResult FindProducts(string article)
+    public async Task<IActionResult> FindProducts(string article)
     {
-        return Ok(new ProductDto()
-        {
-            ProductArticleNumber = article,
-            ProductName = "Вилка",
-            ProductCost = 153,
-            ProductPhoto = Convert.ToBase64String(System.IO.File.ReadAllBytes(@"D:\DemoExam\DemoExam\DatabaseFiller\Pictures\B736H6.jpg"))
-        });
+        var product = await _productsService.GetByArticleNumber(article);
+        return Ok(_mapper.Map<ProductDto>(product));
     }
 }

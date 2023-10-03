@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using DemoExam.Core.Services.Alert;
+using DemoExam.Domain.Services.Alert;
 
 namespace DemoExam.Wpf;
 

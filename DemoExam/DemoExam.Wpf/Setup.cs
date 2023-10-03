@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using DemoExam.Core.Repositories;
-using DemoExam.Core.Services.Alert;
 using DemoExam.Core.ViewModels.ProductsViewModel;
 using DemoExam.Database;
+using DemoExam.Domain.Repositories;
+using DemoExam.Domain.Services.Alert;
 using DemoExam.Translation;
 using DemoExam.Wpf.Pages;
 using Microsoft.Extensions.Logging;

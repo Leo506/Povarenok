@@ -17,7 +17,14 @@ else
     </a>
     <div class="row">
         <div class="col-md">
-            <img src="@ImageSource" alt="" class="product-image shadow rounded"/>
+            @if (_product.ProductPhoto is null)
+            {
+                <img src="images/default_image.png" alt="" class="product-image shadow rounded"/>
+            }
+            else
+            {
+                <img src="@ImageSource" alt="" class="product-image shadow rounded"/>
+            }
         </div>
         <div class="col-md">
             <h1>@_product.ProductName</h1>
@@ -66,7 +73,7 @@ else
 @code {
 
     private ProductDto? _product;
-    private string? ImageSource => $"data:image/jpg;base64, {_product?.ProductPhoto}";
+    private string ImageSource => $"data:image/jpg;base64, {_product?.ProductPhoto}";
 
     [Parameter]
     public string Article { get; set; } = default!;

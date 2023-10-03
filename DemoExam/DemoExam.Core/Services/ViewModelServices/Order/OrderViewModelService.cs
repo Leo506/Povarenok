@@ -1,7 +1,7 @@
 ﻿using DemoExam.Core.Extensions;
 using DemoExam.Core.ObservableObjects;
-using DemoExam.Core.Repositories;
-using DemoExam.Core.Services.Order;
+using DemoExam.Domain.Repositories;
+using DemoExam.Domain.Services.Order;
 
 namespace DemoExam.Core.Services.ViewModelServices.Order;
 

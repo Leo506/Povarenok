@@ -20,11 +20,11 @@
     </div>
     <select class="form-select" name="category" @bind="_categoryFilter" @bind:after="OnCategoryFilterChanged">
         <option value="all">Все категории</option>
-        @if (_products?.Any() is true)
+        @if (_categories?.Any() is true)
         {
-            @foreach (var product in _products.DistinctBy(x => x.ProductCategory))
+            @foreach (var category in _categories)
             {
-                <option value="@product.ProductCategory">@product.ProductCategory</option>
+                <option value="@category">@category</option>
             }
         }
     </select>
@@ -64,6 +64,7 @@
 @code {
 
     private IEnumerable<ProductDto>? _products;
+    private IEnumerable<string> _categories = Enumerable.Empty<string>();
 
     private string? _categoryFilter = "all";
     private string? _searchString;
@@ -71,28 +72,25 @@
     protected override async Task OnInitializedAsync()
     {
         await GetCatalog();
+        GetCategories();
         BasketService.BasketContentChanged += StateHasChanged;
     }
 
-    private async Task GetCatalog()
+    private void GetCategories()
     {
+        _categories = _products?.Any() is true 
+            ? _products.DistinctBy(x => x.ProductCategory).Select(x => x.ProductCategory) 
+            : Enumerable.Empty<string>();
+    }
+
+    private async Task GetCatalog() => 
         _products = await HttpClient.GetFromJsonAsync<List<ProductDto>>("catalog") ?? new List<ProductDto>();
-    }
 
-    private async Task OnSearchInputChanged()
-    {
-        if (string.IsNullOrEmpty(_searchString))
-            await GetCatalog();
-        else
-        {
-            var newProducts = await HttpClient.GetFromJsonAsync<List<ProductDto>>($"catalog/search?searchString={_searchString}&category={_categoryFilter}");
-            if (newProducts?.Any() is true)
-                _products = newProducts;
-        }
-    }
+    private Task OnSearchInputChanged() => OnFilterChanged();
 
-    private void OnCategoryFilterChanged()
-    {
-    }
+    private Task OnCategoryFilterChanged() => OnFilterChanged();
+
+    private async Task OnFilterChanged() => 
+        _products = await HttpClient.GetFromJsonAsync<List<ProductDto>>($"catalog/search?searchString={_searchString}&category={_categoryFilter}");
 
 }

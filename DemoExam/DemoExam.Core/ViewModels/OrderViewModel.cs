@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Windows.Input;
 using DemoExam.Core.ObservableObjects;
-using DemoExam.Core.Services.Alert;
 using DemoExam.Core.Services.ViewModelServices.Order;
+using DemoExam.Domain.Services.Alert;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;

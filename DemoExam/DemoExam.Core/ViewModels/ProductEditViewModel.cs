@@ -1,9 +1,9 @@
 ﻿using System.Windows.Input;
-using DemoExam.Core.Services.Alert;
-using DemoExam.Core.Services.Categories;
-using DemoExam.Core.Services.Manufacturer;
-using DemoExam.Core.Services.Products;
-using DemoExam.Core.Services.Suppliers;
+using DemoExam.Domain.Services.Alert;
+using DemoExam.Domain.Services.Categories;
+using DemoExam.Domain.Services.Manufacturer;
+using DemoExam.Domain.Services.Products;
+using DemoExam.Domain.Services.Suppliers;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
