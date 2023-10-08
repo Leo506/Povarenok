@@ -1,0 +1,41 @@
+﻿@page "/Login"
+@using DemoExam.Blazor.ViewModels
+@using DemoExam.Blazor.Services.Auth
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Авторизация</PageTitle>
+
+<div class="form-signin text-center">
+    <EditForm Model="@_loginViewModel" OnValidSubmit="Authenticate">
+        <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+        <label for="inputLogin" class="sr-only">Логин</label>
+        <InputText id="inputLogin" @bind-Value="_loginViewModel.Login" class="form-control" placeholder="Логин"/>
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <InputText id="inputPassword" class="form-control mt-2" type="password" @bind-Value="_loginViewModel.Password" placeholder="Пароль"/>
+        <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Вход</button>
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+    </EditForm>
+    
+    @if (_hasError)
+    {
+        <div class="alert alert-danger mt-2">
+            Неправильный логин или пароль
+        </div>
+    }
+    
+</div>
+
+@code {
+    private bool _hasError;
+    private readonly LoginViewModel _loginViewModel = new();
+
+    private async Task Authenticate()
+    {
+        _hasError = !await AuthService.LoginAsync(_loginViewModel.Login, _loginViewModel.Password).ConfigureAwait(false);
+        if (!_hasError)
+            NavigationManager.NavigateTo("/catalog");
+    }
+
+}
