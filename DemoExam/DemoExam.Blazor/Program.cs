@@ -16,5 +16,4 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<AuthenticationStateProvider, TokenAuthProvider>()
     .AddAuthorizationCore();
-
 await builder.Build().RunAsync();

@@ -17,8 +17,12 @@ public class AuthService : IAuthService
     {
         try
         {
-            var accessToken = await _httpClient.GetStringAsync($"/login?login={login}&password={password}")
+            var request = new HttpRequestMessage(HttpMethod.Get, "auth/login");
+            request.Headers.Add("login", login);
+            request.Headers.Add("password", password);
+            var response = await _httpClient.SendAsync(request)
                 .ConfigureAwait(false);
+            var accessToken = await response.Content.ReadAsStringAsync();
             await _localStorageService.SetAsync("access_token", accessToken).ConfigureAwait(false);
             return true;
         }

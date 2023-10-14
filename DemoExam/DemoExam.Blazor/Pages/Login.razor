@@ -35,7 +35,7 @@
     {
         _hasError = !await AuthService.LoginAsync(_loginViewModel.Login, _loginViewModel.Password).ConfigureAwait(false);
         if (!_hasError)
-            NavigationManager.NavigateTo("/catalog");
+            NavigationManager.NavigateTo("/catalog", true);
     }
 
 }

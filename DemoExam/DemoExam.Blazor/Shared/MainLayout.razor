@@ -1,4 +1,75 @@
-﻿@inherits LayoutComponentBase
+﻿@using DemoExam.Blazor.Services.LocalStorage
+@using DemoExam.Blazor.Services.Auth
+@using System.IdentityModel.Tokens.Jwt
+@using System.Security.Claims
+@inherits LayoutComponentBase
+@inject ILocalStorageService LocalStorageService
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 d-flex">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Поваренок</a>
+            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" 
+                    class="navbar-toggler"
+                    data-bs-target=".navbar-collapse"
+                    data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <a class="btn btn-outline-primary me-2" type="button" href="/Login">Вход</a>
+                        <button class="btn btn-primary" type="button">Регистрация</button>
+                    </NotAuthorized>
+                    <Authorized>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @_currentUserName
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Мои Заказы</a></li>
+                                @if (_currentUserRole == "Администратор")
+                                {
+                                    <li><a class="dropdown-item" href="#">Товары</a></li>
+                                    <li><a class="dropdown-item" href="#">Все заказы</a></li>
+                                }
+                                else if (_currentUserRole == "Менеджер")
+                                {
+                                    <li><a class="dropdown-item" href="#">Все заказы</a></li>
+                                }
+                                <li><a class="dropdown-item text-danger" href="#" @onclick="OnLogoutClick">Выйти</a></li>
+                            </ul>
+                        </div>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    </nav>
+</header>
 <main role="main" class="pb-3">
     @Body
 </main>
+
+@code
+{
+    private string _currentUserName = default!;
+    private string _currentUserRole = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await LocalStorageService.GetAsync<string>("access_token").ConfigureAwait(false);
+        if (token is null)
+            return;
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwt = tokenHandler.ReadJwtToken(token);
+        _currentUserName = jwt.Claims.First(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+        _currentUserRole = jwt.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+    }
+
+    private async Task OnLogoutClick()
+    {
+        await AuthService.Logout().ConfigureAwait(false);
+        NavigationManager.NavigateTo("/", true);
+    }
+}
