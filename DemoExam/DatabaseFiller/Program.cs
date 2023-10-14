@@ -68,7 +68,7 @@ if (context.Products.Any() is false)
             MaxDiscount = byte.Parse(data[3]),
             ManufacturerId = manufacturer.Id,
             SupplierId = supplier.Id,
-            ProductCategory = data[6],
+            ProductCategory = data[6].ToUpper(),
             CurrentDiscount = byte.Parse(data[7]),
             ProductQuantityInStock = int.Parse(data[8]),
             ProductDescription = data[9],
