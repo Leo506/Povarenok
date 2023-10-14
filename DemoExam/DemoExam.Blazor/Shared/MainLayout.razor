@@ -1,9 +1,7 @@
-﻿@using DemoExam.Blazor.Services.LocalStorage
+﻿@using System.Security.Claims
 @using DemoExam.Blazor.Services.Auth
-@using System.IdentityModel.Tokens.Jwt
-@using System.Security.Claims
 @inherits LayoutComponentBase
-@inject ILocalStorageService LocalStorageService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 <header>
@@ -29,12 +27,12 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Мои Заказы</a></li>
-                                @if (_currentUserRole == "Администратор")
+                                @if (_user?.IsInRole("Администратор") is true)
                                 {
                                     <li><a class="dropdown-item" href="#">Товары</a></li>
                                     <li><a class="dropdown-item" href="#">Все заказы</a></li>
                                 }
-                                else if (_currentUserRole == "Менеджер")
+                                else if (_user?.IsInRole("Менеджер") is true)
                                 {
                                     <li><a class="dropdown-item" href="#">Все заказы</a></li>
                                 }
@@ -54,17 +52,15 @@
 @code
 {
     private string _currentUserName = default!;
-    private string _currentUserRole = default!;
+    private ClaimsPrincipal? _user;
 
     protected override async Task OnInitializedAsync()
     {
-        var token = await LocalStorageService.GetAsync<string>("access_token").ConfigureAwait(false);
-        if (token is null)
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
+        if (state.User.Identity?.IsAuthenticated is false)
             return;
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var jwt = tokenHandler.ReadJwtToken(token);
-        _currentUserName = jwt.Claims.First(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
-        _currentUserRole = jwt.Claims.First(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+        _user = state.User;
+        _currentUserName = state.User.Claims.First(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
     }
 
     private async Task OnLogoutClick()
