@@ -14,5 +14,13 @@ public class AutoMapperProfile : Profile
                     ? null 
                     : Convert.ToBase64String(h.ProductPhoto)))
             .ForMember(x => x.ProductArticleNumber, j => j.MapFrom(h => h.ArticleNumber));
+
+        CreateMap<Order, OrderShortDto>()
+            .ForMember(x => x.PickupPoint,
+                j => j.MapFrom(h => h.OrderPickupPointNavigation.AddressString))
+            .ForMember(x => x.Status,
+                j => j.MapFrom(h => h.OrderStatus))
+            .ForMember(x => x.DeliveryDate,
+                j => j.MapFrom(h => DateOnly.FromDateTime(h.OrderDate)));
     }
 }

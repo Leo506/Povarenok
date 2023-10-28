@@ -1,6 +1,13 @@
 using DemoExam.Blazor.Server.Extensions;
 using DemoExam.Blazor.Server.Mapping;
 using DemoExam.Blazor.Server.Middlewares;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .Enrich.FromLogContext()
+    .CreateLogger();
+    
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -17,8 +24,10 @@ builder.Services
         policyBuilder.AllowAnyHeader();
     }));
 
+builder.Host.UseSerilog();
 
 var app = builder.Build();
+app.UseSerilogRequestLogging();
 app.UseGlobalExceptionCatcher();
 
 if (app.Environment.IsDevelopment())

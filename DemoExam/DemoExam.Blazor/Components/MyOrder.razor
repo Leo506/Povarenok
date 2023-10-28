@@ -1,0 +1,13 @@
+﻿<tr>
+    <th scope="row">Заказ №@Order.Id</th>
+    <td>@Order.Status</td>
+    <td>@Order.DeliveryDate</td>
+    <td>@Order.PickupPoint</td>
+    <td>@Order.GetCode</td>
+</tr>
+
+@code
+{
+    [Parameter]
+    public OrderShortDto Order { get; set; } = default!;
+}

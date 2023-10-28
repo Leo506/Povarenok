@@ -1,22 +1,22 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using DemoExam.Blazor.Services.LocalStorage;
+using DemoExam.Blazor.Services.AccessToken;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace DemoExam.Blazor;
 
 public class TokenAuthProvider : AuthenticationStateProvider
 {
-    private readonly ILocalStorageService _localStorage;
+    private readonly IAccessTokenService _accessTokenService;
 
-    public TokenAuthProvider(ILocalStorageService localStorage)
+    public TokenAuthProvider(IAccessTokenService accessTokenService)
     {
-        _localStorage = localStorage;
+        _accessTokenService = accessTokenService;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var accessToken = await _localStorage.GetAsync<string>("access_token");
+        var accessToken = await _accessTokenService.GetAccessToken();
         if (accessToken is null)
             return CreateAnonymous();
 

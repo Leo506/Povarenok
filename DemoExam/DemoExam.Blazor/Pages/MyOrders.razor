@@ -1,0 +1,78 @@
+﻿@page "/MyOrders"
+@using DemoExam.Blazor.Services.Orders
+@using DemoExam.Blazor.Comparers
+@using DemoExam.Blazor.Components
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IOrdersService OrdersService
+
+<PageTitle>Мои заказы</PageTitle>
+
+<link rel="stylesheet" href="css/open-iconic/font/css/open-iconic-bootstrap.min.css"/>
+
+<h3>Мои заказы</h3>
+
+<div class="d-flex w-25 align-items-center">
+    <span>
+        <i class="oi oi-sort-ascending"></i>
+    </span>
+    <select class="form-select" id="sorting" @bind="_sortField" @bind:after="OnSortFieldChanged">
+        <option>@SortByStatus</option>
+        <option>@SortByDeliveryDate</option>
+    </select>
+</div>
+<table class="table table-striped table-hover" sortable="True">
+    <thead>
+    <tr>
+        <th scope="col">№</th>
+        <th scope="col" aria-sort="ascending">Статус</th>
+        <th scope="col">Дата доставки</th>
+        <th scope="col">Пункт выдачи</th>
+        <th scope="col">Код получения</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var order in _orderShortDtos)
+    {
+        <MyOrder Order="order"/>
+    }
+    </tbody>
+</table>
+
+
+@code {
+
+        private const string SortByStatus = "По статусу";
+        private const string SortByDeliveryDate = "По дате доставки";
+
+    private string _sortField = default!;
+
+    private List<OrderShortDto> _orderShortDtos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var authState = await AuthStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
+            var userId = int.Parse(authState.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "-1");
+            _orderShortDtos = await OrdersService.GetUserOrders(userId).ConfigureAwait(false);
+            _sortField = SortByStatus;
+            OnSortFieldChanged();
+        }
+        catch (Exception e)
+        {
+            // ignored
+        }
+        finally
+        {
+            await base.OnInitializedAsync();
+        }
+    }
+
+    private void OnSortFieldChanged()
+    {
+        _orderShortDtos = _sortField == SortByStatus
+            ? _orderShortDtos.OrderBy(x => x.Status, new StatusComparer()).ToList()
+            : _orderShortDtos.OrderByDescending(x => x.DeliveryDate).ToList();
+    }
+
+}

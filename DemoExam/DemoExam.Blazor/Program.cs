@@ -1,7 +1,9 @@
 using DemoExam.Blazor;
+using DemoExam.Blazor.Services.AccessToken;
 using DemoExam.Blazor.Services.Auth;
 using DemoExam.Blazor.Services.Basket;
 using DemoExam.Blazor.Services.LocalStorage;
+using DemoExam.Blazor.Services.Orders;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -15,5 +17,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://
     .AddSingleton<ILocalStorageService, LocalStorageService>()
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<AuthenticationStateProvider, TokenAuthProvider>()
+    .AddScoped<IOrdersService, OrdersService>()
+    .AddScoped<IAccessTokenService, AccessTokenService>()
     .AddAuthorizationCore();
 await builder.Build().RunAsync();

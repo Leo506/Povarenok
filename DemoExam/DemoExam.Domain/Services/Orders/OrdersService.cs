@@ -16,4 +16,9 @@ public class OrdersService : IOrdersService
     {
         return _ordersRepository.UpdateOrder(order);
     }
+
+    public Task<List<Models.Order>> GetOrdersForUser(int userId)
+    {
+        return _ordersRepository.GetOrdersForUser(userId);
+    }
 }

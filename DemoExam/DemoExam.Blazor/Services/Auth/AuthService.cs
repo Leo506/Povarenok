@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using DemoExam.Blazor.Exceptions;
-using DemoExam.Blazor.Services.LocalStorage;
+using DemoExam.Blazor.Services.AccessToken;
 using DemoExam.Blazor.Shared;
 using DemoExam.Blazor.ViewModels;
 
@@ -9,13 +9,13 @@ namespace DemoExam.Blazor.Services.Auth;
 
 public class AuthService : IAuthService
 {
-    private readonly ILocalStorageService _localStorageService;
+    private readonly IAccessTokenService _accessTokenService;
     private readonly HttpClient _httpClient;
 
-    public AuthService(ILocalStorageService localStorageService, HttpClient httpClient)
+    public AuthService(HttpClient httpClient, IAccessTokenService accessTokenService)
     {
-        _localStorageService = localStorageService;
         _httpClient = httpClient;
+        _accessTokenService = accessTokenService;
     }
 
     public async Task<bool> LoginAsync(string login, string password)
@@ -27,17 +27,18 @@ public class AuthService : IAuthService
             request.Headers.Add("password", password);
             var response = await _httpClient.SendAsync(request)
                 .ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
             var accessToken = await response.Content.ReadAsStringAsync();
-            await _localStorageService.SetAsync("access_token", accessToken).ConfigureAwait(false);
+            await _accessTokenService.SetAccessToken(accessToken);
             return true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false;
         }
     }
 
-    public Task Logout() => _localStorageService.RemoveAsync("access_token");
+    public Task Logout() => _accessTokenService.RemoveAccessToken();
 
     public async Task Registrate(RegistrationViewModel registrationViewModel)
     {

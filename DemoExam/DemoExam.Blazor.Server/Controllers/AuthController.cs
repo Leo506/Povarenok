@@ -62,7 +62,8 @@ public class AuthController : ControllerBase
         new List<Claim>
         {
             new(ClaimsIdentity.DefaultNameClaimType, user.UserName),
-            new(ClaimsIdentity.DefaultRoleClaimType, user.UserRoleNavigation.RoleName)
+            new(ClaimsIdentity.DefaultRoleClaimType, user.UserRoleNavigation.RoleName),
+            new("UserId", user.Id.ToString())
         };
 
     [HttpPost("registration")]

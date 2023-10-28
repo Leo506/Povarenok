@@ -26,7 +26,7 @@
                                 @_currentUserName
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Мои Заказы</a></li>
+                                <li><a class="dropdown-item" href="/MyOrders">Мои Заказы</a></li>
                                 @if (_user?.IsInRole("Администратор") is true)
                                 {
                                     <li><a class="dropdown-item" href="#">Товары</a></li>
