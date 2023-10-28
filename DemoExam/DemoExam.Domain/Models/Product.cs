@@ -2,7 +2,7 @@
 
 public partial class Product
 {
-    public string ProductArticleNumber { get; set; } = null!;
+    public string ArticleNumber { get; set; } = null!;
 
     public string ProductName { get; set; } = null!;
 
@@ -15,18 +15,18 @@ public partial class Product
     public decimal ProductCost { get; set; }
 
     public byte? MaxDiscount { get; set; }
-    
+
     public int ProductQuantityInStock { get; set; }
-    
+
     public byte CurrentDiscount { get; set; }
-    
+
     public int ManufacturerId { get; set; }
-    
+
     public int SupplierId { get; set; }
 
     public virtual Manufacturer Manufacturer { get; set; } = null!;
 
-    public virtual ICollection<OrderList> OrderLists { get; } = new List<OrderList>();
+    public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
 
     public virtual Supplier Supplier { get; set; } = null!;
 

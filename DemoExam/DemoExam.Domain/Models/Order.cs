@@ -1,8 +1,8 @@
 ﻿namespace DemoExam.Domain.Models;
 
-public class Order
+public partial class Order
 {
-    public int OrderId { get; set; }
+    public int Id { get; set; }
 
     public string OrderStatus { get; set; } = null!;
 
@@ -10,13 +10,15 @@ public class Order
 
     public int OrderPickupPoint { get; set; }
 
-    public string? ClientName { get; set; }
-
     public int? GetCode { get; set; }
 
-    public DateTime OrderData { get; set; }
+    public DateTime OrderDate { get; set; }
 
-    public virtual ICollection<OrderList> OrderLists { get; } = new List<OrderList>();
+    public int UserId { get; set; }
+
+    public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
 
     public virtual PickupPoint OrderPickupPointNavigation { get; set; } = null!;
+
+    public virtual User User { get; set; } = null!;
 }

@@ -39,7 +39,7 @@ public class ProductsService : IProductsService
 
     public Task AddProductToOrder(Product product)
     {
-        _orderService.AddProductToOrder(product.ProductArticleNumber);
+        _orderService.AddProductToOrder(product.ArticleNumber);
         
         return Task.CompletedTask;
     }

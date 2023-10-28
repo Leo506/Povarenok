@@ -18,7 +18,7 @@ public partial class TradeContext : IProductRepository
         return Products
             .Include(x => x.Manufacturer)
             .Include(x => x.Supplier)
-            .FirstOrDefaultAsync(x => x.ProductArticleNumber == articleNumber);
+            .FirstOrDefaultAsync(x => x.ArticleNumber == articleNumber);
     }
 
     public async Task AddAsync(Product product)
@@ -37,7 +37,7 @@ public partial class TradeContext : IProductRepository
 
         await SetSupplierToProduct(product);
 
-        var dbProduct = await Products.FirstOrDefaultAsync(x => x.ProductArticleNumber == product.ProductArticleNumber);
+        var dbProduct = await Products.FirstOrDefaultAsync(x => x.ArticleNumber == product.ArticleNumber);
         dbProduct?.Update(product);
         Products.Update(dbProduct!);
         await SaveChangesAsync();
@@ -74,7 +74,7 @@ public partial class TradeContext : IProductRepository
     }
 
     public Task<bool> Contains(string articleNumber) => 
-        Products.AnyAsync(x => x.ProductArticleNumber == articleNumber);
+        Products.AnyAsync(x => x.ArticleNumber == articleNumber);
 
     public async Task<IEnumerable<Product>> Find(string searchString, string category)
     {

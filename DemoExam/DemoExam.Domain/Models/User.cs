@@ -2,7 +2,7 @@
 
 public partial class User
 {
-    public int UserId { get; set; }
+    public int Id { get; set; }
 
     public string UserSurname { get; set; } = null!;
 
@@ -16,5 +16,7 @@ public partial class User
 
     public int UserRole { get; set; }
 
-    public virtual Domain.Models.Role UserRoleNavigation { get; set; } = null!;
+    public virtual ICollection<Order> Orders { get; } = new List<Order>();
+
+    public virtual Role UserRoleNavigation { get; set; } = null!;
 }

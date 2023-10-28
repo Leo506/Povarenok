@@ -18,7 +18,7 @@ public class OrdersViewModel : MvxViewModel
             if (value is null)
                 return;
             
-            ProductsInOrder = value.OrderLists.ToDictionary(x => x.Product, x => x.Amount);
+            ProductsInOrder = value.OrderItems.ToDictionary(x => x.Product, x => x.Amount);
             SetProperty(ref _selectedOrder, value);
             RaisePropertyChanged(nameof(ProductsInOrder));
         }

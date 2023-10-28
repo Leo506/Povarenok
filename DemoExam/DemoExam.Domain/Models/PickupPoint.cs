@@ -1,8 +1,8 @@
 ﻿namespace DemoExam.Domain.Models;
 
-public class PickupPoint
+public partial class PickupPoint
 {
-    public int PointId { get; set; }
+    public int Id { get; set; }
 
     public string PostIndex { get; set; } = null!;
 
@@ -11,9 +11,4 @@ public class PickupPoint
     public string Street { get; set; } = null!;
 
     public virtual ICollection<Order> Orders { get; } = new List<Order>();
-
-    public override string ToString()
-    {
-        return $"{PostIndex} {City}, {Street}";
-    }
 }

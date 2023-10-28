@@ -8,7 +8,7 @@ public partial class TradeContext : IOrdersRepository
     async Task<IEnumerable<Order>> IOrdersRepository.GetAllAsync()
     {
         var orders = await Orders
-            .Include(x => x.OrderLists)
+            .Include(x => x.OrderItems)
                 .ThenInclude(x => x.Product)
             .Include(x => x.OrderPickupPointNavigation)
             .ToListAsync();

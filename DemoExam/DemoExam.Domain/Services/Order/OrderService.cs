@@ -37,7 +37,7 @@ public class OrderService : IOrderService
         var orderEntity = await _repository.CreateOrderAsync(order).ConfigureAwait(false);
 
         foreach (var (product, amount) in _productsInOrder)
-            await _repository.AddProductPositionToOrder(orderEntity.OrderId, product, amount).ConfigureAwait(false);
+            await _repository.AddProductPositionToOrder(orderEntity.Id, product, amount).ConfigureAwait(false);
 
         CreateNewOrder();
     }

@@ -13,13 +13,13 @@ public class ProductsAmountInStockToColorBrushConverter : IValueConverter
     {
         var order = (Order)value;
 
-        if (order.OrderLists.Any(x => x.Product.ProductQuantityInStock == 0))
+        if (order.OrderItems.Any(x => x.Product.ProductQuantityInStock == 0))
         {
             var color = (Color)ColorConverter.ConvertFromString("#ff8c00");
             return new SolidColorBrush(color);
         }
 
-        if (order.OrderLists.All(x => x.Product.ProductQuantityInStock > 3))
+        if (order.OrderItems.All(x => x.Product.ProductQuantityInStock > 3))
         {
             var color = (Color)ColorConverter.ConvertFromString("#20b2aa");
             return new SolidColorBrush(color);

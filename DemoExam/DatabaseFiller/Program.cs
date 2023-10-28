@@ -8,6 +8,31 @@ Console.WriteLine("Hello, World!");
 
 var context = new TradeContext();
 
+// Roles
+if (context.Roles.Any() is false)
+{
+    foreach (var item in File.ReadAllLines("Data/Roles.csv"))
+        await context.Roles.AddAsync(new Role { RoleName = item });
+    await context.SaveChangesAsync();
+}
+
+// Users
+if (context.Users.Any() is false)
+    await ImportData("Data/User.csv", ';', async data =>
+    {
+        var tmp = context.Roles.Any();
+        var role = await context.Roles.FirstOrDefaultAsync(x => x.RoleName == data[4]);
+        await context.Users.AddAsync(new User
+        {
+            UserSurname = data[0],
+            UserName = data[1].Split()[0],
+            UserPatronymic = data[1].Split()[1],
+            UserLogin = data[2],
+            UserPassword = data[3],
+            UserRole = role.Id
+        });
+    });
+
 // Pickup points
 if (context.PickupPoints.Any() is false)
     await ImportData("Data/PickupPointsImport.csv", ';', async data =>
@@ -27,10 +52,10 @@ if (context.Orders.Any() is false)
     {
         await context.Orders.AddAsync(new Order
         {
-            OrderData = DateTime.Parse(data[1]),
+            OrderDate = DateTime.Parse(data[1]),
             OrderDeliveryDate = DateTime.Parse(data[2]),
             OrderPickupPoint = int.Parse(data[3]),
-            ClientName = data[4],
+            UserId = 1,
             GetCode = int.Parse(data[5]),
             OrderStatus = data[6]
         });
@@ -62,7 +87,7 @@ if (context.Products.Any() is false)
         
         await context.Products.AddAsync(new Product
         {
-            ProductArticleNumber = data[0],
+            ArticleNumber = data[0],
             ProductName = data[1],
             ProductCost = int.Parse(data[2]),
             MaxDiscount = byte.Parse(data[3]),
@@ -77,41 +102,16 @@ if (context.Products.Any() is false)
     });
 
 // Order list
-if (context.OrderLists.Any() is false)
+if (context.OrderItems.Any() is false)
     await ImportData("Data/OrderList.csv", ',', async data =>
     {
-        await context.OrderLists.AddAsync(new OrderList
+        await context.OrderItems.AddAsync(new OrderItem()
         {
             OrderId = int.Parse(data[0]),
             ProductId = data[1],
             Amount = int.Parse(data[2])
             /*Order = context.Orders.First(x => x.OrderId == int.Parse(data[0])),
             Product = context.Products.First(x => x.ProductArticleNumber == data[1])*/
-        });
-    });
-
-// Roles
-if (context.Roles.Any() is false)
-{
-    foreach (var item in File.ReadAllLines("Data/Roles.csv"))
-        await context.Roles.AddAsync(new Role { RoleName = item });
-    await context.SaveChangesAsync();
-}
-
-// Users
-if (context.Users.Any() is false)
-    await ImportData("Data/User.csv", ';', async data =>
-    {
-        var tmp = context.Roles.Any();
-        var role = await context.Roles.FirstOrDefaultAsync(x => x.RoleName == data[4]);
-        await context.Users.AddAsync(new User
-        {
-            UserSurname = data[0],
-            UserName = data[1].Split()[0],
-            UserPatronymic = data[1].Split()[1],
-            UserLogin = data[2],
-            UserPassword = data[3],
-            UserRole = role.RoleId
         });
     });
 

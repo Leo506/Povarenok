@@ -9,15 +9,15 @@ public partial class ProductValidator : AbstractValidator<Product>
 {
     public ProductValidator()
     {
-        RuleFor(x => x.ProductArticleNumber).NotEmpty().WithMessage(Translate.ProductArticleNumberIsRequired);
-        RuleFor(x => x.ProductArticleNumber).Length(6).WithMessage(Translate.ProductArticlleNumberMustHaveSixLetters);
-        RuleFor(x => x.ProductArticleNumber).Must(x => x is not null && !CyrillicRegex().IsMatch(x))
+        RuleFor(x => x.ArticleNumber).NotEmpty().WithMessage(Translate.ProductArticleNumberIsRequired);
+        RuleFor(x => x.ArticleNumber).Length(6).WithMessage(Translate.ProductArticlleNumberMustHaveSixLetters);
+        RuleFor(x => x.ArticleNumber).Must(x => x is not null && !CyrillicRegex().IsMatch(x))
             .WithMessage(Translate.ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters);
-        RuleFor(x => x.ProductArticleNumber).Must(x => x?.All(char.IsDigit) is false)
+        RuleFor(x => x.ArticleNumber).Must(x => x?.All(char.IsDigit) is false)
             .WithMessage(Translate.ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters);
-        RuleFor(x => x.ProductArticleNumber).Must(x => x?.All(char.IsLetter) is false)
+        RuleFor(x => x.ArticleNumber).Must(x => x?.All(char.IsLetter) is false)
             .WithMessage(Translate.ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters);
-        RuleFor(x => x.ProductArticleNumber).Must(x => x?.Any(char.IsLower) is false)
+        RuleFor(x => x.ArticleNumber).Must(x => x?.Any(char.IsLower) is false)
             .WithMessage(Translate.ProductArticleNumberMustContainsDigitsAndUppercaseLatinLetters);
 
         RuleFor(x => x.ProductName).NotEmpty().WithMessage(Translate.ProductNameIsRequired);

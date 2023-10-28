@@ -19,7 +19,7 @@ public partial class TradeContext : DbContext
 
     public virtual DbSet<Order> Orders { get; set; }
 
-    public virtual DbSet<OrderList> OrderLists { get; set; }
+    public virtual DbSet<OrderItem> OrderItems { get; set; }
 
     public virtual DbSet<PickupPoint> PickupPoints { get; set; }
 
@@ -48,28 +48,30 @@ public partial class TradeContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__C3905BAFA031FC03");
+            entity.HasKey(e => e.Id).HasName("PK__Order__C3905BAFA031FC03");
 
             entity.ToTable("Order");
 
             entity.HasIndex(e => e.OrderPickupPoint, "IX_Order_OrderPickupPoint");
 
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.ClientName).HasMaxLength(100);
-            entity.Property(e => e.OrderData).HasColumnType("datetime");
+            entity.Property(e => e.OrderDate).HasColumnType("datetime");
             entity.Property(e => e.OrderDeliveryDate).HasColumnType("datetime");
+            entity.Property(e => e.UserId).HasDefaultValueSql("((1))");
 
             entity.HasOne(d => d.OrderPickupPointNavigation).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.OrderPickupPoint)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Order_PickupPoint_null_fk");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("Order_User_UserID_fk");
         });
 
-        modelBuilder.Entity<OrderList>(entity =>
+        modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("OrderList_pk");
+            entity.HasKey(e => e.Id).HasName("OrderItem_pk");
 
-            entity.ToTable("OrderList");
+            entity.ToTable("OrderItem");
 
             entity.HasIndex(e => e.OrderId, "IX_OrderList_OrderId");
 
@@ -77,20 +79,18 @@ public partial class TradeContext : DbContext
 
             entity.Property(e => e.ProductId).HasMaxLength(100);
 
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderLists)
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("OrderList_Order_null_fk");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.OrderLists)
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("OrderList_Product_null_fk");
         });
 
         modelBuilder.Entity<PickupPoint>(entity =>
         {
-            entity.HasKey(e => e.PointId).HasName("PickupPoint_pk");
+            entity.HasKey(e => e.Id).HasName("PickupPoint_pk");
 
             entity.ToTable("PickupPoint");
 
@@ -103,11 +103,15 @@ public partial class TradeContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductArticleNumber).HasName("PK__Product__2EA7DCD5B04CBEB8");
+            entity.HasKey(e => e.ArticleNumber).HasName("PK__Product__2EA7DCD5B04CBEB8");
 
             entity.ToTable("Product");
 
-            entity.Property(e => e.ProductArticleNumber).HasMaxLength(100);
+            entity.HasIndex(e => e.ManufacturerId, "IX_Product_ManufacturerId");
+
+            entity.HasIndex(e => e.SupplierId, "IX_Product_SupplierId");
+
+            entity.Property(e => e.ArticleNumber).HasMaxLength(100);
             entity.Property(e => e.ProductCost).HasColumnType("decimal(19, 4)");
             entity.Property(e => e.ProductPhoto).HasColumnType("image");
 
@@ -124,11 +128,10 @@ public partial class TradeContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Role__8AFACE3A03B089D8");
+            entity.HasKey(e => e.Id).HasName("PK__Role__8AFACE3A03B089D8");
 
             entity.ToTable("Role");
 
-            entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.RoleName).HasMaxLength(100);
         });
 
@@ -143,20 +146,18 @@ public partial class TradeContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__1788CCACD83B2744");
+            entity.HasKey(e => e.Id).HasName("PK__User__1788CCACD83B2744");
 
             entity.ToTable("User");
 
             entity.HasIndex(e => e.UserRole, "IX_User_UserRole");
 
-            entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.UserName).HasMaxLength(100);
             entity.Property(e => e.UserPatronymic).HasMaxLength(100);
             entity.Property(e => e.UserSurname).HasMaxLength(100);
 
             entity.HasOne(d => d.UserRoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.UserRole)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__User__UserRole__2F10007B");
         });
 

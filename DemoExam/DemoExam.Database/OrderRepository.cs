@@ -7,7 +7,7 @@ public partial class TradeContext : IOrderRepository
 {
     public async Task<Order> CreateOrderAsync(Order order)
     {
-        order.OrderId = 0;
+        order.Id = 0;
         var orderEntity = await Orders.AddAsync(order).ConfigureAwait(false);
         await SaveChangesAsync().ConfigureAwait(false);
 
@@ -16,7 +16,7 @@ public partial class TradeContext : IOrderRepository
 
     public async Task AddProductPositionToOrder(int orderId, string productId, int amount)
     {
-        await OrderLists.AddAsync(new OrderList()
+        await OrderItems.AddAsync(new OrderItem()
         {
             OrderId = orderId,
             ProductId = productId,
@@ -29,8 +29,8 @@ public partial class TradeContext : IOrderRepository
     public Task<int> GetLastOrderId()
     {
         return Orders
-            .OrderBy(x => x.OrderId)
-            .Select(x => x.OrderId)
+            .OrderBy(x => x.Id)
+            .Select(x => x.Id)
             .LastAsync();
     }
 

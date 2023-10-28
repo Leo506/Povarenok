@@ -30,7 +30,7 @@ public partial class Product
 
     public Product(Product product)
     {
-        ProductArticleNumber = product.ProductArticleNumber;
+        ArticleNumber = product.ArticleNumber;
         ProductName = product.ProductName;
         ProductDescription = product.ProductDescription;
         ProductCategory = product.ProductCategory;
@@ -42,7 +42,7 @@ public partial class Product
         ManufacturerId = product.ManufacturerId;
         SupplierId = product.SupplierId;
         Manufacturer = product.Manufacturer;
-        OrderLists = product.OrderLists;
+        OrderItems = product.OrderItems;
         Supplier = product.Supplier;
         ManufacturerName = product.ManufacturerName;
         SupplierName = product.SupplierName;
@@ -50,7 +50,7 @@ public partial class Product
 
     public void Update(Product product)
     {
-        ProductArticleNumber = product.ProductArticleNumber;
+        ArticleNumber = product.ArticleNumber;
         ProductName = product.ProductName;
         ProductDescription = product.ProductDescription;
         ProductCategory = product.ProductCategory;

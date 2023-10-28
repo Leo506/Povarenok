@@ -1,15 +1,10 @@
 ﻿namespace DemoExam.Domain.Models;
 
-public class Supplier
+public partial class Supplier
 {
     public int Id { get; set; }
 
     public string SupplierName { get; set; } = null!;
 
-    public virtual ICollection<Domain.Models.Product> Products { get; } = new List<Domain.Models.Product>();
-
-    public override string ToString()
-    {
-        return SupplierName;
-    }
+    public virtual ICollection<Product> Products { get; } = new List<Product>();
 }
