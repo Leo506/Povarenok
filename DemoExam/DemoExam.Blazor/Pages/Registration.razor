@@ -11,20 +11,31 @@
     <EditForm Model="@_registrationViewModel" OnValidSubmit="Registrate">
         <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
         
+        <div class="form-floating">
+        <InputText id="inputName" @bind-Value="_registrationViewModel.UserName" class="form-control mt-2" placeholder="Имя"/>
         <label for="inputName">Имя</label>
-        <InputText id="inputName" @bind-Value="_registrationViewModel.UserName" class="form-control" placeholder="Имя"/>
+        </div>
         
-        <label for="inputSurname">Фамилия</label>
-        <InputText id="inputSurname" @bind-Value="_registrationViewModel.UserSurname" class="form-control" placeholder="Фамилия"/>
+        <div class="form-floating">
+            <InputText id="inputSurname" @bind-Value="_registrationViewModel.UserSurname" class="form-control mt-2" placeholder="Фамилия"/>
+            <label for="inputSurname">Фамилия</label>
+        </div>
         
-        <label for="inputPatronymic">Отчество</label>
-        <InputText id="inputPatronymic" @bind-Value="_registrationViewModel.UserPatronymic" class="form-control" placeholder="Отчество"/>
+        <div class="form-floating">
+            <InputText id="inputPatronymic" @bind-Value="_registrationViewModel.UserPatronymic" class="form-control mt-2" placeholder="Отчество"/>
+            <label for="inputPatronymic">Отчество</label>
+        </div>
         
-        <label for="inputLogin" class="sr-only">Логин</label>
-        <InputText id="inputLogin" @bind-Value="_registrationViewModel.Login" class="form-control" placeholder="Логин"/>
+        <div class="form-floating">
+            <InputText id="inputLogin" @bind-Value="_registrationViewModel.Login" class="form-control mt-2" placeholder="Логин"/>
+            <label for="inputLogin">Логин</label>
+        </div>
         
-        <label for="inputPassword" class="sr-only">Пароль</label>
-        <InputText id="inputPassword" class="form-control mt-2" type="password" @bind-Value="_registrationViewModel.Password" placeholder="Пароль"/>
+        <div class="form-floating">
+            <InputText id="inputPassword" class="form-control mt-2" type="password" @bind-Value="_registrationViewModel.Password" placeholder="Пароль"/>
+            <label for="inputPassword">Пароль</label>
+        </div>
+        
         <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Регистрация</button>
         
         <DataAnnotationsValidator/>
