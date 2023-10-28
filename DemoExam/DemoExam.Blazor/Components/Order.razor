@@ -45,7 +45,7 @@
                         @foreach (var item in OrderDto.OrderItems)
                         {
                             <tr>
-                                <td>@item.Title</td>
+                                <td><a target="_blank" href="/catalog/@item.Article">@item.Title</a></td>
                                 <td>@item.Amount</td>
                                 <td>@item.TotalCost.ToString("F2") ₽</td>
                             </tr>
