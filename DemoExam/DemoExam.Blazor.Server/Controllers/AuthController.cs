@@ -1,6 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Security.Claims;
+using DemoExam.Blazor.Shared;
+using DemoExam.Domain.Exceptions;
 using DemoExam.Domain.Models;
 using DemoExam.Domain.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -62,4 +64,24 @@ public class AuthController : ControllerBase
             new(ClaimsIdentity.DefaultNameClaimType, user.UserName),
             new(ClaimsIdentity.DefaultRoleClaimType, user.UserRoleNavigation.RoleName)
         };
+
+    [HttpPost("registration")]
+    public async Task<IActionResult> Register([FromBody] UserDto userDto)
+    {
+        try
+        {
+            var (userName, userSurname, userPatronymic, login, password) = userDto;
+            await _authService.RegisterUser(login, password, userName, userSurname, userPatronymic)
+                .ConfigureAwait(false);
+            return Ok();
+        }
+        catch (DuplicateLoginException)
+        {
+            return Conflict();
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 }

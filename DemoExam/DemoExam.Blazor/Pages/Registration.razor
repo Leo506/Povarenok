@@ -1,0 +1,64 @@
+﻿@page "/Registration"
+@using DemoExam.Blazor.ViewModels
+@using DemoExam.Blazor.Services.Auth
+@using DemoExam.Blazor.Exceptions
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Регистрация</PageTitle>
+
+<div class="form-signin text-center">
+    <EditForm Model="@_registrationViewModel" OnValidSubmit="Registrate">
+        <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
+        
+        <label for="inputName">Имя</label>
+        <InputText id="inputName" @bind-Value="_registrationViewModel.UserName" class="form-control" placeholder="Имя"/>
+        
+        <label for="inputSurname">Фамилия</label>
+        <InputText id="inputSurname" @bind-Value="_registrationViewModel.UserSurname" class="form-control" placeholder="Фамилия"/>
+        
+        <label for="inputPatronymic">Отчество</label>
+        <InputText id="inputPatronymic" @bind-Value="_registrationViewModel.UserPatronymic" class="form-control" placeholder="Отчество"/>
+        
+        <label for="inputLogin" class="sr-only">Логин</label>
+        <InputText id="inputLogin" @bind-Value="_registrationViewModel.Login" class="form-control" placeholder="Логин"/>
+        
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <InputText id="inputPassword" class="form-control mt-2" type="password" @bind-Value="_registrationViewModel.Password" placeholder="Пароль"/>
+        <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Регистрация</button>
+        
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+    </EditForm>
+    
+    @if (!string.IsNullOrEmpty(_errorMessage))
+    {
+        <div class="alert alert-danger mt-2">
+            @_errorMessage
+        </div>
+    }
+    
+</div>
+
+@code {
+    private string? _errorMessage;
+    private readonly RegistrationViewModel _registrationViewModel = new();
+
+    private async Task Registrate()
+    {
+        try
+        {
+            await AuthService.Registrate(_registrationViewModel).ConfigureAwait(false);
+            NavigationManager.NavigateTo("/Login");
+        }
+        catch (DuplicateLoginException)
+        {
+            _errorMessage = "Пользователь с таки логином уже существует";
+        }
+        catch (Exception e)
+        {
+            _errorMessage = "Что-то пошло не так";
+        }
+    }
+
+}

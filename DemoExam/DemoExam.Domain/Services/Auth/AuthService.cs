@@ -1,4 +1,5 @@
 ﻿using System.Security.Authentication;
+using DemoExam.Domain.Exceptions;
 using DemoExam.Domain.Models;
 using DemoExam.Domain.Repositories;
 
@@ -20,5 +21,14 @@ public class AuthService : IAuthService
             throw new AuthenticationException("Incorrect login or password");
 
         return user;
+    }
+
+    public async Task RegisterUser(string login, string password, string userName, string userSurname, string userPatronymic)
+    {
+        var user = await _repository.GetUser(login).ConfigureAwait(false);
+        if (user is not null)
+            throw new DuplicateLoginException();
+
+        await _repository.CreateUser(login, password, userName, userSurname, userPatronymic).ConfigureAwait(false);
     }
 }

@@ -12,6 +12,7 @@ public class AutoMapperProfile : Profile
             .ForMember(x => x.ProductPhoto, 
                 j => j.MapFrom(h => h.ProductPhoto == null 
                     ? null 
-                    : Convert.ToBase64String(h.ProductPhoto)));
+                    : Convert.ToBase64String(h.ProductPhoto)))
+            .ForMember(x => x.ProductArticleNumber, j => j.MapFrom(h => h.ArticleNumber));
     }
 }
