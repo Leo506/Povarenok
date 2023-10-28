@@ -21,6 +21,26 @@ public class AutoMapperProfile : Profile
             .ForMember(x => x.Status,
                 j => j.MapFrom(h => h.OrderStatus))
             .ForMember(x => x.DeliveryDate,
-                j => j.MapFrom(h => DateOnly.FromDateTime(h.OrderDate)));
+                j => j.MapFrom(h => DateOnly.FromDateTime(h.OrderDeliveryDate)));
+
+        CreateMap<Order, OrderDto>()
+            .ForMember(x => x.PickupPoint,
+                j => j.MapFrom(h => h.OrderPickupPointNavigation.AddressString))
+            .ForMember(x => x.Status,
+                j => j.MapFrom(h => h.OrderStatus))
+            .ForMember(x => x.DeliveryDate,
+                j => j.MapFrom(h => DateOnly.FromDateTime(h.OrderDeliveryDate)))
+            .ForMember(x => x.OrderDate,
+                j => j.MapFrom(h => DateOnly.FromDateTime(h.OrderDate)))
+            .ForMember(x => x.OrderItems,
+                j => j.MapFrom(x => x.OrderItems));
+
+        CreateMap<OrderItem, OrderItemDto>()
+            .ForMember(x => x.Article,
+                j => j.MapFrom(h => h.Product.ArticleNumber))
+            .ForMember(x => x.Title,
+                j => j.MapFrom(h => h.Product.ProductName))
+            .ForMember(x => x.TotalCost,
+                j => j.MapFrom(h => h.Product.ProductCost * h.Amount));
     }
 }

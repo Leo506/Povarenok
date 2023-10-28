@@ -1,5 +1,7 @@
 ﻿<tr>
-    <th scope="row">Заказ №@Order.Id</th>
+    <th scope="row" data-bs-toggle="modal" data-bs-target="#exampleModal" @onclick="OnOrderClick">
+        Заказ №@Order.Id
+    </th>
     <td>@Order.Status</td>
     <td>@Order.DeliveryDate</td>
     <td>@Order.PickupPoint</td>
@@ -10,4 +12,10 @@
 {
     [Parameter]
     public OrderShortDto Order { get; set; } = default!;
+
+    [Parameter]
+    public Func<int, Task> OnOrderClickCallback { get; set; } = default!;
+
+
+    private Task OnOrderClick() => OnOrderClickCallback(Order.Id);
 }

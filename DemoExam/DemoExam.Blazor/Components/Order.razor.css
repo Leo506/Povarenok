@@ -1,0 +1,9 @@
+﻿.order-content {
+    min-width: 400px;
+    min-height: 400px;
+}
+
+tfoot {
+    font-size: 15px;
+    font-weight: 700;
+}

@@ -1,0 +1,73 @@
+﻿<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content order-content @(OrderDto is null ? "justify-content-center align-items-center" : "")">
+            @if (OrderDto is null)
+            {
+                <div class="spinner-border text-center"/>
+            }
+            else
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Заказ №@OrderDto.Id</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between">
+                        <p>Статус</p>
+                        <p>@OrderDto.Status</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Дата доставки</p>
+                        <p>@OrderDto.DeliveryDate</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Дата оформления</p>
+                        <p>@OrderDto.OrderDate</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Пункт выдачи</p>
+                        <p>@OrderDto.PickupPoint</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Код получения</p>
+                        <p>@OrderDto.GetCode</p>
+                    </div>
+                    <h5>Состав:</h5>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Количество</th>
+                            <th>Итоговая стоимость</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in OrderDto.OrderItems)
+                        {
+                            <tr>
+                                <td>@item.Title</td>
+                                <td>@item.Amount</td>
+                                <td>@item.TotalCost.ToString("F2") ₽</td>
+                            </tr>
+                        }
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="2" class="fw-bold">Итоговая стоимость заказа:</td>
+                            <td>@OrderDto.OrderItems.Sum(x => x.TotalCost).ToString("F2") ₽</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public OrderDto? OrderDto { get; set; }
+
+}

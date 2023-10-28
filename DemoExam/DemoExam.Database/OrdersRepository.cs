@@ -25,4 +25,13 @@ public partial class TradeContext : IOrdersRepository
             .Where(x => x.UserId == userId)
             .ToListAsync();
     }
+
+    public Task<Order?> Get(int orderId)
+    {
+        return Orders
+            .Include(x => x.OrderItems)
+            .ThenInclude(x => x.Product)
+            .Include(x => x.OrderPickupPointNavigation)
+            .FirstOrDefaultAsync(x => x.Id == orderId);
+    }
 }

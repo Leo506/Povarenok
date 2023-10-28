@@ -24,4 +24,14 @@ public class OrdersService : IOrdersService
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<OrderShortDto>>() ?? new();
     }
+
+    public async Task<OrderDto> GetOrder(int orderId)
+    {
+        var accessToken = await _accessTokenService.GetAccessToken();
+        var request = new HttpRequestMessage(HttpMethod.Get, $"Orders/{orderId}");
+        request.Headers.Add("Authorization", $"Bearer {accessToken}");
+        var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<OrderDto>() ?? new();
+    }
 }

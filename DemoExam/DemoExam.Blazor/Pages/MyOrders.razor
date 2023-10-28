@@ -33,10 +33,13 @@
     <tbody>
     @foreach (var order in _orderShortDtos)
     {
-        <MyOrder Order="order"/>
+        <MyOrder Order="order" OnOrderClickCallback="OnOrderClick"/>
     }
     </tbody>
 </table>
+
+
+<Order OrderDto="_currentViewOrder" />
 
 
 @code {
@@ -47,6 +50,8 @@
     private string _sortField = default!;
 
     private List<OrderShortDto> _orderShortDtos = new();
+
+    private OrderDto? _currentViewOrder;
 
     protected override async Task OnInitializedAsync()
     {
@@ -75,4 +80,10 @@
             : _orderShortDtos.OrderByDescending(x => x.DeliveryDate).ToList();
     }
 
+
+    private async Task OnOrderClick(int id)
+    {
+        _currentViewOrder = await OrdersService.GetOrder(id);
+        StateHasChanged();
+    }
 }
