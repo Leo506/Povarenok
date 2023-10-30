@@ -51,15 +51,7 @@
     }
 </div>
 
-@if (BasketService.TotalProductsCount > 0)
-{
-    <a href="#" class="btn btn-primary fab d-flex align-items-center justify-content-center">
-        <i class="oi oi-basket" style="font-size: 35px"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            @BasketService.TotalProductsCount
-        </span>
-    </a>
-}
+<Basket/>
 
 @code {
 
@@ -73,7 +65,6 @@
     {
         await GetCatalog();
         GetCategories();
-        BasketService.BasketContentChanged += StateHasChanged;
     }
 
     private void GetCategories()
