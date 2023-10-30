@@ -4,6 +4,7 @@
 @using DemoExam.Blazor.Components
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IOrdersService OrdersService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Мои заказы</PageTitle>
 
@@ -58,6 +59,9 @@
         try
         {
             var authState = await AuthStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
+            if (authState.User.Identity?.IsAuthenticated is false)
+                NavigationManager.NavigateTo(nameof(Login));
+            
             var userId = int.Parse(authState.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "-1");
             _orderShortDtos = await OrdersService.GetUserOrders(userId).ConfigureAwait(false);
             _sortField = SortByStatus;

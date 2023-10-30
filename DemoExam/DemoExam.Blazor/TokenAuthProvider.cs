@@ -23,9 +23,12 @@ public class TokenAuthProvider : AuthenticationStateProvider
         var handler = new JwtSecurityTokenHandler();
         var jwt = handler.ReadJwtToken(accessToken);
 
+        if (DateTime.UtcNow >= jwt.ValidTo)
+            return CreateAnonymous();
+        
         var identity = new ClaimsIdentity(jwt.Claims, "Bearer");
         var principal = new ClaimsPrincipal(identity);
-
+        
         return new AuthenticationState(principal);
     }
 
