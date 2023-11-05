@@ -7,7 +7,6 @@ public partial class TradeContext : IOrderRepository
 {
     public async Task<Order> CreateOrderAsync(Order order)
     {
-        order.Id = 0;
         var orderEntity = await Orders.AddAsync(order).ConfigureAwait(false);
         await SaveChangesAsync().ConfigureAwait(false);
 

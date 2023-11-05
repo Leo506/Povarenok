@@ -1,8 +1,8 @@
 ﻿using DemoExam.Database;
 using DemoExam.Domain.Repositories;
 using DemoExam.Domain.Services.Auth;
-using DemoExam.Domain.Services.Order;
 using DemoExam.Domain.Services.Orders;
+using DemoExam.Domain.Services.PickupPoints;
 using DemoExam.Domain.Services.Products;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -41,15 +41,16 @@ public static class ServiceCollectionExtensions
             .AddTransient<IProductRepository, TradeContext>()
             .AddTransient<IOrderRepository, TradeContext>()
             .AddTransient<IUserRepository, TradeContext>()
+            .AddTransient<IPickupPointRepository, TradeContext>()
             .AddTransient<IOrdersRepository, TradeContext>();
     }
 
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<IOrderService, OrderService>()
             .AddTransient<IOrdersService, OrdersService>()
             .AddTransient<IProductsService, ProductsService>()
+            .AddTransient<IPickupPointService, PickupPointService>()
             .AddScoped<IAuthService, AuthService>();
     }
 }

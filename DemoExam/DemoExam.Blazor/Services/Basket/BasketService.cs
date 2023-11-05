@@ -40,4 +40,9 @@ public class BasketService : IBasketService
     }
 
     public Dictionary<ProductDto, int> GetAll() => _products;
+    public void Clear()
+    {
+        _products.Clear();
+        BasketContentChanged?.Invoke();
+    }
 }

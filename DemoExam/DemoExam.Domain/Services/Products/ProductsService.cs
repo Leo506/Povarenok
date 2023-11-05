@@ -1,18 +1,15 @@
 ﻿using DemoExam.Domain.Models;
 using DemoExam.Domain.Repositories;
-using DemoExam.Domain.Services.Order;
 
 namespace DemoExam.Domain.Services.Products;
 
 public class ProductsService : IProductsService
 {
     private readonly IProductRepository _repository;
-    private readonly IOrderService _orderService;
 
-    public ProductsService(IProductRepository repository, IOrderService orderService)
+    public ProductsService(IProductRepository repository)
     {
         _repository = repository;
-        _orderService = orderService;
     }
 
     public async Task<IEnumerable<Product>> GetAll()
@@ -20,9 +17,7 @@ public class ProductsService : IProductsService
         var products = await _repository.GetAllAsync();
         return products.Any() ? products : Enumerable.Empty<Product>();
     }
-
-    public Task<int> Count() => _repository.Count();
-
+    
     public Task DeleteProduct(Product product) => _repository.DeleteAsync(product);
 
     public Task AddProduct(Product product)
@@ -37,14 +32,8 @@ public class ProductsService : IProductsService
         return _repository.UpdateAsync(product);
     }
 
-    public Task AddProductToOrder(Product product)
-    {
-        _orderService.AddProductToOrder(product.ArticleNumber);
-        
-        return Task.CompletedTask;
-    }
+    public Task<bool> Exists(string article) => _repository.Contains(article);
 
-    public bool CanOpenOrder() => _orderService.HasProductsInOrder();
     public async Task<Product> GetByArticleNumber(string article)
     {
         var product = await _repository.GetAsync(article).ConfigureAwait(false);

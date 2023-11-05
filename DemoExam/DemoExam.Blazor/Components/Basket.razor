@@ -1,9 +1,11 @@
 ﻿@using DemoExam.Blazor.Services.Basket
 @using DemoExam.Blazor.Services.Modals
+@using DemoExam.Blazor.Services.Orders
 @using DemoExam.Blazor.Services.PickupPoints
 @inject IBasketService BasketService
 @inject IPickupPointsService PickupPointsService
 @inject IModalService ModalService
+@inject IOrdersService OrdersService
 
 @if (BasketService.TotalProductsCount > 0)
 {
@@ -76,7 +78,7 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <button class="btn btn-primary">Оформить</button>
+                    <button class="btn btn-primary" @onclick="CreateNewOrder">Оформить</button>
                 </div>
             }
         </div>
@@ -87,12 +89,7 @@
 
     private int? _selectedPointId;
 
-    private List<PickupPointDto> _pickupPointDtos = new()
-    {
-        new PickupPointDto { Address = "gege", Id = 2 },
-        new PickupPointDto { Address = "guuuue", Id = 4 },
-        new PickupPointDto { Address = "gjjjj", Id = 5 }
-    };
+    private List<PickupPointDto> _pickupPointDtos = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -102,11 +99,20 @@
                 await ModalService.CloseModal();
             StateHasChanged();
         };
-    //_pickupPointDtos = await PickupPointsService.GetAll();
+        _pickupPointDtos = await PickupPointsService.GetAll();
         _selectedPointId = _pickupPointDtos.FirstOrDefault()?.Id;
         await base.OnInitializedAsync();
     }
 
     private void DeleteProduct(ProductDto product) => BasketService.RemoveProduct(product, all:true);
+
+    private async Task CreateNewOrder()
+    {
+        if (_selectedPointId is null)
+            return;
+        await OrdersService.CreateNew(_selectedPointId.Value);
+        await ModalService.CloseModal();
+        BasketService.Clear();
+    }
 
 }

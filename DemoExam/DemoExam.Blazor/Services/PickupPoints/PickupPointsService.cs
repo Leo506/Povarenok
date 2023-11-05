@@ -19,10 +19,7 @@ public class PickupPointsService : IPickupPointsService
     {
         try
         {
-            var accessToken = await _accessTokenService.GetAccessToken();
-            var request = new HttpRequestMessage(HttpMethod.Get, "/pickupPoints");
-            request.Headers.Add("Authorization", accessToken);
-
+            var request = new HttpRequestMessage(HttpMethod.Get, "/PickupPoints");
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<List<PickupPointDto>>() ?? new();

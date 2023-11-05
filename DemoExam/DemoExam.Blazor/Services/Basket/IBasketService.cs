@@ -15,4 +15,5 @@ public interface IBasketService
     int GetProductAmount(ProductDto productDto);
 
     Dictionary<ProductDto, int> GetAll();
+    void Clear();
 }

@@ -65,4 +65,22 @@ public class OrdersController : ControllerBase
             return BadRequest();
         }
     }
+
+    [HttpPost("")]
+    [Authorize]
+    public async Task<IActionResult> CreateNewOrder([FromBody] NewOrderDto newOrderDto)
+    {
+        try
+        {
+            var userIdStr = User.FindFirst(x => x.Type == "UserId")?.Value;
+            if (int.TryParse(userIdStr, out var userId) is false)
+                return Unauthorized();
+            await _ordersService.CreateNewOrder(userId, newOrderDto.PickupPointId, newOrderDto.Products);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

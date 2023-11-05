@@ -7,4 +7,6 @@ public interface IOrdersService
     Task<List<OrderShortDto>> GetUserOrders(int userId);
 
     Task<OrderDto> GetOrder(int orderId);
+
+    Task CreateNew(int pickupPointId);
 }

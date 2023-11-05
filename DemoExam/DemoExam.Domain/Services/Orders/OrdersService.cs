@@ -1,31 +1,67 @@
 ﻿using DemoExam.Domain.Exceptions;
+using DemoExam.Domain.Models;
 using DemoExam.Domain.Repositories;
+using DemoExam.Domain.Services.Products;
 
 namespace DemoExam.Domain.Services.Orders;
 
 public class OrdersService : IOrdersService
 {
     private readonly IOrdersRepository _ordersRepository;
+    private readonly IOrderRepository _orderRepository;
+    private readonly IProductsService _productsService;
 
-    public OrdersService(IOrdersRepository ordersRepository)
+    public OrdersService(IOrdersRepository ordersRepository, IOrderRepository orderRepository,
+        IProductsService productsService)
     {
         _ordersRepository = ordersRepository;
+        _orderRepository = orderRepository;
+        _productsService = productsService;
     }
 
-    public Task<IEnumerable<Domain.Models.Order>> GetAllOrders() => _ordersRepository.GetAllAsync();
-    public Task UpdateOrder(Domain.Models.Order order)
+    public Task<IEnumerable<Order>> GetAllOrders() => _ordersRepository.GetAllAsync();
+    public Task UpdateOrder(Order order)
     {
         return _ordersRepository.UpdateOrder(order);
     }
 
-    public Task<List<Models.Order>> GetOrdersForUser(int userId)
+    public Task<List<Order>> GetOrdersForUser(int userId)
     {
         return _ordersRepository.GetOrdersForUser(userId);
     }
 
-    public async Task<Models.Order> GetOrder(int orderId)
+    public async Task<Order> GetOrder(int orderId)
     {
         var order = await _ordersRepository.Get(orderId);
         return order ?? throw new NotFoundException();
+    }
+
+    public async Task CreateNewOrder(int userId, int pickupPointId, Dictionary<string, int> products)
+    {
+        foreach (var (article, amount) in products)
+        {
+            if (amount <= 0)
+                throw new InvalidProductsAmountInOrderException();
+
+            if (await _productsService.Exists(article) is false)
+                throw new ProductNotFoundException();
+        }
+        
+        
+        var random = new Random();
+        var order = new Order()
+        {
+            UserId = userId,
+            OrderDate = DateTime.Now,
+            OrderDeliveryDate = DateTime.Now.AddDays(random.Next(1, 4)),
+            GetCode = random.Next(100, 1000),
+            OrderPickupPoint = pickupPointId,
+            OrderStatus = OrderStatusConstants.NewOrder
+        };
+        order = await _orderRepository.CreateOrderAsync(order);
+        foreach (var (article, amount) in products)
+        {
+            await _orderRepository.AddProductPositionToOrder(order.Id, article, amount);
+        }
     }
 }
