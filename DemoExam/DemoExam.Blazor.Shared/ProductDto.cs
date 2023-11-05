@@ -1,6 +1,6 @@
 ﻿namespace DemoExam.Blazor.Shared;
 
-public class ProductDto
+public record ProductDto
 {
     public string ProductArticleNumber { get; set; } = null!;
 

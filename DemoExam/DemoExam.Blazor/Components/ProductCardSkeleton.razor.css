@@ -1,0 +1,11 @@
+﻿.image-placeholder {
+    background-color: #868e96;
+    height: 240px;
+}
+
+div.card {
+    width: 18rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}

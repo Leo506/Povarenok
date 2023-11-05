@@ -3,7 +3,9 @@ using DemoExam.Blazor.Services.AccessToken;
 using DemoExam.Blazor.Services.Auth;
 using DemoExam.Blazor.Services.Basket;
 using DemoExam.Blazor.Services.LocalStorage;
+using DemoExam.Blazor.Services.Modals;
 using DemoExam.Blazor.Services.Orders;
+using DemoExam.Blazor.Services.PickupPoints;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -19,5 +21,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://
     .AddScoped<AuthenticationStateProvider, TokenAuthProvider>()
     .AddScoped<IOrdersService, OrdersService>()
     .AddScoped<IAccessTokenService, AccessTokenService>()
+    .AddScoped<IPickupPointsService, PickupPointsService>()
+    .AddScoped<IModalService, ModalService>()
     .AddAuthorizationCore();
 await builder.Build().RunAsync();

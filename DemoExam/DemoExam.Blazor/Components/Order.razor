@@ -1,4 +1,4 @@
-﻿<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+﻿<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel">
     <div class="modal-dialog">
         <div class="modal-content order-content @(OrderDto is null ? "justify-content-center align-items-center" : "")">
             @if (OrderDto is null)
@@ -8,7 +8,7 @@
             else
             {
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Заказ №@OrderDto.Id</h5>
+                    <h5 class="modal-title" id="orderModalLabel">Заказ №@OrderDto.Id</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

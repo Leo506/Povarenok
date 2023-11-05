@@ -1,45 +1,6 @@
-﻿::deep div.card {
-    width: 18rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    transition: all 0.3s;
-}
-
-::deep div.card a {
-    text-decoration: none;
-    color: black;
-}
-
-.cards-layout {
+﻿.cards-layout {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: st;
-}
-
-::deep div.card:hover {
-    transform: scale(1.05);
-}
-
-::deep .price {
-    font-weight: 500;
-    font-size: x-large;
-}
-
-::deep .add-panel {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-::deep .change-amount-button {
-    width: 35px;
-    height: 35px;
-}
-
-
-::deep .image-placeholder {
-    background-color: #868e96;
-    height: 240px;
 }

@@ -42,5 +42,9 @@ public class AutoMapperProfile : Profile
                 j => j.MapFrom(h => h.Product.ProductName))
             .ForMember(x => x.TotalCost,
                 j => j.MapFrom(h => h.Product.ProductCost * h.Amount));
+
+        CreateMap<PickupPoint, PickupPointDto>()
+            .ForMember(x => x.Address,
+                j => j.MapFrom(h => h.AddressString));
     }
 }

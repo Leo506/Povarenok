@@ -9,3 +9,8 @@ function get(key) {
 function remove(key) {
     return  localStorage.removeItem(key);
 }
+
+function closeModal() {
+    const closeBtn = document.querySelector('.btn-close');
+    closeBtn.click();
+}

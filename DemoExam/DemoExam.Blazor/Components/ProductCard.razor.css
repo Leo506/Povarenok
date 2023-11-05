@@ -1,0 +1,27 @@
+﻿.add-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-weight: 500;
+    font-size: x-large;
+}
+
+div.card:hover {
+    transform: scale(1.05);
+}
+
+div.card a {
+    text-decoration: none;
+    color: black;
+}
+
+div.card {
+    width: 18rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}

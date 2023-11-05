@@ -1,22 +1,112 @@
 ﻿@using DemoExam.Blazor.Services.Basket
+@using DemoExam.Blazor.Services.Modals
+@using DemoExam.Blazor.Services.PickupPoints
 @inject IBasketService BasketService
+@inject IPickupPointsService PickupPointsService
+@inject IModalService ModalService
 
 @if (BasketService.TotalProductsCount > 0)
 {
-    <a href="#" class="btn btn-primary fab d-flex align-items-center justify-content-center">
+    <button data-bs-toggle="modal" data-bs-target="#basketModal" class="btn btn-primary fab d-flex align-items-center justify-content-center">
         <i class="oi oi-basket" style="font-size: 35px"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             @BasketService.TotalProductsCount
         </span>
-    </a>
+    </button>
 }
+
+<div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="basketModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content order-content @(_pickupPointDtos.Any() ? "" : "justify-content-center align-items-center")">
+            @if (_pickupPointDtos.Any() is false)
+            {
+                <div class="spinner-border text-center"/>
+            }
+            else
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="basketModalLabel">Ваша корзина</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-row justify-content-between">
+                        <p>Пункт выдачи:</p>
+                        <InputSelect @bind-Value="_selectedPointId" class="form-select">
+                            @foreach (var point in _pickupPointDtos)
+                            {
+                                <option value="@point.Id">@point.Address</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Количетво</th>
+                            <th>Итоговая стоимость</th>
+                            <th>Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var (product, amount) in BasketService.GetAll())
+                        {
+                            <tr>
+                                <td>@product.ProductName</td>
+                                <td class="">
+                                    <AddToBasketPanel Product="product"/>
+                                </td>
+                                <td>@((product.ProductCost * amount).ToString("F2"))</td>
+                                <td>
+                                    <button class="text-danger btn" @onclick="() => DeleteProduct(product)">
+                                        <i class="oi oi-trash"/>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="2" class="fw-bold">
+                                Итоговая стоимость:
+                            </td>
+                            <td colspan="2">
+                                @BasketService.GetAll().Sum(x => x.Key.ProductCost * x.Value).ToString("F2")
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <button class="btn btn-primary">Оформить</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 @code {
 
-    protected override void OnInitialized()
+    private int? _selectedPointId;
+
+    private List<PickupPointDto> _pickupPointDtos = new()
     {
-        base.OnInitialized();
-        BasketService.BasketContentChanged += StateHasChanged;
+        new PickupPointDto { Address = "gege", Id = 2 },
+        new PickupPointDto { Address = "guuuue", Id = 4 },
+        new PickupPointDto { Address = "gjjjj", Id = 5 }
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        BasketService.BasketContentChanged += async () =>
+        {
+            if (BasketService.TotalProductsCount == 0)
+                await ModalService.CloseModal();
+            StateHasChanged();
+        };
+    //_pickupPointDtos = await PickupPointsService.GetAll();
+        _selectedPointId = _pickupPointDtos.FirstOrDefault()?.Id;
+        await base.OnInitializedAsync();
     }
+
+    private void DeleteProduct(ProductDto product) => BasketService.RemoveProduct(product, all:true);
 
 }

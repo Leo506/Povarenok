@@ -10,7 +10,9 @@ public interface IBasketService
     
     void AddProduct(ProductDto product);
 
-    void RemoveProduct(ProductDto product);
+    void RemoveProduct(ProductDto product, bool all = false);
 
     int GetProductAmount(ProductDto productDto);
+
+    Dictionary<ProductDto, int> GetAll();
 }
