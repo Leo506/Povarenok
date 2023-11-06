@@ -1,6 +1,4 @@
-﻿using DemoExam.Database;
-using DemoExam.Domain.Repositories;
-using DemoExam.Domain.Services.Auth;
+﻿using DemoExam.Domain.Services.Auth;
 using DemoExam.Domain.Services.Orders;
 using DemoExam.Domain.Services.PickupPoints;
 using DemoExam.Domain.Services.Products;
@@ -33,16 +31,6 @@ public static class ServiceCollectionExtensions
                 };
             });
         return services;
-    }
-
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<IProductRepository, TradeContext>()
-            .AddTransient<IOrderRepository, TradeContext>()
-            .AddTransient<IUserRepository, TradeContext>()
-            .AddTransient<IPickupPointRepository, TradeContext>()
-            .AddTransient<IOrdersRepository, TradeContext>();
     }
 
     public static IServiceCollection AddServices(this IServiceCollection services)

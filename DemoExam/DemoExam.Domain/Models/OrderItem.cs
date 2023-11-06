@@ -1,6 +1,6 @@
 ﻿namespace DemoExam.Domain.Models;
 
-public partial class OrderItem
+public class OrderItem
 {
     public int Id { get; set; }
 

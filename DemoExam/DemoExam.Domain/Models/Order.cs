@@ -1,14 +1,14 @@
 ﻿namespace DemoExam.Domain.Models;
 
-public partial class Order
+public class Order
 {
     public int Id { get; set; }
 
-    public string OrderStatus { get; set; } = null!;
+    public string Status { get; set; } = null!;
 
-    public DateTime OrderDeliveryDate { get; set; }
+    public DateTime DeliveryDate { get; set; }
 
-    public int OrderPickupPoint { get; set; }
+    public int PickupPointId { get; set; }
 
     public int? GetCode { get; set; }
 

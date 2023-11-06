@@ -14,7 +14,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\DemoExam.Core\DemoExam.Core.csproj" />
-        <ProjectReference Include="..\DemoExam.Database\DemoExam.Database.csproj" />
+        <ProjectReference Include="..\DemoExam.Infrastructure\DemoExam.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -23,7 +23,7 @@ public class AuthService : IAuthService
         return user;
     }
 
-    public async Task RegisterUser(string login, string password, string userName, string userSurname, string userPatronymic)
+    public async Task RegisterUserAsync(string login, string password, string userName, string userSurname, string userPatronymic)
     {
         var user = await _repository.GetUser(login).ConfigureAwait(false);
         if (user is not null)

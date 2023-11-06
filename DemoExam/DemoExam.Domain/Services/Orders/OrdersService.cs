@@ -33,7 +33,7 @@ public class OrdersService : IOrdersService
     public async Task<Order> GetOrder(int orderId)
     {
         var order = await _ordersRepository.Get(orderId);
-        return order ?? throw new NotFoundException();
+        return order ?? throw new EntityNotFoundException();
     }
 
     public async Task CreateNewOrder(int userId, int pickupPointId, Dictionary<string, int> products)
@@ -44,7 +44,7 @@ public class OrdersService : IOrdersService
                 throw new InvalidProductsAmountInOrderException();
 
             if (await _productsService.Exists(article) is false)
-                throw new ProductNotFoundException();
+                throw new EntityNotFoundException();
         }
         
         
@@ -53,10 +53,10 @@ public class OrdersService : IOrdersService
         {
             UserId = userId,
             OrderDate = DateTime.Now,
-            OrderDeliveryDate = DateTime.Now.AddDays(random.Next(1, 4)),
+            DeliveryDate = DateTime.Now.AddDays(random.Next(1, 4)),
             GetCode = random.Next(100, 1000),
-            OrderPickupPoint = pickupPointId,
-            OrderStatus = OrderStatusConstants.NewOrder
+            PickupPointId = pickupPointId,
+            Status = OrderStatusConstants.NewOrder
         };
         order = await _orderRepository.CreateOrderAsync(order);
         foreach (var (article, amount) in products)

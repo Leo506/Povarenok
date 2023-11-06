@@ -4,21 +4,19 @@ public partial class Product
 {
     public string ArticleNumber { get; set; } = null!;
 
-    public string ProductName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string ProductDescription { get; set; } = null!;
+    public string Description { get; set; } = null!;
 
-    public string ProductCategory { get; set; } = null!;
+    public string Category { get; set; } = null!;
 
-    public byte[]? ProductPhoto { get; set; }
+    public byte[]? Photo { get; set; }
 
-    public decimal ProductCost { get; set; }
+    public decimal Price { get; set; }
+    
+    public int QuantityInStock { get; set; }
 
-    public byte? MaxDiscount { get; set; }
-
-    public int ProductQuantityInStock { get; set; }
-
-    public byte CurrentDiscount { get; set; }
+    public byte Discount { get; set; }
 
     public int ManufacturerId { get; set; }
 
@@ -29,8 +27,4 @@ public partial class Product
     public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
 
     public virtual Supplier Supplier { get; set; } = null!;
-
-    public Product()
-    {
-    }
 }

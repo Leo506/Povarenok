@@ -56,7 +56,7 @@ public class OrdersController : ControllerBase
             var orderDto = _mapper.Map<OrderDto>(order);
             return Ok(orderDto);
         }
-        catch (NotFoundException)
+        catch (EntityNotFoundException)
         {
             return NotFound();
         }

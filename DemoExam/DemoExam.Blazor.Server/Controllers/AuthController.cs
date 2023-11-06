@@ -61,8 +61,8 @@ public class AuthController : ControllerBase
     private static IEnumerable<Claim> GetUserClaims(User user) =>
         new List<Claim>
         {
-            new(ClaimsIdentity.DefaultNameClaimType, user.UserName),
-            new(ClaimsIdentity.DefaultRoleClaimType, user.UserRoleNavigation.RoleName),
+            new(ClaimsIdentity.DefaultNameClaimType, user.Name),
+            new(ClaimsIdentity.DefaultRoleClaimType, user.UserRoleNavigation.Name),
             new("UserId", user.Id.ToString())
         };
 
@@ -72,7 +72,7 @@ public class AuthController : ControllerBase
         try
         {
             var (userName, userSurname, userPatronymic, login, password) = userDto;
-            await _authService.RegisterUser(login, password, userName, userSurname, userPatronymic)
+            await _authService.RegisterUserAsync(login, password, userName, userSurname, userPatronymic)
                 .ConfigureAwait(false);
             return Ok();
         }

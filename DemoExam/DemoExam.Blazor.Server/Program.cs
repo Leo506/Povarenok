@@ -1,6 +1,7 @@
 using DemoExam.Blazor.Server.Extensions;
 using DemoExam.Blazor.Server.Mapping;
 using DemoExam.Blazor.Server.Middlewares;
+using DemoExam.Infrastructure;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -15,7 +16,7 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddSwagger()
     .AddJwtAuthentication()
-    .AddRepositories()
+    .AddInfrastructure()
     .AddServices()
     .AddAutoMapper(typeof(AutoMapperProfile))
     .AddCors(options => options.AddDefaultPolicy(policyBuilder =>

@@ -1,6 +1,6 @@
-﻿using DemoExam.Core.Utils;
-using DemoExam.Database;
+﻿using DatabaseFiller;
 using DemoExam.Domain.Models;
+using DemoExam.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Hello, World!");
@@ -12,7 +12,7 @@ var context = new TradeContext();
 if (context.Roles.Any() is false)
 {
     foreach (var item in File.ReadAllLines("Data/Roles.csv"))
-        await context.Roles.AddAsync(new Role { RoleName = item });
+        await context.Roles.AddAsync(new Role { Name = item });
     await context.SaveChangesAsync();
 }
 
@@ -21,15 +21,15 @@ if (context.Users.Any() is false)
     await ImportData("Data/User.csv", ';', async data =>
     {
         var tmp = context.Roles.Any();
-        var role = await context.Roles.FirstOrDefaultAsync(x => x.RoleName == data[4]);
+        var role = await context.Roles.FirstOrDefaultAsync(x => x.Name == data[4]);
         await context.Users.AddAsync(new User
         {
-            UserSurname = data[0],
-            UserName = data[1].Split()[0],
-            UserPatronymic = data[1].Split()[1],
-            UserLogin = data[2],
-            UserPassword = data[3],
-            UserRole = role.Id
+            Surname = data[0],
+            Name = data[1].Split()[0],
+            Patronymic = data[1].Split()[1],
+            Login = data[2],
+            Password = data[3],
+            RoleId = role.Id
         });
     });
 
@@ -53,11 +53,11 @@ if (context.Orders.Any() is false)
         await context.Orders.AddAsync(new Order
         {
             OrderDate = DateTime.Parse(data[1]),
-            OrderDeliveryDate = DateTime.Parse(data[2]),
-            OrderPickupPoint = int.Parse(data[3]),
+            DeliveryDate = DateTime.Parse(data[2]),
+            PickupPointId = int.Parse(data[3]),
             UserId = 1,
             GetCode = int.Parse(data[5]),
-            OrderStatus = data[6]
+            Status = data[6]
         });
     });
 
@@ -65,22 +65,22 @@ if (context.Orders.Any() is false)
 if (context.Products.Any() is false)
     await ImportData("Data/Product.csv", ';', async data =>
     {
-        var manufacturer = await context.Manufacturers.FirstOrDefaultAsync(x => x.ManufacturerName == data[4]);
+        var manufacturer = await context.Manufacturers.FirstOrDefaultAsync(x => x.Name == data[4]);
         if (manufacturer is null)
         {
             manufacturer = (await context.Manufacturers.AddAsync(new Manufacturer()
             {
-                ManufacturerName = data[4]
+                Name = data[4]
             })).Entity;
             await context.SaveChangesAsync();
         }
 
-        var supplier = await context.Suppliers.FirstOrDefaultAsync(x => x.SupplierName == data[5]);
+        var supplier = await context.Suppliers.FirstOrDefaultAsync(x => x.Name == data[5]);
         if (supplier is null)
         {
             supplier = (await context.Suppliers.AddAsync(new Supplier()
             {
-                SupplierName = data[5]
+                Name = data[5]
             })).Entity;
             await context.SaveChangesAsync();
         }
@@ -88,16 +88,15 @@ if (context.Products.Any() is false)
         await context.Products.AddAsync(new Product
         {
             ArticleNumber = data[0],
-            ProductName = data[1],
-            ProductCost = int.Parse(data[2]),
-            MaxDiscount = byte.Parse(data[3]),
+            Name = data[1],
+            Price = int.Parse(data[2]),
             ManufacturerId = manufacturer.Id,
             SupplierId = supplier.Id,
-            ProductCategory = data[6].ToUpper(),
-            CurrentDiscount = byte.Parse(data[7]),
-            ProductQuantityInStock = int.Parse(data[8]),
-            ProductDescription = data[9],
-            ProductPhoto = ReadToByteArray(data[10])
+            Category = data[6].ToUpper(),
+            Discount = byte.Parse(data[7]),
+            QuantityInStock = int.Parse(data[8]),
+            Description = data[9],
+            Photo = ReadToByteArray(data[10])
         });
     });
 

@@ -13,7 +13,7 @@ public partial class Product
     [Required]
     public string ManufacturerName
     {
-        get => _manufacturerName ??= Manufacturer.ManufacturerName;
+        get => _manufacturerName ??= Manufacturer.Name;
         set => _manufacturerName = value;
     }
 
@@ -21,44 +21,23 @@ public partial class Product
     [Required]
     public string SupplierName
     {
-        get => _supplierName ??= Supplier.SupplierName;
+        get => _supplierName ??= Supplier.Name;
         set => _supplierName = value;
     }
     
     [NotMapped]
-    public decimal ProductCostWithDiscount => CurrentDiscount == 0 ? ProductCost : ProductCost - ProductCost * (CurrentDiscount / 100.0m);
-
-    public Product(Product product)
-    {
-        ArticleNumber = product.ArticleNumber;
-        ProductName = product.ProductName;
-        ProductDescription = product.ProductDescription;
-        ProductCategory = product.ProductCategory;
-        ProductPhoto = product.ProductPhoto;
-        ProductCost = product.ProductCost;
-        MaxDiscount = product.MaxDiscount;
-        ProductQuantityInStock = product.ProductQuantityInStock;
-        CurrentDiscount = product.CurrentDiscount;
-        ManufacturerId = product.ManufacturerId;
-        SupplierId = product.SupplierId;
-        Manufacturer = product.Manufacturer;
-        OrderItems = product.OrderItems;
-        Supplier = product.Supplier;
-        ManufacturerName = product.ManufacturerName;
-        SupplierName = product.SupplierName;
-    }
+    public decimal ProductCostWithDiscount => Discount == 0 ? Price : Price - Price * (Discount / 100.0m);
 
     public void Update(Product product)
     {
         ArticleNumber = product.ArticleNumber;
-        ProductName = product.ProductName;
-        ProductDescription = product.ProductDescription;
-        ProductCategory = product.ProductCategory;
-        ProductPhoto = product.ProductPhoto;
-        ProductCost = product.ProductCost;
-        MaxDiscount = product.MaxDiscount;
-        ProductQuantityInStock = product.ProductQuantityInStock;
-        CurrentDiscount = product.CurrentDiscount;
+        Name = product.Name;
+        Description = product.Description;
+        Category = product.Category;
+        Photo = product.Photo;
+        Price = product.Price;
+        QuantityInStock = product.QuantityInStock;
+        Discount = product.Discount;
         ManufacturerId = product.ManufacturerId;
         SupplierId = product.SupplierId;
         ManufacturerName = product.ManufacturerName;

@@ -19,7 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DemoExam.Blazor.Shared\DemoExam.Blazor.Shared.csproj" />
-      <ProjectReference Include="..\DemoExam.Database\DemoExam.Database.csproj" />
+      <ProjectReference Include="..\DemoExam.Infrastructure\DemoExam.Infrastructure.csproj" />
       <ProjectReference Include="..\DemoExam.Domain\DemoExam.Domain.csproj" />
     </ItemGroup>
 
