@@ -79,7 +79,15 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <button class="btn btn-primary" @onclick="CreateNewOrder">Оформить</button>
+                    <AuthorizeView>
+                        <Authorized>
+                            <button class="btn btn-primary" @onclick="CreateNewOrder">Оформить</button>
+                        </Authorized>
+                        <NotAuthorized>
+                            <button class="btn btn-primary disabled" disabled>Оформить</button>
+                        </NotAuthorized>
+                        
+                    </AuthorizeView>
                 </div>
             }
         </div>
