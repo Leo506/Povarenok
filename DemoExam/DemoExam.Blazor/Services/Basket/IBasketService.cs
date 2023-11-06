@@ -1,4 +1,4 @@
-﻿using DemoExam.Blazor.Shared;
+﻿using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Services.Basket;
 
@@ -8,12 +8,12 @@ public interface IBasketService
     
     int TotalProductsCount { get; }
     
-    void AddProduct(ProductDto product);
+    void AddProduct(Product product);
 
-    void RemoveProduct(ProductDto product, bool all = false);
+    void RemoveProduct(Product product, bool all = false);
 
-    int GetProductAmount(ProductDto productDto);
+    int GetProductAmount(Product product);
 
-    Dictionary<ProductDto, int> GetAll();
+    Dictionary<Product, int> GetAll();
     void Clear();
 }

@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Security.Claims;
-using DemoExam.Blazor.Shared;
+using DemoExam.Blazor.Shared.Dto.Requests;
+using DemoExam.Blazor.Shared.Dto.Responses;
 using DemoExam.Domain.Exceptions;
-using DemoExam.Domain.Models;
 using DemoExam.Domain.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
         {
             var user = await _authService.AuthenticateAsync(login, password).ConfigureAwait(false);
             var encodedJwt = GenerateJWTToken(user);
-            return Ok(encodedJwt);
+            return Ok(new Login(encodedJwt));
         }
         catch (AuthenticationException)
         {
@@ -44,7 +44,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    private static string GenerateJWTToken(User user)
+    private static string GenerateJWTToken(Domain.Models.User user)
     {
         var now = DateTime.UtcNow;
         var jwt = new JwtSecurityToken(
@@ -58,7 +58,7 @@ public class AuthController : ControllerBase
         return encodedJwt;
     }
 
-    private static IEnumerable<Claim> GetUserClaims(User user) =>
+    private static IEnumerable<Claim> GetUserClaims(Domain.Models.User user) =>
         new List<Claim>
         {
             new(ClaimsIdentity.DefaultNameClaimType, user.Name),
@@ -67,11 +67,11 @@ public class AuthController : ControllerBase
         };
 
     [HttpPost("registration")]
-    public async Task<IActionResult> Register([FromBody] UserDto userDto)
+    public async Task<IActionResult> Register([FromBody] User user)
     {
         try
         {
-            var (userName, userSurname, userPatronymic, login, password) = userDto;
+            var (userName, userSurname, userPatronymic, login, password) = user;
             await _authService.RegisterUserAsync(login, password, userName, userSurname, userPatronymic)
                 .ConfigureAwait(false);
             return Ok();

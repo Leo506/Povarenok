@@ -1,15 +1,15 @@
-﻿using DemoExam.Blazor.Shared;
+﻿using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Services.Basket;
 
 public class BasketService : IBasketService
 {
-    private readonly Dictionary<ProductDto, int> _products = new();
+    private readonly Dictionary<Product, int> _products = new();
 
     public event Action? BasketContentChanged;
     public int TotalProductsCount => _products.Sum(x => x.Value);
     
-    public void AddProduct(ProductDto product)
+    public void AddProduct(Product product)
     {
         if (_products.ContainsKey(product))
             _products[product]++;
@@ -18,7 +18,7 @@ public class BasketService : IBasketService
         BasketContentChanged?.Invoke();
     }
 
-    public void RemoveProduct(ProductDto product, bool all = false)
+    public void RemoveProduct(Product product, bool all = false)
     {
         if (all)
         {
@@ -32,14 +32,14 @@ public class BasketService : IBasketService
         BasketContentChanged?.Invoke();
     }
 
-    public int GetProductAmount(ProductDto productDto)
+    public int GetProductAmount(Product product)
     {
-        return _products.TryGetValue(productDto, out var amount) 
+        return _products.TryGetValue(product, out var amount) 
             ? amount 
             : 0;
     }
 
-    public Dictionary<ProductDto, int> GetAll() => _products;
+    public Dictionary<Product, int> GetAll() => _products;
     public void Clear()
     {
         _products.Clear();

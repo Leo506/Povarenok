@@ -1,8 +1,9 @@
 ﻿@page "/Catalog"
-@using DemoExam.Blazor.Services.Basket
+@using DemoExam.Blazor.Shared.Dto.Responses
+@using DemoExam.Blazor.Network.Endpoints
+@using Arbus.Network
 @using DemoExam.Blazor.Components
-@inject HttpClient HttpClient
-@inject IBasketService BasketService
+@inject HttpClientContext ClientContext
 
 <PageTitle>Каталог</PageTitle>
 
@@ -55,7 +56,7 @@
 
 @code {
 
-    private IEnumerable<ProductDto>? _products;
+    private IEnumerable<Product>? _products;
     private IEnumerable<string> _categories = Enumerable.Empty<string>();
 
     private string? _categoryFilter = "all";
@@ -70,18 +71,20 @@
     private void GetCategories()
     {
         _categories = _products?.Any() is true 
-            ? _products.DistinctBy(x => x.ProductCategory).Select(x => x.ProductCategory) 
+            ? _products.DistinctBy(x => x.Category).Select(x => x.Category) 
             : Enumerable.Empty<string>();
     }
 
-    private async Task GetCatalog() => 
-        _products = await HttpClient.GetFromJsonAsync<List<ProductDto>>("catalog") ?? new List<ProductDto>();
+    private async Task GetCatalog()
+    {
+        _products = await ClientContext.RunEndpoint(new CatalogEndpoint());
+    }
 
     private Task OnSearchInputChanged() => OnFilterChanged();
 
     private Task OnCategoryFilterChanged() => OnFilterChanged();
 
     private async Task OnFilterChanged() => 
-        _products = await HttpClient.GetFromJsonAsync<List<ProductDto>>($"catalog/search?searchString={_searchString}&category={_categoryFilter}");
+        _products = await ClientContext.RunEndpoint(new SearchProductsEndpoint(_searchString, _categoryFilter));
 
 }

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DemoExam.Blazor.Shared;
+namespace DemoExam.Blazor.Shared.Dto.Requests;
 
-public record UserDto(
+public record User(
     [Required] string UserName,
     [Required] string UserSurname,
     [Required] string UserPatronymic,

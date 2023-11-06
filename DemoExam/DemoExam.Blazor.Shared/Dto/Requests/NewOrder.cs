@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DemoExam.Blazor.Shared;
+namespace DemoExam.Blazor.Shared.Dto.Requests;
 
-public class NewOrderDto
+public class NewOrder
 {
     [Required]
     public Dictionary<string, int> Products { get; set; } = default!;

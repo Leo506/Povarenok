@@ -1,28 +1,23 @@
-﻿using System.Net.Http.Json;
-using DemoExam.Blazor.Services.AccessToken;
-using DemoExam.Blazor.Shared;
+﻿using Arbus.Network;
+using DemoExam.Blazor.Network.Endpoints;
+using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Services.PickupPoints;
 
 public class PickupPointsService : IPickupPointsService
 {
-    private readonly IAccessTokenService _accessTokenService;
-    private readonly HttpClient _httpClient;
+    private readonly HttpClientContext _clientContext;
 
-    public PickupPointsService(IAccessTokenService accessTokenService, HttpClient httpClient)
+    public PickupPointsService(HttpClientContext clientContext)
     {
-        _accessTokenService = accessTokenService;
-        _httpClient = httpClient;
+        _clientContext = clientContext;
     }
 
-    public async Task<List<PickupPointDto>> GetAll()
+    public async Task<List<PickupPoint>> GetAll()
     {
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "/PickupPoints");
-            var response = await _httpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<PickupPointDto>>() ?? new();
+            return await _clientContext.RunEndpoint(new PickupPointsEndpoint());
         }
         catch (Exception)
         {

@@ -1,55 +1,33 @@
-﻿using System.Net.Http.Json;
-using DemoExam.Blazor.Services.AccessToken;
+﻿using Arbus.Network;
+using DemoExam.Blazor.Network.Endpoints;
 using DemoExam.Blazor.Services.Basket;
-using DemoExam.Blazor.Shared;
+using DemoExam.Blazor.Shared.Dto.Requests;
+using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Services.Orders;
 
 public class OrdersService : IOrdersService
 {
-    private readonly IAccessTokenService _accessTokenService;
-    private readonly HttpClient _httpClient;
     private readonly IBasketService _basketService;
+    private readonly HttpClientContext _clientContext;
 
-    public OrdersService(HttpClient httpClient, IAccessTokenService accessTokenService, IBasketService basketService)
+    public OrdersService(IBasketService basketService, HttpClientContext clientContext)
     {
-        _httpClient = httpClient;
-        _accessTokenService = accessTokenService;
         _basketService = basketService;
+        _clientContext = clientContext;
     }
 
-    public async Task<List<OrderShortDto>> GetUserOrders(int userId)
-    {
-        var accessToken = await _accessTokenService.GetAccessToken();
-        var request = new HttpRequestMessage(HttpMethod.Get, $"/Orders/User/{userId}");
-        request.Headers.Add("Authorization", $"Bearer {accessToken}");
-        var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<OrderShortDto>>() ?? new();
-    }
+    public Task<List<OrderShort>> GetUserOrders(int userId) => _clientContext.RunEndpoint(new UserOrdersEndpoint(userId));
 
-    public async Task<OrderDto> GetOrder(int orderId)
-    {
-        var accessToken = await _accessTokenService.GetAccessToken();
-        var request = new HttpRequestMessage(HttpMethod.Get, $"Orders/{orderId}");
-        request.Headers.Add("Authorization", $"Bearer {accessToken}");
-        var response = await _httpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<OrderDto>() ?? new();
-    }
+    public Task<Order> GetOrder(int orderId) => _clientContext.RunEndpoint(new OrderEndpoint(orderId));
 
-    public async Task CreateNew(int pickupPointId)
+    public Task CreateNew(int pickupPointId)
     {
-        var accessToken = await _accessTokenService.GetAccessToken();
-        var request = new HttpRequestMessage(HttpMethod.Post, "Orders");
-        request.Headers.Add("Authorization", $"Bearer {accessToken}");
-        var dto = new NewOrderDto()
+        var dto = new NewOrder()
         {
             PickupPointId = pickupPointId,
-            Products = _basketService.GetAll().ToDictionary(x => x.Key.ProductArticleNumber, x => x.Value)
+            Products = _basketService.GetAll().ToDictionary(x => x.Key.ArticleNumber, x => x.Value)
         };
-        request.Content = JsonContent.Create(dto);
-        var response = await _httpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
+        return _clientContext.RunEndpoint(new NewOrderEndpoint(dto));
     }
 }

@@ -1,4 +1,5 @@
-﻿@using DemoExam.Blazor.Services.Basket
+﻿@using DemoExam.Blazor.Shared.Dto.Responses
+@using DemoExam.Blazor.Services.Basket
 @using DemoExam.Blazor.Services.Modals
 @using DemoExam.Blazor.Services.Orders
 @using DemoExam.Blazor.Services.PickupPoints
@@ -54,11 +55,11 @@
                         @foreach (var (product, amount) in BasketService.GetAll())
                         {
                             <tr>
-                                <td>@product.ProductName</td>
+                                <td>@product.Name</td>
                                 <td class="">
                                     <AddToBasketPanel Product="product"/>
                                 </td>
-                                <td>@((product.ProductCost * amount).ToString("F2"))</td>
+                                <td>@((product.Price * amount).ToString("F2"))</td>
                                 <td>
                                     <button class="text-danger btn" @onclick="() => DeleteProduct(product)">
                                         <i class="oi oi-trash"/>
@@ -73,7 +74,7 @@
                                 Итоговая стоимость:
                             </td>
                             <td colspan="2">
-                                @BasketService.GetAll().Sum(x => x.Key.ProductCost * x.Value).ToString("F2")
+                                @BasketService.GetAll().Sum(x => x.Key.Price * x.Value).ToString("F2")
                             </td>
                         </tr>
                         </tfoot>
@@ -89,7 +90,7 @@
 
     private int? _selectedPointId;
 
-    private List<PickupPointDto> _pickupPointDtos = new();
+    private List<PickupPoint> _pickupPointDtos = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -104,7 +105,7 @@
         await base.OnInitializedAsync();
     }
 
-    private void DeleteProduct(ProductDto product) => BasketService.RemoveProduct(product, all:true);
+    private void DeleteProduct(Product product) => BasketService.RemoveProduct(product, all:true);
 
     private async Task CreateNewOrder()
     {

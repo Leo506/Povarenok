@@ -1,6 +1,6 @@
-﻿namespace DemoExam.Blazor.Shared;
+﻿namespace DemoExam.Blazor.Shared.Dto.Responses;
 
-public class OrderItemDto
+public class OrderItem
 {
     public string Article { get; set; } = default!;
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DemoExam.Blazor.Shared;
+using DemoExam.Blazor.Shared.Dto.Responses;
 using DemoExam.Domain.Services.Products;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +24,7 @@ public class CatalogController : ControllerBase
         await Task.Delay(2_000).ConfigureAwait(false);
 
         var products = await _productsService.GetAll().ConfigureAwait(false);
-        var productDtos = products.Select(x => _mapper.Map<ProductDto>(x));
+        var productDtos = products.Select(x => _mapper.Map<Product>(x));
         return Ok(productDtos);
     }
     
@@ -32,7 +32,7 @@ public class CatalogController : ControllerBase
     public async Task<IActionResult> FindProducts([FromQuery, ] string searchString = "", [FromQuery] string category = "all")
     {
         var products = await _productsService.FindProduct(searchString, category);
-        var productDtos = products.Select(x => _mapper.Map<ProductDto>(x));
+        var productDtos = products.Select(x => _mapper.Map<Product>(x));
         return Ok(productDtos);
     }
     
@@ -40,6 +40,6 @@ public class CatalogController : ControllerBase
     public async Task<IActionResult> FindProducts(string article)
     {
         var product = await _productsService.GetByArticleNumber(article);
-        return Ok(_mapper.Map<ProductDto>(product));
+        return Ok(_mapper.Map<Product>(product));
     }
 }

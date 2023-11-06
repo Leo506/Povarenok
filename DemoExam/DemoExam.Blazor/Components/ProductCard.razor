@@ -1,22 +1,23 @@
-﻿@using DemoExam.Blazor.Services.Basket
+﻿@using DemoExam.Blazor.Shared.Dto.Responses
+@using DemoExam.Blazor.Services.Basket
 @inject IBasketService BasketService
 
 <div class="card shadow bg-body-secondary">
-    <a href="/catalog/@Product.ProductArticleNumber">
-        @if (Product.ProductPhoto is null)
+    <a href="/catalog/@Product.ArticleNumber">
+        @if (Product.Photo is null)
         {
             <img class="card-img-top p-5" src="images/default_image.png" alt=""/>
         }
         else
         {
-            <img class="card-img-top @Product.ProductPhoto" src="@ImageSource" alt=""/>
+            <img class="card-img-top @Product.Photo" src="@ImageSource" alt=""/>
         }
     </a>
     <div class="card-body">
-        <h5 class="card-title">@Product.ProductName</h5>
-        <p class="card-text">@Product.ProductDescription</p>
+        <h5 class="card-title">@Product.Name</h5>
+        <p class="card-text">@Product.Description</p>
         <div class="add-panel">
-            <div class="card-text price d-block">@Product.ProductCost.ToString("F2") руб.</div>
+            <div class="card-text price d-block">@Product.Price.ToString("F2") руб.</div>
             <AddToBasketPanel Product="Product"/>
         </div>
     </div>
@@ -24,9 +25,9 @@
 
 @code {
 
-    private string ImageSource => $"data:image/jpg;base64, {Product.ProductPhoto}";
+    private string ImageSource => $"data:image/jpg;base64, {Product.Photo}";
 
     [Parameter]
-    public ProductDto Product { get; set; } = default!;
+    public Product Product { get; set; } = default!;
 
 }

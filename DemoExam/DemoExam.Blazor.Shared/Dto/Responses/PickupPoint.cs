@@ -1,6 +1,6 @@
-﻿namespace DemoExam.Blazor.Shared;
+﻿namespace DemoExam.Blazor.Shared.Dto.Responses;
 
-public class PickupPointDto
+public class PickupPoint
 {
     public int Id { get; set; }
 

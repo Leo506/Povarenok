@@ -1,4 +1,5 @@
-﻿<tr>
+﻿@using DemoExam.Blazor.Shared.Dto.Responses
+<tr>
     <th scope="row" data-bs-toggle="modal" data-bs-target="#orderModal" @onclick="OnOrderClick">
         Заказ №@Order.Id
     </th>
@@ -11,7 +12,7 @@
 @code
 {
     [Parameter]
-    public OrderShortDto Order { get; set; } = default!;
+    public OrderShort Order { get; set; } = default!;
 
     [Parameter]
     public Func<int, Task> OnOrderClickCallback { get; set; } = default!;

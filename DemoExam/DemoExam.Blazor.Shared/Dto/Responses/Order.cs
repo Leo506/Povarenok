@@ -1,6 +1,6 @@
-﻿namespace DemoExam.Blazor.Shared;
+﻿namespace DemoExam.Blazor.Shared.Dto.Responses;
 
-public class OrderDto
+public class Order
 {
     public int Id { get; set; }
 
@@ -14,5 +14,5 @@ public class OrderDto
 
     public int GetCode { get; set; }
 
-    public List<OrderItemDto> OrderItems { get; set; } = default!;
+    public List<OrderItem> OrderItems { get; set; } = default!;
 }

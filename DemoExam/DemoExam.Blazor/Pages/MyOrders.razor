@@ -1,7 +1,9 @@
 ﻿@page "/MyOrders"
+@using DemoExam.Blazor.Shared.Dto.Responses
 @using DemoExam.Blazor.Services.Orders
 @using DemoExam.Blazor.Comparers
 @using DemoExam.Blazor.Components
+@using Order = DemoExam.Blazor.Shared.Dto.Responses.Order
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IOrdersService OrdersService
 @inject NavigationManager NavigationManager
@@ -40,7 +42,7 @@
 </table>
 
 
-<Order OrderDto="_currentViewOrder" />
+<Order OrderDto="_currentViewOrder"/>
 
 <Basket/>
 
@@ -52,9 +54,9 @@
 
     private string _sortField = default!;
 
-    private List<OrderShortDto> _orderShortDtos = new();
+    private List<OrderShort> _orderShortDtos = new();
 
-    private OrderDto? _currentViewOrder;
+    private Order? _currentViewOrder;
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,7 +65,7 @@
             var authState = await AuthStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
             if (authState.User.Identity?.IsAuthenticated is false)
                 NavigationManager.NavigateTo(nameof(Login));
-            
+
             var userId = int.Parse(authState.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "-1");
             _orderShortDtos = await OrdersService.GetUserOrders(userId).ConfigureAwait(false);
             _sortField = SortByStatus;
@@ -71,7 +73,7 @@
         }
         catch (Exception e)
         {
-            // ignored
+    // ignored
         }
         finally
         {
@@ -92,4 +94,5 @@
         _currentViewOrder = await OrdersService.GetOrder(id);
         StateHasChanged();
     }
+
 }

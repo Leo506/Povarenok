@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using DemoExam.Blazor.Shared;
-using DemoExam.Domain.Models;
+using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Server.Mapping;
 
@@ -8,14 +7,14 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<Product, ProductDto>()
-            .ForMember(x => x.ProductPhoto, 
+        CreateMap<Domain.Models.Product, Product>()
+            .ForMember(x => x.Photo, 
                 j => j.MapFrom(h => h.Photo == null 
                     ? null 
                     : Convert.ToBase64String(h.Photo)))
-            .ForMember(x => x.ProductArticleNumber, j => j.MapFrom(h => h.ArticleNumber));
+            .ForMember(x => x.ArticleNumber, j => j.MapFrom(h => h.ArticleNumber));
 
-        CreateMap<Order, OrderShortDto>()
+        CreateMap<Domain.Models.Order, OrderShort>()
             .ForMember(x => x.PickupPoint,
                 j => j.MapFrom(h => h.OrderPickupPointNavigation.AddressString))
             .ForMember(x => x.Status,
@@ -23,7 +22,7 @@ public class AutoMapperProfile : Profile
             .ForMember(x => x.DeliveryDate,
                 j => j.MapFrom(h => DateOnly.FromDateTime(h.DeliveryDate)));
 
-        CreateMap<Order, OrderDto>()
+        CreateMap<Domain.Models.Order, Order>()
             .ForMember(x => x.PickupPoint,
                 j => j.MapFrom(h => h.OrderPickupPointNavigation.AddressString))
             .ForMember(x => x.Status,
@@ -35,7 +34,7 @@ public class AutoMapperProfile : Profile
             .ForMember(x => x.OrderItems,
                 j => j.MapFrom(x => x.OrderItems));
 
-        CreateMap<OrderItem, OrderItemDto>()
+        CreateMap<Domain.Models.OrderItem, OrderItem>()
             .ForMember(x => x.Article,
                 j => j.MapFrom(h => h.Product.ArticleNumber))
             .ForMember(x => x.Title,
@@ -43,7 +42,7 @@ public class AutoMapperProfile : Profile
             .ForMember(x => x.TotalCost,
                 j => j.MapFrom(h => h.Product.Price * h.Amount));
 
-        CreateMap<PickupPoint, PickupPointDto>()
+        CreateMap<Domain.Models.PickupPoint, PickupPoint>()
             .ForMember(x => x.Address,
                 j => j.MapFrom(h => h.AddressString));
     }

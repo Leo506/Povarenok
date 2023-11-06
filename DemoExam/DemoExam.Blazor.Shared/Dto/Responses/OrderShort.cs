@@ -1,6 +1,6 @@
-﻿namespace DemoExam.Blazor.Shared;
+﻿namespace DemoExam.Blazor.Shared.Dto.Responses;
 
-public class OrderShortDto
+public class OrderShort
 {
     public int Id { get; set; }
 

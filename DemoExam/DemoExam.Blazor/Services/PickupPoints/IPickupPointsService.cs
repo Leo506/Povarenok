@@ -1,8 +1,8 @@
-﻿using DemoExam.Blazor.Shared;
+﻿using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Services.PickupPoints;
 
 public interface IPickupPointsService
 {
-    Task<List<PickupPointDto>> GetAll();
+    Task<List<PickupPoint>> GetAll();
 }

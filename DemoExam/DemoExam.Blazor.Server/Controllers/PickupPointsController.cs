@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using DemoExam.Blazor.Shared;
-using DemoExam.Domain.Models;
+using DemoExam.Blazor.Shared.Dto.Responses;
 using DemoExam.Domain.Services.PickupPoints;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,8 +23,8 @@ public class PickupPointsController : ControllerBase
     {
         try
         {
-            List<PickupPoint> points = await _pickupPointService.GetAll();
-            var pointsDto = _mapper.Map<List<PickupPointDto>>(points);
+            List<Domain.Models.PickupPoint> points = await _pickupPointService.GetAll();
+            var pointsDto = _mapper.Map<List<PickupPoint>>(points);
             return Ok(pointsDto);
         }
         catch (Exception e)

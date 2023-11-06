@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
-using DemoExam.Blazor.Shared;
+using DemoExam.Blazor.Shared.Dto.Requests;
+using DemoExam.Blazor.Shared.Dto.Responses;
 using DemoExam.Domain.Exceptions;
 using DemoExam.Domain.Models;
 using DemoExam.Domain.Services.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Order = DemoExam.Blazor.Shared.Dto.Responses.Order;
 
 namespace DemoExam.Blazor.Server.Controllers;
 
@@ -33,7 +35,7 @@ public class OrdersController : ControllerBase
             return Forbid();
 
         var orders = await _ordersService.GetOrdersForUser(userId).ConfigureAwait(false);
-        var ordersDto = _mapper.Map<List<OrderShortDto>>(orders);
+        var ordersDto = _mapper.Map<List<OrderShort>>(orders);
         return Ok(ordersDto);
     }
 
@@ -53,7 +55,7 @@ public class OrdersController : ControllerBase
                     return Forbid();
             }
 
-            var orderDto = _mapper.Map<OrderDto>(order);
+            var orderDto = _mapper.Map<Order>(order);
             return Ok(orderDto);
         }
         catch (EntityNotFoundException)
@@ -68,14 +70,14 @@ public class OrdersController : ControllerBase
 
     [HttpPost("")]
     [Authorize]
-    public async Task<IActionResult> CreateNewOrder([FromBody] NewOrderDto newOrderDto)
+    public async Task<IActionResult> CreateNewOrder([FromBody] NewOrder newOrder)
     {
         try
         {
             var userIdStr = User.FindFirst(x => x.Type == "UserId")?.Value;
             if (int.TryParse(userIdStr, out var userId) is false)
                 return Unauthorized();
-            await _ordersService.CreateNewOrder(userId, newOrderDto.PickupPointId, newOrderDto.Products);
+            await _ordersService.CreateNewOrder(userId, newOrder.PickupPointId, newOrder.Products);
             return Ok();
         }
         catch (Exception e)
