@@ -1,0 +1,114 @@
+﻿@using DemoExam.Blazor.Extensions
+@using DemoExam.Blazor.Network.Endpoints
+@using DemoExam.Blazor.ViewModels
+@using Arbus.Network
+@inject HttpClientContext ClientContext
+@inject IJSRuntime JsRuntime
+<div class="modal fade" id="productEditModal" tabindex="-1" aria-labelledby="productEditModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content order-content @(ProductEditViewModel is null ? "justify-content-center align-items-center" : "")">
+            @if (ProductEditViewModel is null)
+            {
+                <div class="spinner-border text-center"/>
+            }
+            else
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">@ProductEditViewModel.ArticleNumber</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="ProductEditViewModel" OnValidSubmit="SaveChanges">
+                        <DataAnnotationsValidator/>
+                        <div class="mb-3">
+                            <label for="name_input" class="form-label">Название</label>
+                            <InputText @bind-Value="ProductEditViewModel.Name" class="form-control form-text" id="name_input"/>
+                            <ValidationMessage For="() => ProductEditViewModel.Name"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description_input" class="form-label">Описание</label>
+                            <InputTextArea id="description_input" 
+                                           @bind-Value="ProductEditViewModel.Description" 
+                                           class="form-control form-text"/>
+                            <ValidationMessage For="() => ProductEditViewModel.Description"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category_input" class="form-label">Катерогия</label>
+                            <InputText id="category_input" @bind-Value="ProductEditViewModel.Category" 
+                                       class="form-control form-text"/>
+                            <ValidationMessage For="() => ProductEditViewModel.Category"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="photo_input" class="form-label">Фото</label>
+                            <img class="shadow d-block mb-3" src="@ImageSource" alt="photo" height="100"/>
+                            <InputFile id="photo_input" class="form-control" OnChange="OnFileLoad"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price_input" class="form-label">Цена</label>
+                            <InputNumber id="price_input" 
+                                         @bind-Value="ProductEditViewModel.Price" 
+                                         class="form-control"
+                                         ParsingErrorMessage="Поле должно быть числом"/>
+                            <ValidationMessage For="() => ProductEditViewModel.Price"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="discount_input" class="form-label">Скидка</label>
+                            <InputNumber id="discount_input" 
+                                         @bind-Value="ProductEditViewModel.Discount"
+                                         class="form-control"
+                                         ParsingErrorMessage="Поле должно быть числом"/>
+                            <ValidationMessage For="() => ProductEditViewModel.Discount"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity_input" class="form-label">Количество на складе</label>
+                            <InputNumber id="quantity_input" 
+                                         @bind-Value="ProductEditViewModel.QuantityInStock" 
+                                         class="form-control"
+                                         ParsingErrorMessage="Поле должно быть числом"/>
+                            <ValidationMessage For="() => ProductEditViewModel.QuantityInStock"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="manufacturer_input" class="form-label">Производитель</label>
+                            <InputText id="manufacturer_input" @bind-Value="ProductEditViewModel.ManufacturerName" 
+                                       class="form-control form-text"/>
+                            <ValidationMessage For="() => ProductEditViewModel.ManufacturerName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="supplier_input" class="form-label">Поставщик</label>
+                            <InputText id="supplier_input" @bind-Value="ProductEditViewModel.SupplierName" 
+                                       class="form-control form-text"/>
+                            <ValidationMessage For="() => ProductEditViewModel.SupplierName"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </EditForm>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@code {
+    
+    [Parameter]
+    public ProductEditViewModel? ProductEditViewModel { get; set; }
+
+    private string ImageSource => ProductEditViewModel?.Photo is null
+        ? "images/default_image.png"
+        : $"data:image/jpg;base64, {ProductEditViewModel.Photo}";
+
+    private async Task OnFileLoad(InputFileChangeEventArgs obj)
+    {
+        await using var ms = new MemoryStream();
+        await obj.File.OpenReadStream().CopyToAsync(ms);
+        ProductEditViewModel!.Photo = Convert.ToBase64String(ms.ToArray());
+        StateHasChanged();
+    }
+
+    private async Task SaveChanges()
+    {
+        await ClientContext.RunEndpoint(new ProductEditEndpoint(ProductEditViewModel!.ArticleNumber, ProductEditViewModel.ToDto()));
+        await JsRuntime.CloseModal();
+    }
+
+}

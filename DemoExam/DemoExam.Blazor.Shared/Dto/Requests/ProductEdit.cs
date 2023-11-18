@@ -1,4 +1,6 @@
-﻿namespace DemoExam.Blazor.Shared.Dto.Requests;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DemoExam.Blazor.Shared.Dto.Requests;
 
 public class ProductEdit
 {
@@ -10,15 +12,18 @@ public class ProductEdit
 
     public string? Photo { get; set; }
 
+    [Range(0, double.MaxValue)]
     public decimal? Price { get; set; }
     
+    [Range(0, int.MaxValue)]
     public int? QuantityInStock { get; set; }
     
+    [Range(0, 100)]
     public byte? Discount { get; set; }
 
-    public string? ManufacturerName { get; set; } = default!;
+    public string? ManufacturerName { get; set; }
 
-    public string? SupplierName { get; set; } = default!;
+    public string? SupplierName { get; set; }
     
     
 }

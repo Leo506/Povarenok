@@ -1,6 +1,6 @@
 ﻿@using DemoExam.Blazor.Shared.Dto.Responses
 <tr>
-    <th scope="row" data-bs-toggle="modal" data-bs-target="#orderModal">
+    <th scope="row">
         @Product.ArticleNumber
     </th>
     <td>@Product.Name</td>
@@ -12,7 +12,7 @@
     <td>@Product.QuantityInStock</td>
     <td>
         <div class="d-flex">
-            <button class="btn">
+            <button class="btn" @onclick="async () => await OnEditClickCallback(Product.ArticleNumber)">
                 <i class="oi oi-pencil"></i>
             </button>
             <button class="text-danger btn" @onclick="async () => await OnDeleteClickCallback(Product.ArticleNumber)">
@@ -29,4 +29,8 @@
 
     [Parameter]
     public Func<string, Task> OnDeleteClickCallback { get; set; } = default!;
+
+    [Parameter]
+    public Func<string, Task> OnEditClickCallback { get; set; } = default!;
+
 }

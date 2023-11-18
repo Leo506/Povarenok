@@ -1,12 +1,12 @@
-﻿@using DemoExam.Blazor.Shared.Dto.Responses
+﻿@using DemoExam.Blazor.Extensions
 @using DemoExam.Blazor.Services.Basket
-@using DemoExam.Blazor.Services.Modals
 @using DemoExam.Blazor.Services.Orders
 @using DemoExam.Blazor.Services.PickupPoints
+@using DemoExam.Blazor.Shared.Dto.Responses
 @inject IBasketService BasketService
 @inject IPickupPointsService PickupPointsService
-@inject IModalService ModalService
 @inject IOrdersService OrdersService
+@inject IJSRuntime JsRuntime
 
 @if (BasketService.TotalProductsCount > 0)
 {
@@ -105,7 +105,7 @@
         BasketService.BasketContentChanged += async () =>
         {
             if (BasketService.TotalProductsCount == 0)
-                await ModalService.CloseModal();
+                await JsRuntime.CloseModal();
             StateHasChanged();
         };
         _pickupPointDtos = await PickupPointsService.GetAll();
@@ -120,7 +120,7 @@
         if (_selectedPointId is null)
             return;
         await OrdersService.CreateNew(_selectedPointId.Value);
-        await ModalService.CloseModal();
+        await JsRuntime.CloseModal();
         BasketService.Clear();
     }
 

@@ -1,7 +1,9 @@
 ﻿@page "/Products"
-@using DemoExam.Blazor.Shared.Dto.Responses
-@using Arbus.Network
+@using DemoExam.Blazor.Extensions
 @using DemoExam.Blazor.Network.Endpoints
+@using DemoExam.Blazor.Shared.Dto.Responses
+@using DemoExam.Blazor.ViewModels
+@using Arbus.Network
 @using DemoExam.Blazor.Components
 @inject HttpClientContext ClientContext
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -29,17 +31,22 @@
     <tbody>
     @foreach (var product in _products)
     {
-        <ProductRow Product="product" OnDeleteClickCallback="OnDeleteProductClick"/>
+        <ProductRow Product="product" 
+                    OnDeleteClickCallback="OnDeleteProductClick"
+                    OnEditClickCallback="OnEditProductClick"/>
     }
     </tbody>
 </table>
 
+<ProductEditView ProductEditViewModel="_selectedViewProductEdit"/>
 
 <Basket/>
 
 @code {
 
     private List<Product> _products = new();
+
+    private ProductEditViewModel? _selectedViewProductEdit;
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,13 +66,21 @@
 
     private async Task OnDeleteProductClick(string article)
     {
-        var confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Уверены, что хотите удалить товар?");
+        var confirm = await JsRuntime.Confirm("Уверены, что хотите удалить товар?");
         if (confirm)
         {
             await ClientContext.RunEndpoint(new DeleteProductEndpoint(article));
             _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
             StateHasChanged();
         }
+    }
+
+    private async Task OnEditProductClick(string article)
+    {
+        var product = _products.First(x => x.ArticleNumber == article);
+        _selectedViewProductEdit = ProductEditViewModel.Create(product);
+        StateHasChanged();
+        await JsRuntime.ShowModal("productEditModal");
     }
 
 }
