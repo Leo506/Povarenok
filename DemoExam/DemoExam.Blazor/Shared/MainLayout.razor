@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims
 @using DemoExam.Blazor.Services.Auth
+@using DemoExam.Blazor.Pages
 @inherits LayoutComponentBase
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAuthService AuthService
@@ -26,7 +27,8 @@
                                 @_currentUserName
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/MyOrders">Мои Заказы</a></li>
+                                <li><a class="dropdown-item" href="/@nameof(MyOrders)">Мои Заказы</a></li>
+                                <li><a class="dropdown-item" href="/@nameof(Catalog)">Каталог</a></li>
                                 @if (_user?.IsInRole("Администратор") is true)
                                 {
                                     <li><a class="dropdown-item" href="#">Товары</a></li>
