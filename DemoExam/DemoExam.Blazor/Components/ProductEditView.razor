@@ -1,9 +1,4 @@
-﻿@using DemoExam.Blazor.Extensions
-@using DemoExam.Blazor.Network.Endpoints
-@using DemoExam.Blazor.ViewModels
-@using Arbus.Network
-@inject HttpClientContext ClientContext
-@inject IJSRuntime JsRuntime
+﻿@using DemoExam.Blazor.ViewModels
 <div class="modal fade" id="productEditModal" tabindex="-1" aria-labelledby="productEditModalLabel">
     <div class="modal-dialog">
         <div class="modal-content order-content @(ProductEditViewModel is null ? "justify-content-center align-items-center" : "")">
@@ -18,7 +13,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <EditForm Model="ProductEditViewModel" OnValidSubmit="SaveChanges">
+                    <EditForm Model="ProductEditViewModel" OnValidSubmit="async () => await SaveChanges()">
                         <DataAnnotationsValidator/>
                         <div class="mb-3">
                             <label for="name_input" class="form-label">Название</label>
@@ -93,6 +88,9 @@
     [Parameter]
     public ProductEditViewModel? ProductEditViewModel { get; set; }
 
+    [Parameter]
+    public Func<Task> SaveChanges { get; set; } = default!;
+
     private string ImageSource => ProductEditViewModel?.Photo is null
         ? "images/default_image.png"
         : $"data:image/jpg;base64, {ProductEditViewModel.Photo}";
@@ -104,11 +102,4 @@
         ProductEditViewModel!.Photo = Convert.ToBase64String(ms.ToArray());
         StateHasChanged();
     }
-
-    private async Task SaveChanges()
-    {
-        await ClientContext.RunEndpoint(new ProductEditEndpoint(ProductEditViewModel!.ArticleNumber, ProductEditViewModel.ToDto()));
-        await JsRuntime.CloseModal();
-    }
-
 }

@@ -38,7 +38,8 @@
     </tbody>
 </table>
 
-<ProductEditView ProductEditViewModel="_selectedViewProductEdit"/>
+<ProductEditView ProductEditViewModel="_selectedViewProductEdit"
+                 SaveChanges="SaveChanges"/>
 
 <Basket/>
 
@@ -81,6 +82,14 @@
         _selectedViewProductEdit = ProductEditViewModel.Create(product);
         StateHasChanged();
         await JsRuntime.ShowModal("productEditModal");
+    }
+
+    private async Task SaveChanges()
+    {
+        await ClientContext.RunEndpoint(new ProductEditEndpoint(_selectedViewProductEdit!.ArticleNumber, _selectedViewProductEdit.ToDto()));
+        await JsRuntime.CloseModal();
+        _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
+        StateHasChanged();
     }
 
 }

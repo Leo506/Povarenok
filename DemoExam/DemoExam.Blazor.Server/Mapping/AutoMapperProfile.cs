@@ -40,7 +40,7 @@ public class AutoMapperProfile : Profile
             .ForMember(x => x.Title,
                 j => j.MapFrom(h => h.Product.Name))
             .ForMember(x => x.TotalCost,
-                j => j.MapFrom(h => h.Product.Price * h.Amount));
+                j => j.MapFrom(h => h.Product.PriceWithDiscount * h.Amount));
 
         CreateMap<Domain.Models.PickupPoint, PickupPoint>()
             .ForMember(x => x.Address,
