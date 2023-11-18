@@ -21,6 +21,7 @@ builder.Services
     .AddAutoMapper(typeof(AutoMapperProfile))
     .AddCors(options => options.AddDefaultPolicy(policyBuilder =>
     {
+        policyBuilder.AllowAnyMethod();
         policyBuilder.AllowAnyOrigin();
         policyBuilder.AllowAnyHeader();
     }));

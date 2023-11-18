@@ -1,0 +1,71 @@
+﻿@page "/Products"
+@using DemoExam.Blazor.Shared.Dto.Responses
+@using Arbus.Network
+@using DemoExam.Blazor.Network.Endpoints
+@using DemoExam.Blazor.Components
+@inject HttpClientContext ClientContext
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Товары</PageTitle>
+
+<h3>Товары</h3>
+
+<table class="table table-hover" sortable="True">
+    <thead>
+    <tr>
+        <th scope="col">Артикул</th>
+        <th scope="col">Название</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Скидка(%)</th>
+        <th scope="col">Производитель</th>
+        <th scope="col">Поставщик</th>
+        <th scope="col">На складе</th>
+        <th scope="col">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var product in _products)
+    {
+        <ProductRow Product="product" OnDeleteClickCallback="OnDeleteProductClick"/>
+    }
+    </tbody>
+</table>
+
+
+<Basket/>
+
+@code {
+
+    private List<Product> _products = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (state.User.Identity?.IsAuthenticated is false)
+        {
+            NavigationManager.NavigateTo(nameof(Login));
+            return;
+        }
+        if (state.User.IsInRole("Администратор") is false)
+        {
+            NavigationManager.NavigateTo(nameof(Catalog));
+            return;
+        }
+        _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
+    }
+
+    private async Task OnDeleteProductClick(string article)
+    {
+        var confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Уверены, что хотите удалить товар?");
+        if (confirm)
+        {
+            await ClientContext.RunEndpoint(new DeleteProductEndpoint(article));
+            _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
+            StateHasChanged();
+        }
+    }
+
+}

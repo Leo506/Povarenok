@@ -18,12 +18,20 @@ public class ProductsService : IProductsService
         return products.Any() ? products : Enumerable.Empty<Product>();
     }
     
-    public Task DeleteProduct(Product product) => _repository.DeleteAsync(product);
+    public Task DeleteProduct(string article) => _repository.DeleteAsync(article);
 
     public Task AddProduct(Product product)
     {
         product.Validate();
         return _repository.AddAsync(product);
+    }
+
+    public async Task UpdateProduct(string productArticle, Action<Product> productEditAction)
+    {
+        var product = await GetByArticleNumber(productArticle);
+        productEditAction(product);
+        product.Validate();
+        await _repository.UpdateAsync(product);
     }
 
     public Task UpdateProduct(Product product)

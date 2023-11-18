@@ -31,7 +31,7 @@
                                 <li><a class="dropdown-item" href="/@nameof(Catalog)">Каталог</a></li>
                                 @if (_user?.IsInRole("Администратор") is true)
                                 {
-                                    <li><a class="dropdown-item" href="#">Товары</a></li>
+                                    <li><a class="dropdown-item" href="/@nameof(Products)">Товары</a></li>
                                     <li><a class="dropdown-item" href="#">Все заказы</a></li>
                                 }
                                 else if (_user?.IsInRole("Менеджер") is true)

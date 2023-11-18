@@ -69,9 +69,9 @@ internal class ProductRepository : IProductRepository
             product.ManufacturerId = manufacturer.Id;
     }
 
-    public async Task DeleteAsync(Product product)
+    public async Task DeleteAsync(string article)
     {
-        _tradeContext.Products.Remove(product);
+        await _tradeContext.Products.Where(x => x.ArticleNumber == article).ExecuteDeleteAsync();
         await _tradeContext.SaveChangesAsync();
     }
 

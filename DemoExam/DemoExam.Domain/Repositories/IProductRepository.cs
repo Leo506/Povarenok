@@ -10,7 +10,7 @@ public interface IProductRepository
 
     Task AddAsync(Product product);
 
-    Task DeleteAsync(Product product);
+    Task DeleteAsync(string article);
 
     Task UpdateAsync(Product product);
 

@@ -6,11 +6,11 @@ public interface IProductsService
 {
     Task<IEnumerable<Product>> GetAll();
 
-    Task DeleteProduct(Product product);
+    Task DeleteProduct(string article);
 
     Task AddProduct(Product product);
 
-    Task UpdateProduct(Product product);
+    Task UpdateProduct(string productArticle, Action<Product> productEditAction);
 
     Task<bool> Exists(string article);
 
