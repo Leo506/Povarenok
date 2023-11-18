@@ -59,7 +59,7 @@
                                 <td class="">
                                     <AddToBasketPanel Product="product"/>
                                 </td>
-                                <td>@((product.Price * amount).ToString("F2"))</td>
+                                <td>@((product.PriceWithDiscount * amount).ToString("F2"))</td>
                                 <td>
                                     <button class="text-danger btn" @onclick="() => DeleteProduct(product)">
                                         <i class="oi oi-trash"/>
@@ -74,7 +74,7 @@
                                 Итоговая стоимость:
                             </td>
                             <td colspan="2">
-                                @BasketService.GetAll().Sum(x => x.Key.Price * x.Value).ToString("F2")
+                                @BasketService.GetAll().Sum(x => x.Key.PriceWithDiscount * x.Value).ToString("F2")
                             </td>
                         </tr>
                         </tfoot>

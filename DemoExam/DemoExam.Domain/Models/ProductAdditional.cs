@@ -26,7 +26,7 @@ public partial class Product
     }
     
     [NotMapped]
-    public decimal ProductCostWithDiscount => Discount == 0 ? Price : Price - Price * (Discount / 100.0m);
+    public decimal PriceWithDiscount => Discount == 0 ? Price : Price - Price * (Discount / 100.0m);
 
     public void Update(Product product)
     {

@@ -14,6 +14,8 @@ public record Product
 
     public decimal Price { get; set; }
     
+    public decimal PriceWithDiscount { get; set; }
+    
     public int QuantityInStock { get; set; }
     
     public byte Discount { get; set; }

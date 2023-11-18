@@ -3,6 +3,7 @@
 @using Arbus.Network
 @using DemoExam.Blazor.Services.Basket
 @using DemoExam.Blazor.Network.Endpoints
+@using DemoExam.Blazor.Components
 @inject HttpClientContext ClientContext
 @inject IBasketService BasketService
 
@@ -44,33 +45,28 @@ else
                 </tr>
                 <tr class="cost-row">
                     <th>Стоимость</th>
-                    <td>@_product.Price.ToString("F2") руб.</td>
+                    @if (_product.Price == _product.PriceWithDiscount)
+                    {
+                        <td>@_product.Price.ToString("F2") руб.</td>
+                    }
+                    else
+                    {
+                        <td>
+                            <div class="d-flex flex-column">
+                                <div class="price-old text-decoration-line-through">@_product.Price.ToString("F2") руб.</div>
+                                <div class="price-new">@_product.PriceWithDiscount.ToString("F2") руб.</div>
+                            </div>
+                        </td>
+                    }
                 </tr>
 
                 </tbody>
             </table>
-            <div class="d-flex flex-row">
-                @if (BasketService.GetProductAmount(_product) > 0)
-                {
-                    <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button"
-                            @onclick="() => BasketService.RemoveProduct(_product)">
-                        <i class="oi oi-minus"></i>
-                    </button>
-                    <p class="d-block amount-text">@BasketService.GetProductAmount(_product)</p>
-                    <button class="btn btn-outline-dark rounded-circle p-0 change-amount-button"
-                            @onclick="() => BasketService.AddProduct(_product)">
-                        <i class="oi oi-plus"></i>
-                    </button>
-                }
-                else
-                {
-                    <button class="btn btn-outline-primary" @onclick="() => BasketService.AddProduct(_product)">
-                        В корзину
-                    </button>
-                }
-            </div>
+            <AddToBasketPanel Product="_product"/>
         </div>
     </div>
+    
+    <Basket/>
 }
 
 @code {

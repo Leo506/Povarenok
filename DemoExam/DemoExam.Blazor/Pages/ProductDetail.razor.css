@@ -24,3 +24,11 @@
 .btn {
     font-size: 20px;
 }
+
+.price-old {
+    font-size: large;
+}
+
+.price-new {
+    font-size: larger;
+}

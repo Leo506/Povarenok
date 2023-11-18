@@ -17,7 +17,17 @@
         <h5 class="card-title">@Product.Name</h5>
         <p class="card-text">@Product.Description</p>
         <div class="add-panel">
-            <div class="card-text price d-block">@Product.Price.ToString("F2") руб.</div>
+            @if (Product.Price == Product.PriceWithDiscount)
+            {
+                <div class="card-text price">@Product.Price.ToString("F2") руб.</div>
+            }
+            else
+            {
+                <div class="d-flex flex-column">
+                    <div class="card-text price-old text-decoration-line-through">@Product.Price.ToString("F2") руб.</div>
+                    <div class="card-text price-new">@Product.PriceWithDiscount.ToString("F2") руб.</div>
+                </div>
+            }
             <AddToBasketPanel Product="Product"/>
         </div>
     </div>
