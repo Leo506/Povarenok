@@ -54,4 +54,12 @@ public class ProductsController : ControllerBase
         await _productsService.DeleteProduct(productArticle);
         return Ok();
     }
+
+    [HttpPost("/new/")]
+    public async Task<IActionResult> CreateNew([FromBody] NewProduct newProduct)
+    {
+        var product = _mapper.Map<DemoExam.Domain.Models.Product>(newProduct);
+        await _productsService.AddProduct(product);
+        return Ok();
+    }
 }

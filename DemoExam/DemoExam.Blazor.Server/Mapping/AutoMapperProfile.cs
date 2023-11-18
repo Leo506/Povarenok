@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DemoExam.Blazor.Shared.Dto.Requests;
 using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Server.Mapping;
@@ -45,5 +46,11 @@ public class AutoMapperProfile : Profile
         CreateMap<Domain.Models.PickupPoint, PickupPoint>()
             .ForMember(x => x.Address,
                 j => j.MapFrom(h => h.AddressString));
+
+        CreateMap<NewProduct, Domain.Models.Product>()
+            .ForMember(x => x.Photo,
+                j => j.MapFrom(h => h.Photo == null
+                    ? null
+                    : Convert.FromBase64String(h.Photo)));
     }
 }

@@ -18,7 +18,11 @@ builder.Services
     .AddJwtAuthentication()
     .AddInfrastructure()
     .AddServices()
-    .AddAutoMapper(typeof(AutoMapperProfile))
+    .AddAutoMapper(expression =>
+    {
+        expression.AllowNullCollections = true;
+        expression.AddProfile<AutoMapperProfile>();
+    })
     .AddCors(options => options.AddDefaultPolicy(policyBuilder =>
     {
         policyBuilder.AllowAnyMethod();

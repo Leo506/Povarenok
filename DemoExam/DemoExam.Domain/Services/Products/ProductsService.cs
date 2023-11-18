@@ -34,12 +34,6 @@ public class ProductsService : IProductsService
         await _repository.UpdateAsync(product);
     }
 
-    public Task UpdateProduct(Product product)
-    {
-        product.Validate();
-        return _repository.UpdateAsync(product);
-    }
-
     public Task<bool> Exists(string article) => _repository.Contains(article);
 
     public async Task<Product> GetByArticleNumber(string article)

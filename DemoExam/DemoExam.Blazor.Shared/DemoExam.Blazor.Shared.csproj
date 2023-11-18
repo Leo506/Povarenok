@@ -10,4 +10,8 @@
       <Folder Include="Dto\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.8.0" />
+    </ItemGroup>
+
 </Project>
