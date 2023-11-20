@@ -4,9 +4,9 @@ namespace DemoExam.Blazor.ViewModels;
 
 public class LoginViewModel
 {
-    [Required]
+    [Required(ErrorMessage = "Поле обязательно")]
     public string Login { get; set; } = default!;
 
-    [Required]
+    [Required(ErrorMessage = "Поле обязательно")]
     public string Password { get; set; } = default!;
 }

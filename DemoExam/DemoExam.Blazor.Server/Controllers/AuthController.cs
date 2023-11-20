@@ -40,7 +40,7 @@ public class AuthController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e, "Failed to authenticate user");
-            return BadRequest();
+            return BadRequest(e);
         }
     }
 
@@ -82,7 +82,8 @@ public class AuthController : ControllerBase
         }
         catch (Exception e)
         {
-            return BadRequest();
+            _logger.LogError(e, "Failed to register new user");
+            return BadRequest(e);
         }
     }
 }

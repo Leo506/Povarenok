@@ -16,21 +16,7 @@ public class AuthService : IAuthService
         _accessTokenService = accessTokenService;
         _clientContext = clientContext;
     }
-
-    public async Task<bool> LoginAsync(string login, string password)
-    {
-        try
-        {
-            var loginResponse = await _clientContext.RunEndpoint(new LoginEndpoint(login, password));
-            await _accessTokenService.SetAccessToken(loginResponse.AccessToken);
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-
+    
     public Task Logout() => _accessTokenService.RemoveAccessToken();
 
     public async Task Registrate(RegistrationViewModel registrationViewModel)

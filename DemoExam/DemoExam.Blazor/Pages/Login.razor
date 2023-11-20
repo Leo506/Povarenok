@@ -1,8 +1,14 @@
 ﻿@page "/Login"
 @using DemoExam.Blazor.ViewModels
-@using DemoExam.Blazor.Services.Auth
-@inject IAuthService AuthService
+@using Arbus.Network
+@using Arbus.Network.Exceptions
+@using DemoExam.Blazor.Services.AccessToken
+@using DemoExam.Blazor.Network.Endpoints
+@using System.Net
+@inject HttpClientContext ClientContext
+@inject IAccessTokenService AccessTokenService
 @inject NavigationManager NavigationManager
+@inject ILogger<Login> Logger
 
 <PageTitle>Авторизация</PageTitle>
 
@@ -12,34 +18,47 @@
         <div class="form-floating">
             <InputText id="inputLogin" @bind-Value="_loginViewModel.Login" class="form-control" placeholder="Логин"/>
             <label for="inputLogin">Логин</label>
+            <ValidationMessage For="() => _loginViewModel.Login"/>
         </div>
         <div class="form-floating">
             <InputText id="inputPassword" class="form-control mt-2" type="password" @bind-Value="_loginViewModel.Password" placeholder="Пароль"/>
             <label for="inputPassword">Пароль</label>
+            <ValidationMessage For="() => _loginViewModel.Password"/>
         </div>
         <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Вход</button>
         <DataAnnotationsValidator/>
-        <ValidationSummary/>
     </EditForm>
 
-    @if (_hasError)
+    @if (_error is not null)
     {
         <div class="alert alert-danger mt-2">
-            Неправильный логин или пароль
+            @_error
         </div>
     }
 
 </div>
 
 @code {
-    private bool _hasError;
+    private string? _error;
     private readonly LoginViewModel _loginViewModel = new();
 
     private async Task Authenticate()
     {
-        _hasError = !await AuthService.LoginAsync(_loginViewModel.Login, _loginViewModel.Password).ConfigureAwait(false);
-        if (!_hasError)
+        try
+        {
+            var loginResponse = await ClientContext.RunEndpoint(new LoginEndpoint(_loginViewModel.Login, _loginViewModel.Password));
+            await AccessTokenService.SetAccessToken(loginResponse.AccessToken);
             NavigationManager.NavigateTo("/catalog", true);
+        }
+        catch (NetworkException e) when (e.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            _error = "Неправильный логин или пароль";
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e, "Failed to login");
+            _error = "Что-то пошло не так при обработке запроса";
+        }
     }
 
 }
