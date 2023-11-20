@@ -3,6 +3,7 @@
 @using DemoExam.Blazor.Network.Endpoints
 @using DemoExam.Blazor.Shared.Dto.Responses
 @using DemoExam.Blazor.ViewModels
+@using DemoExam.Blazor.Shared.Dto.Requests
 @using Arbus.Network
 @using DemoExam.Blazor.Components
 @inject HttpClientContext ClientContext
@@ -14,6 +15,7 @@
 
 <h3>Товары</h3>
 
+<button class="btn btn-outline-primary" @onclick="OnCreateProductClick">Добавить</button>
 <table class="table table-hover" sortable="True">
     <thead>
     <tr>
@@ -41,6 +43,9 @@
 <ProductEditView ProductEditViewModel="_selectedViewProductEdit"
                  SaveChanges="SaveChanges"/>
 
+<NewProductView NewProduct="_newProduct" 
+                SaveNewProduct="SaveNewProduct"/>
+
 <Basket/>
 
 @code {
@@ -48,6 +53,8 @@
     private List<Product> _products = new();
 
     private ProductEditViewModel? _selectedViewProductEdit;
+
+    private NewProduct? _newProduct;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,8 +78,7 @@
         if (confirm)
         {
             await ClientContext.RunEndpoint(new DeleteProductEndpoint(article));
-            _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
-            StateHasChanged();
+            await UpdateProductsList();
         }
     }
 
@@ -84,10 +90,28 @@
         await JsRuntime.ShowModal("productEditModal");
     }
 
+    private async Task OnCreateProductClick()
+    {
+        _newProduct = new();
+        await JsRuntime.ShowModal("createProductModal");
+    }
+
     private async Task SaveChanges()
     {
         await ClientContext.RunEndpoint(new ProductEditEndpoint(_selectedViewProductEdit!.ArticleNumber, _selectedViewProductEdit.ToDto()));
         await JsRuntime.CloseModal();
+        await UpdateProductsList();
+    }
+
+    private async Task SaveNewProduct(NewProduct newProduct)
+    {
+        await ClientContext.RunEndpoint(new NewProductEndpoint(newProduct));
+        await JsRuntime.CloseModal();
+        await UpdateProductsList();
+    }
+
+    private async Task UpdateProductsList()
+    {
         _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
         StateHasChanged();
     }

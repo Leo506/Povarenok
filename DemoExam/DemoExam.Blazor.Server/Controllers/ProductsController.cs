@@ -30,7 +30,7 @@ public class ProductsController : ControllerBase
         return Ok(productsDto);
     }
 
-    [HttpPost("edit/{productArticle}")]
+    [HttpPut("{productArticle}")]
     public async Task<IActionResult> EditProduct(string productArticle, [FromBody] ProductEdit productEdit)
     {
         await _productsService.UpdateProduct(productArticle, x =>
@@ -55,7 +55,7 @@ public class ProductsController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("/new/")]
+    [HttpPost("")]
     public async Task<IActionResult> CreateNew([FromBody] NewProduct newProduct)
     {
         var product = _mapper.Map<DemoExam.Domain.Models.Product>(newProduct);

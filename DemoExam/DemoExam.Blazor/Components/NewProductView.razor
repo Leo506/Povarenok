@@ -1,0 +1,109 @@
+﻿@using DemoExam.Blazor.Shared.Dto.Requests
+<div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="productEditModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content order-content @(NewProduct is null ? "justify-content-center align-items-center" : "")">
+            @if (NewProduct is null)
+            {
+                <div class="spinner-border text-center"/>
+            }
+            else
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">Новый товар</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="NewProduct" OnValidSubmit="async () => await SaveNewProduct(NewProduct)">
+                        <DataAnnotationsValidator/>
+                        <div class="mb-3">
+                            <label for="article_input" class="form-label">Артикул</label>
+                            <InputText @bind-Value="NewProduct.ArticleNumber" class="form-control form-text" id="article_input"/>
+                            <ValidationMessage For="() => NewProduct.ArticleNumber"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name_input" class="form-label">Название</label>
+                            <InputText @bind-Value="NewProduct.Name" class="form-control form-text" id="name_input"/>
+                            <ValidationMessage For="() => NewProduct.Name"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description_input" class="form-label">Описание</label>
+                            <InputTextArea id="description_input" 
+                                           @bind-Value="NewProduct.Description" 
+                                           class="form-control form-text"/>
+                            <ValidationMessage For="() => NewProduct.Description"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category_input" class="form-label">Катерогия</label>
+                            <InputText id="category_input" @bind-Value="NewProduct.Category" 
+                                       class="form-control form-text"/>
+                            <ValidationMessage For="() => NewProduct.Category"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="photo_input" class="form-label">Фото</label>
+                            <img class="shadow d-block mb-3" src="@ImageSource" alt="photo" height="100"/>
+                            <InputFile id="photo_input" class="form-control" OnChange="OnFileLoad"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price_input" class="form-label">Цена</label>
+                            <InputNumber id="price_input" 
+                                         @bind-Value="NewProduct.Price" 
+                                         class="form-control"
+                                         ParsingErrorMessage="Поле должно быть числом"/>
+                            <ValidationMessage For="() => NewProduct.Price"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="discount_input" class="form-label">Скидка</label>
+                            <InputNumber id="discount_input" 
+                                         @bind-Value="NewProduct.Discount"
+                                         class="form-control"
+                                         ParsingErrorMessage="Поле должно быть числом"/>
+                            <ValidationMessage For="() => NewProduct.Discount"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity_input" class="form-label">Количество на складе</label>
+                            <InputNumber id="quantity_input" 
+                                         @bind-Value="NewProduct.QuantityInStock" 
+                                         class="form-control"
+                                         ParsingErrorMessage="Поле должно быть числом"/>
+                            <ValidationMessage For="() => NewProduct.QuantityInStock"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="manufacturer_input" class="form-label">Производитель</label>
+                            <InputText id="manufacturer_input" @bind-Value="NewProduct.ManufacturerName" 
+                                       class="form-control form-text"/>
+                            <ValidationMessage For="() => NewProduct.ManufacturerName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="supplier_input" class="form-label">Поставщик</label>
+                            <InputText id="supplier_input" @bind-Value="NewProduct.SupplierName" 
+                                       class="form-control form-text"/>
+                            <ValidationMessage For="() => NewProduct.SupplierName"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </EditForm>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public NewProduct? NewProduct { get; set; }
+
+    [Parameter]
+    public Func<NewProduct, Task> SaveNewProduct { get; set; } = default!;
+
+    private string ImageSource => NewProduct?.Photo is null
+        ? "images/default_image.png"
+        : $"data:image/jpg;base64, {NewProduct.Photo}";
+
+    private async Task OnFileLoad(InputFileChangeEventArgs obj)
+    {
+        await using var ms = new MemoryStream();
+        await obj.File.OpenReadStream().CopyToAsync(ms);
+        NewProduct!.Photo = Convert.ToBase64String(ms.ToArray());
+        StateHasChanged();
+    }
+}
