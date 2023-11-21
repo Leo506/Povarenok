@@ -71,7 +71,7 @@ public class OrdersService : IOrdersService
         await _orderRepository.RemoveOrder(order);
     }
 
-    public async Task EditOrder(int orderId, int? pickupPointId, List<Tuple<string, int>> orderItemsToDelete)
+    public async Task EditOrder(int orderId, int? pickupPointId, Dictionary<string, int> orderItemsToDelete)
     {
         var order = await GetOrder(orderId);
         order.PickupPointId = pickupPointId ?? order.PickupPointId;

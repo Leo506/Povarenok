@@ -47,7 +47,7 @@ internal class OrderRepository : IOrderRepository
         return _tradeContext.SaveChangesAsync();
     }
 
-    public async Task DeleteOrderItems(int orderId, List<Tuple<string, int>> orderItemsToDelete)
+    public async Task DeleteOrderItems(int orderId, Dictionary<string, int> orderItemsToDelete)
     {
         foreach (var (article, amount) in orderItemsToDelete) 
             await DeleteOrderItem(orderId, article, amount);

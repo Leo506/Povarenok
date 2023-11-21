@@ -9,5 +9,5 @@ public interface IOrderRepository
     Task AddProductPositionToOrder(int orderId, string productId, int amount);
     Task<int> GetLastOrderId();
     Task RemoveOrder(Order order);
-    Task DeleteOrderItems(int orderId, List<Tuple<string, int>> orderItemsToDelete);
+    Task DeleteOrderItems(int orderId, Dictionary<string, int> orderItemsToDelete);
 }

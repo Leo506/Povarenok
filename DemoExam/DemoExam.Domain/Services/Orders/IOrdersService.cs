@@ -8,5 +8,5 @@ public interface IOrdersService
     Task<Models.Order> GetOrder(int orderId);
     Task CreateNewOrder(int userId, int pickupPointId, Dictionary<string, int> products);
     Task CancelOrder(int orderId);
-    Task EditOrder(int orderId, int? pickupPointId, List<Tuple<string, int>> orderItemsToDelete);
+    Task EditOrder(int orderId, int? pickupPointId, Dictionary<string, int> orderItemsToDelete);
 }

@@ -4,5 +4,5 @@ public class OrderEdit
 {
     public int? PickupPointId { get; set; }
 
-    public List<Tuple<string, int>> ItemsToDelete { get; set; } = new();
+    public Dictionary<string, int> ItemsToDelete { get; set; } = new();
 }
