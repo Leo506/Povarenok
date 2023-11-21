@@ -116,7 +116,7 @@ public class OrdersController : ControllerBase
         }
     }
 
-    [HttpDelete("/{orderId:int}")]
+    [HttpDelete("{orderId:int}")]
     [Authorize(Policy = "AdministratorAndManager")]
     public async Task<IActionResult> CancelOrder(int orderId)
     {
@@ -136,7 +136,7 @@ public class OrdersController : ControllerBase
         }
     }
 
-    [HttpPut("/{orderId:int}")]
+    [HttpPut("{orderId:int}")]
     [Authorize(Policy = "AdministratorAndManager")]
     public async Task<IActionResult> EditOrder(int orderId, [FromBody] OrderEdit orderEdit)
     {
