@@ -1,4 +1,5 @@
-﻿using DemoExam.Domain.Services.Auth;
+﻿using DemoExam.Domain.Models;
+using DemoExam.Domain.Services.Auth;
 using DemoExam.Domain.Services.Orders;
 using DemoExam.Domain.Services.PickupPoints;
 using DemoExam.Domain.Services.Products;
@@ -29,6 +30,14 @@ public static class ServiceCollectionExtensions
                     IssuerSigningKey = AuthOptions.SecurityKey,
                     ValidateLifetime = true
                 };
+            });
+        services
+            .AddAuthorization(options =>
+            {
+                options.AddPolicy("AdministratorAndManager", policy =>
+                {
+                    policy.RequireRole(Role.AdminRoleName, Role.ManagerRoleName);
+                });
             });
         return services;
     }

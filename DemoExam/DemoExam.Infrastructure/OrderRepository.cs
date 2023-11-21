@@ -1,4 +1,5 @@
-﻿using DemoExam.Domain.Repositories;
+﻿using DemoExam.Domain.Exceptions;
+using DemoExam.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoExam.Infrastructure;
@@ -38,5 +39,35 @@ internal class OrderRepository : IOrderRepository
             .OrderBy(x => x.Id)
             .Select(x => x.Id)
             .LastAsync();
+    }
+
+    public Task RemoveOrder(Order order)
+    {
+        _tradeContext.Orders.Remove(order);
+        return _tradeContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteOrderItems(int orderId, List<Tuple<string, int>> orderItemsToDelete)
+    {
+        foreach (var (article, amount) in orderItemsToDelete) 
+            await DeleteOrderItem(orderId, article, amount);
+
+        await _tradeContext.SaveChangesAsync();
+    }
+
+    private async Task DeleteOrderItem(int orderId, string article, int amount)
+    {
+        var orderItem = await _tradeContext.OrderItems
+            .FirstOrDefaultAsync(x => x.OrderId == orderId && x.ProductId == article);
+        if (orderItem is null)
+            throw new EntityNotFoundException();
+
+        if (orderItem.Amount <= amount)
+            _tradeContext.OrderItems.Remove(orderItem);
+        else
+        {
+            orderItem.Amount -= amount;
+            _tradeContext.OrderItems.Update(orderItem);
+        }
     }
 }
