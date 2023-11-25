@@ -110,16 +110,30 @@
 
     private async Task SaveChanges()
     {
-        await ClientContext.RunEndpoint(new ProductEditEndpoint(_selectedViewProductEdit!.ArticleNumber, _selectedViewProductEdit.ToDto()));
-        await JsRuntime.CloseModal();
-        await UpdateProductsList();
+        try
+        {
+            await ClientContext.RunEndpoint(new ProductEditEndpoint(_selectedViewProductEdit!.ArticleNumber, _selectedViewProductEdit.ToDto()));
+            await JsRuntime.CloseModal();
+            await UpdateProductsList();
+        }
+        catch (Exception e)
+        {
+            ToastService.FromException(e);
+        }
     }
 
     private async Task SaveNewProduct(NewProduct newProduct)
     {
-        await ClientContext.RunEndpoint(new NewProductEndpoint(newProduct));
-        await JsRuntime.CloseModal();
-        await UpdateProductsList();
+        try
+        {
+            await ClientContext.RunEndpoint(new NewProductEndpoint(newProduct));
+            await JsRuntime.CloseModal();
+            await UpdateProductsList();
+        }
+        catch (Exception e)
+        {
+            ToastService.FromException(e);
+        }
     }
 
     private async Task UpdateProductsList()

@@ -141,25 +141,31 @@
 
     private async Task CreateNewOrder()
     {
-        if (_selectedPointId is null)
-            return;
+        try
+        {
+            if (_selectedPointId is null)
+                return;
 
-        await ClientContext.RunEndpoint(new NewOrderEndpoint(new NewOrder()
+            await ClientContext.RunEndpoint(new NewOrderEndpoint(new NewOrder()
+            {
+                PickupPointId = _selectedPointId.Value,
+                Products = BasketService.GetAll()
+            }));
+            await JsRuntime.CloseModal();
+            await BasketService.Clear();
+            ToastsService.Notify(new ToastMessage()
+            {
+                Type = ToastType.Success,
+                IconName = IconName.Basket,
+                HelpText = DateTime.Now.ToString(CultureInfo.CurrentCulture),
+                Message = "Заказ успешно оформлен",
+                Title = "Новый заказ"
+            });
+        }
+        catch (Exception e)
         {
-            PickupPointId = _selectedPointId.Value,
-            Products = BasketService.GetAll()
-        }));
-        await JsRuntime.CloseModal();
-        await BasketService.Clear();
-        ToastsService.Notify(new ToastMessage()
-        {
-            Type = ToastType.Success,
-            IconName = IconName.Basket,
-            HelpText = DateTime.Now.ToString(CultureInfo.CurrentCulture),
-            Message = "Заказ успешно оформлен",
-            Title = "Новый заказ"
-        });
+            ToastsService.FromException(e);
+        }
 
     }
-
 }

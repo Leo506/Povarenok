@@ -24,7 +24,7 @@ public class CatalogController : ControllerBase
         await Task.Delay(2_000).ConfigureAwait(false);
 
         var products = await _productsService.GetAll().ConfigureAwait(false);
-        var productDtos = products.Select(x => _mapper.Map<Product>(x));
+        var productDtos = _mapper.Map<List<Product>>(products.Where(x => x.QuantityInStock > 0));
         return Ok(productDtos);
     }
     

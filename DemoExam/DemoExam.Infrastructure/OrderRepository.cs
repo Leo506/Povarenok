@@ -30,6 +30,8 @@ internal class OrderRepository : IOrderRepository
             Amount = amount
         }).ConfigureAwait(false);
 
+        var product = await _tradeContext.Products.FirstAsync(x => x.ArticleNumber == productId);
+        product.QuantityInStock -= amount;
         await _tradeContext.SaveChangesAsync().ConfigureAwait(false);
     }
 

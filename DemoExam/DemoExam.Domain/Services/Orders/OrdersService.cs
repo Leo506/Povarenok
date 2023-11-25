@@ -43,8 +43,10 @@ public class OrdersService : IOrdersService
             if (amount <= 0)
                 throw new InvalidProductsAmountInOrderException();
 
-            if (await _productsService.Exists(article) is false)
-                throw new EntityNotFoundException();
+
+            var product = await _productsService.GetByArticleNumber(article);
+            if (product.QuantityInStock < amount)
+                throw new NotEnoughProductsInStockException();
         }
         
         

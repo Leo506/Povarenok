@@ -5,12 +5,14 @@
 @using DemoExam.Blazor.ViewModels
 @using DemoExam.Domain.Models
 @using Arbus.Network
+@using BlazorBootstrap
 @using DemoExam.Blazor.Comparers
 @using DemoExam.Blazor.Components
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
 @inject HttpClientContext ClientContext
 @inject IJSRuntime JsRuntime
+@inject ToastService ToastService
 <PageTitle>Заказы</PageTitle>
 <h3>Заказы</h3>
 
@@ -113,9 +115,16 @@
     
     private async Task SaveChanges()
     {
-        await ClientContext.RunEndpoint(new OrderEditEndpoint(_currentEditViewModel!.Id, _currentEditViewModel.ToDto()));
-        await JsRuntime.CloseModal();
-        await UpdateOrdersList();
+        try
+        {
+            await ClientContext.RunEndpoint(new OrderEditEndpoint(_currentEditViewModel!.Id, _currentEditViewModel.ToDto()));
+            await JsRuntime.CloseModal();
+            await UpdateOrdersList();
+        }
+        catch (Exception e)
+        {
+            ToastService.FromException(e);
+        }
     }
     
     private async Task OnOrderDeleteClick(int orderId)
