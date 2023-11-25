@@ -21,12 +21,12 @@
             <div>
                 <AuthorizeView>
                     <NotAuthorized>
-                        <a class="btn btn-outline-primary me-2" type="button" href="/Login">Вход</a>
-                        <a class="btn btn-primary" type="button" href="/Registration">Регистрация</a>
+                        <a id="enterButton" class="btn btn-outline-primary me-2" type="button" href="/Login">Вход</a>
+                        <a id="registerButton" class="btn btn-primary" type="button" href="/Registration">Регистрация</a>
                     </NotAuthorized>
                     <Authorized>
                         <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button id="userMenu" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 @_currentUserName
                             </button>
                             <ul class="dropdown-menu">

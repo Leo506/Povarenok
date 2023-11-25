@@ -31,8 +31,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="delivery_input" class="form-label">Дата доставки</label>
-                            <DateInput id="delivery_input" @bind-Value="ViewModel.DeliveryDate"
+                            <DateInput @bind-Value="ViewModel.DeliveryDate"
                                        EnableMinMax="true"
+                                       ElementId="delivery_input"
                                        Min="ViewModel.OrderDate"
                                        Max="DateOnly.MaxValue"
                                        class="form-control"/>

@@ -21,7 +21,7 @@ public class CatalogController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetCatalog()
     {
-        await Task.Delay(2_000).ConfigureAwait(false);
+        //await Task.Delay(2_000).ConfigureAwait(false);
 
         var products = await _productsService.GetAll().ConfigureAwait(false);
         var productDtos = _mapper.Map<List<Product>>(products.Where(x => x.QuantityInStock > 0));

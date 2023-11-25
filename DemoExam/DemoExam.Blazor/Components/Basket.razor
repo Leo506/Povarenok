@@ -15,7 +15,7 @@
 
 @if (BasketService.TotalProductsCount > 0)
 {
-    <button data-bs-toggle="modal" data-bs-target="#basketModal" class="btn btn-primary fab d-flex align-items-center justify-content-center">
+    <button id="basketButton" data-bs-toggle="modal" data-bs-target="#basketModal" class="btn btn-primary fab d-flex align-items-center justify-content-center">
         <i class="bi-basket" style="font-size: 35px"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             @BasketService.TotalProductsCount

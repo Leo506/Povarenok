@@ -22,7 +22,7 @@ public class ProductEditViewModel
 
     public  string? Photo { get; set; }
 
-    [MinValue(1)]
+    [MinValue(0)]
     [Required(ErrorMessage = PropertyMustBeFilled)]
     public  decimal Price { get; set; }
     
