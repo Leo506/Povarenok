@@ -1,19 +1,21 @@
-﻿@page "/MyOrders"
+﻿@page "/Orders"
 @using DemoExam.Blazor.Shared.Dto.Responses
+@using DemoExam.Domain.Models
 @using Arbus.Network
 @using DemoExam.Blazor.Network.Endpoints
+@using Order = DemoExam.Blazor.Shared.Dto.Responses.Order
 @using DemoExam.Blazor.Comparers
 @using DemoExam.Blazor.Components
-@using Order = DemoExam.Blazor.Shared.Dto.Responses.Order
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
 @inject HttpClientContext ClientContext
+<PageTitle>Заказы</PageTitle>
 
-<PageTitle>Мои заказы</PageTitle>
+
 
 <link rel="stylesheet" href="css/open-iconic/font/css/open-iconic-bootstrap.min.css"/>
 
-<h3>Мои заказы</h3>
+<h3>Заказы</h3>
 
 <div class="d-flex w-25 align-items-center">
     <span>
@@ -47,7 +49,6 @@
 
 <Basket/>
 
-
 @code {
 
         private const string SortByStatus = "По статусу";
@@ -63,23 +64,39 @@
     {
         try
         {
-            var authState = await AuthStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
-            if (authState.User.Identity?.IsAuthenticated is false)
-                NavigationManager.NavigateTo(nameof(Login));
+            if (await EnsureUserIsAdminOrManager() is false) 
+                return;
 
-            var userId = int.Parse(authState.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "-1");
-            _orderShortDtos = await ClientContext.RunEndpoint(new UserOrdersEndpoint(userId));
+            _orderShortDtos = await ClientContext.RunEndpoint(new AllOrdersEndpoint());
             _sortField = SortByStatus;
             OnSortFieldChanged();
         }
         catch (Exception e)
         {
-            //TODO: exception handling
+            // TODO: exception handling
         }
         finally
         {
             await base.OnInitializedAsync();
         }
+    }
+
+    private async Task<bool> EnsureUserIsAdminOrManager()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
+        if (authState.User.Identity?.IsAuthenticated is false)
+        {
+            NavigationManager.NavigateTo(nameof(Login));
+            return false;
+        }
+
+        if (authState.User.IsInRole(Role.AdminRoleName) is false && authState.User.IsInRole(Role.ManagerRoleName))
+        {
+            NavigationManager.NavigateTo("/");
+            return false;
+        }
+
+        return true;
     }
 
     private void OnSortFieldChanged()

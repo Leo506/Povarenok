@@ -1,12 +1,14 @@
 ﻿@using DemoExam.Blazor.Extensions
+@using DemoExam.Blazor.Network.Endpoints
 @using DemoExam.Blazor.Services.Basket
-@using DemoExam.Blazor.Services.Orders
 @using DemoExam.Blazor.Services.PickupPoints
 @using DemoExam.Blazor.Shared.Dto.Responses
+@using Arbus.Network
+@using DemoExam.Blazor.Shared.Dto.Requests
 @inject IBasketService BasketService
 @inject IPickupPointsService PickupPointsService
-@inject IOrdersService OrdersService
 @inject IJSRuntime JsRuntime
+@inject HttpClientContext ClientContext
 
 @if (BasketService.TotalProductsCount > 0)
 {
@@ -119,7 +121,12 @@
     {
         if (_selectedPointId is null)
             return;
-        await OrdersService.CreateNew(_selectedPointId.Value);
+
+        await ClientContext.RunEndpoint(new NewOrderEndpoint(new NewOrder()
+        {
+            PickupPointId = _selectedPointId.Value,
+            Products = BasketService.GetAll().ToDictionary(x => x.Key.ArticleNumber, x => x.Value)
+        }));
         await JsRuntime.CloseModal();
         BasketService.Clear();
     }

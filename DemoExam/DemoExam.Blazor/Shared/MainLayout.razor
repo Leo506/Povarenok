@@ -33,11 +33,11 @@
                                 @if (_user?.IsInRole(Role.AdminRoleName) is true)
                                 {
                                     <li><a class="dropdown-item" href="/@nameof(Products)">Товары</a></li>
-                                    <li><a class="dropdown-item" href="#">Все заказы</a></li>
+                                    <li><a class="dropdown-item" href="/@nameof(Orders)">Все заказы</a></li>
                                 }
                                 else if (_user?.IsInRole(Role.ManagerRoleName) is true)
                                 {
-                                    <li><a class="dropdown-item" href="#">Все заказы</a></li>
+                                    <li><a class="dropdown-item" href="/@nameof(Orders)">Все заказы</a></li>
                                 }
                                 <li><a class="dropdown-item text-danger" href="#" @onclick="OnLogoutClick">Выйти</a></li>
                             </ul>
