@@ -27,4 +27,6 @@ builder.Services.AddScoped(_ => new HttpClient())
     .AddScoped<IPickupPointsService, PickupPointsService>()
     .AddAuthorizationCore()
     .AddBlazorBootstrap();
-await builder.Build().RunAsync();
+var app = builder.Build();
+await app.Services.GetRequiredService<IBasketService>().Initialize();
+await app.RunAsync();

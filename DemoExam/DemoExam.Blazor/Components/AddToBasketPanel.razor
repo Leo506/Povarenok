@@ -6,19 +6,19 @@
 {
     <div class="buttons_container">
         <button class="change-amount-button"
-                @onclick="() => BasketService.RemoveProduct(Product)">
+                @onclick="async () => await BasketService.RemoveProduct(Product)">
             <i class="oi oi-minus"></i>
         </button>
         <div class="number">@BasketService.GetProductAmount(Product)</div>
         <button class="change-amount-button"
-                @onclick="() => BasketService.AddProduct(Product)">
+                @onclick="async () => await BasketService.AddProduct(Product)">
             <i class="oi oi-plus"></i>
         </button>
     </div>
 }
 else
 {
-    <button class="btn btn-outline-primary" @onclick="() => BasketService.AddProduct(Product)">
+    <button class="btn btn-outline-primary" @onclick="async () => await BasketService.AddProduct(Product)">
         В корзину
     </button>
 }

@@ -1,45 +1,60 @@
-﻿using DemoExam.Blazor.Shared.Dto.Responses;
+﻿using DemoExam.Blazor.Services.LocalStorage;
+using DemoExam.Blazor.Shared.Dto.Responses;
 
 namespace DemoExam.Blazor.Services.Basket;
 
 public class BasketService : IBasketService
 {
-    private readonly Dictionary<Product, int> _products = new();
-
+    private const string BasketKey = "Basket";
+    private readonly ILocalStorageService _localStorageService;
+    private Dictionary<string, int> _products = new();
     public event Action? BasketContentChanged;
     public int TotalProductsCount => _products.Sum(x => x.Value);
-    
-    public void AddProduct(Product product)
+
+    public BasketService(ILocalStorageService localStorageService)
     {
-        if (_products.ContainsKey(product))
-            _products[product]++;
+        _localStorageService = localStorageService;
+    }
+
+    public async Task Initialize()
+    {
+        _products = await _localStorageService.GetAsync<Dictionary<string, int>>(BasketKey) ?? new();
+    }
+    
+    public async Task AddProduct(Product product)
+    {
+        if (_products.ContainsKey(product.ArticleNumber))
+            _products[product.ArticleNumber]++;
         else
-            _products[product] = 1;
+            _products[product.ArticleNumber] = 1;
+        await _localStorageService.SetAsync(BasketKey, _products);
         BasketContentChanged?.Invoke();
     }
 
-    public void RemoveProduct(Product product, bool all = false)
+    public async Task RemoveProduct(Product product, bool all = false)
     {
         if (all)
         {
-            _products.Remove(product);
+            _products.Remove(product.ArticleNumber);
+            await _localStorageService.SetAsync(BasketKey, _products);
             BasketContentChanged?.Invoke();;
             return;
         }
-        _products[product]--;
-        if (_products[product] <= 0)
-            _products.Remove(product);
+        _products[product.ArticleNumber]--;
+        if (_products[product.ArticleNumber] <= 0)
+            _products.Remove(product.ArticleNumber);
+        await _localStorageService.SetAsync(BasketKey, _products);
         BasketContentChanged?.Invoke();
     }
 
     public int GetProductAmount(Product product)
     {
-        return _products.TryGetValue(product, out var amount) 
+        return _products.TryGetValue(product.ArticleNumber, out var amount) 
             ? amount 
             : 0;
     }
 
-    public Dictionary<Product, int> GetAll() => _products;
+    public Dictionary<string, int> GetAll() => _products;
     public void Clear()
     {
         _products.Clear();

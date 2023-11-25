@@ -7,13 +7,14 @@ public interface IBasketService
     event Action BasketContentChanged;
     
     int TotalProductsCount { get; }
+    Task Initialize();
     
-    void AddProduct(Product product);
+    Task AddProduct(Product product);
 
-    void RemoveProduct(Product product, bool all = false);
+    Task RemoveProduct(Product product, bool all = false);
 
     int GetProductAmount(Product product);
 
-    Dictionary<Product, int> GetAll();
+    Dictionary<string, int> GetAll();
     void Clear();
 }

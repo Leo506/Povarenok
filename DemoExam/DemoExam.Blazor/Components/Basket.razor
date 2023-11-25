@@ -54,16 +54,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var (product, amount) in BasketService.GetAll())
+                        @foreach (var product in _products)
                         {
                             <tr>
                                 <td>@product.Name</td>
                                 <td class="">
                                     <AddToBasketPanel Product="product"/>
                                 </td>
-                                <td>@((product.PriceWithDiscount * amount).ToString("F2"))</td>
+                                <td>@((product.PriceWithDiscount * BasketService.GetProductAmount(product)).ToString("F2"))</td>
                                 <td>
-                                    <button class="text-danger btn" @onclick="() => DeleteProduct(product)">
+                                    <button class="text-danger btn" @onclick="async () => await DeleteProduct(product)">
                                         <i class="oi oi-trash"/>
                                     </button>
                                 </td>
@@ -76,7 +76,7 @@
                                 Итоговая стоимость:
                             </td>
                             <td colspan="2">
-                                @BasketService.GetAll().Sum(x => x.Key.PriceWithDiscount * x.Value).ToString("F2")
+                                @_products.Sum(x => x.PriceWithDiscount * BasketService.GetProductAmount(x)).ToString("F2") руб.
                             </td>
                         </tr>
                         </tfoot>
@@ -101,6 +101,7 @@
     private int? _selectedPointId;
 
     private List<PickupPoint> _pickupPointDtos = new();
+    private List<Product> _products = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -108,14 +109,25 @@
         {
             if (BasketService.TotalProductsCount == 0)
                 await JsRuntime.CloseModal();
+            await UpdateProductsList();
             StateHasChanged();
         };
+        await UpdateProductsList();
         _pickupPointDtos = await PickupPointsService.GetAll();
         _selectedPointId = _pickupPointDtos.FirstOrDefault()?.Id;
         await base.OnInitializedAsync();
     }
 
-    private void DeleteProduct(Product product) => BasketService.RemoveProduct(product, all:true);
+    private async Task UpdateProductsList()
+    {
+        _products = new();
+        foreach (var (article, _) in BasketService.GetAll())
+        {
+            _products.Add(await ClientContext.RunEndpoint(new ProductEndpoint(article)));
+        }
+    }
+
+    private Task DeleteProduct(Product product) => BasketService.RemoveProduct(product, all: true);
 
     private async Task CreateNewOrder()
     {
@@ -125,7 +137,7 @@
         await ClientContext.RunEndpoint(new NewOrderEndpoint(new NewOrder()
         {
             PickupPointId = _selectedPointId.Value,
-            Products = BasketService.GetAll().ToDictionary(x => x.Key.ArticleNumber, x => x.Value)
+            Products = BasketService.GetAll()
         }));
         await JsRuntime.CloseModal();
         BasketService.Clear();
