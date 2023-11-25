@@ -14,4 +14,8 @@
       <PackageReference Include="FluentValidation" Version="11.8.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DemoExam.Domain\DemoExam.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

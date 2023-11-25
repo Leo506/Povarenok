@@ -142,7 +142,12 @@ public class OrdersController : ControllerBase
     {
         try
         {
-            await _ordersService.EditOrder(orderId, orderEdit.PickupPointId, orderEdit.ItemsToDelete);
+            await _ordersService.EditOrder(orderId, order =>
+            {
+                order.PickupPointId = orderEdit.PickupPointId ?? order.PickupPointId;
+                order.Status = orderEdit.Status ?? order.Status;
+                order.DeliveryDate = orderEdit.DeliveryDate ?? order.DeliveryDate;
+            }, orderEdit.ItemsToDelete);
             return Ok();
         }
         catch (EntityNotFoundException)

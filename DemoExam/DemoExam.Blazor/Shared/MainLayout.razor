@@ -1,6 +1,7 @@
 ﻿@using System.Security.Claims
 @using DemoExam.Blazor.Services.Auth
 @using DemoExam.Blazor.Pages
+@using DemoExam.Domain.Models
 @inherits LayoutComponentBase
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAuthService AuthService
@@ -29,12 +30,12 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/@nameof(MyOrders)">Мои Заказы</a></li>
                                 <li><a class="dropdown-item" href="/@nameof(Catalog)">Каталог</a></li>
-                                @if (_user?.IsInRole("Администратор") is true)
+                                @if (_user?.IsInRole(Role.AdminRoleName) is true)
                                 {
                                     <li><a class="dropdown-item" href="/@nameof(Products)">Товары</a></li>
                                     <li><a class="dropdown-item" href="#">Все заказы</a></li>
                                 }
-                                else if (_user?.IsInRole("Менеджер") is true)
+                                else if (_user?.IsInRole(Role.ManagerRoleName) is true)
                                 {
                                     <li><a class="dropdown-item" href="#">Все заказы</a></li>
                                 }

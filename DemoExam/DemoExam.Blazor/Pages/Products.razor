@@ -1,10 +1,11 @@
 ﻿@page "/Products"
 @using DemoExam.Blazor.Extensions
 @using DemoExam.Blazor.Network.Endpoints
-@using DemoExam.Blazor.Shared.Dto.Responses
 @using DemoExam.Blazor.ViewModels
+@using DemoExam.Domain.Models
 @using DemoExam.Blazor.Shared.Dto.Requests
 @using Arbus.Network
+@using Product = DemoExam.Blazor.Shared.Dto.Responses.Product
 @using DemoExam.Blazor.Components
 @inject HttpClientContext ClientContext
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -64,7 +65,7 @@
             NavigationManager.NavigateTo(nameof(Login));
             return;
         }
-        if (state.User.IsInRole("Администратор") is false)
+        if (state.User.IsInRole(Role.AdminRoleName) is false)
         {
             NavigationManager.NavigateTo(nameof(Catalog));
             return;

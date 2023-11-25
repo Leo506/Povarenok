@@ -71,10 +71,10 @@ public class OrdersService : IOrdersService
         await _orderRepository.RemoveOrder(order);
     }
 
-    public async Task EditOrder(int orderId, int? pickupPointId, Dictionary<string, int> orderItemsToDelete)
+    public async Task EditOrder(int orderId, Action<Order> updateAction, Dictionary<string, int> itemsToDelete)
     {
         var order = await GetOrder(orderId);
-        order.PickupPointId = pickupPointId ?? order.PickupPointId;
-        await _orderRepository.DeleteOrderItems(orderId, orderItemsToDelete);
+        updateAction(order);
+        await _orderRepository.DeleteOrderItems(orderId, itemsToDelete);
     }
 }
