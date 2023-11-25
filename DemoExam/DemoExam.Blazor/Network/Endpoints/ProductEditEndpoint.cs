@@ -8,7 +8,7 @@ public class ProductEditEndpoint : ApiEndpoint
     private readonly ProductEdit _productEdit;
 
     public ProductEditEndpoint(string article, ProductEdit productEdit) : base(HttpMethod.Put,
-        $"/Products/edit/{article}")
+        $"/Products/{article}")
     {
         _productEdit = productEdit;
     }
