@@ -1,0 +1,26 @@
+﻿.buttons_container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.change-amount-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #0064fe;
+    border-radius: 1000px;
+    background-color: white;
+    margin-right: 10px;
+    color: #0064fe;
+}
+
+.change-amount-button:hover {
+    background-color: #b8dcff;
+}
+
+.number {
+    margin-right: 10px;
+}

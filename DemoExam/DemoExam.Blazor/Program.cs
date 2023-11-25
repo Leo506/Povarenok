@@ -25,5 +25,6 @@ builder.Services.AddScoped(_ => new HttpClient())
     .AddScoped<AuthenticationStateProvider, TokenAuthProvider>()
     .AddScoped<IAccessTokenService, AccessTokenService>()
     .AddScoped<IPickupPointsService, PickupPointsService>()
-    .AddAuthorizationCore();
+    .AddAuthorizationCore()
+    .AddBlazorBootstrap();
 await builder.Build().RunAsync();

@@ -1,17 +1,17 @@
 ﻿@page "/Orders"
+@using DemoExam.Blazor.Extensions
+@using DemoExam.Blazor.Network.Endpoints
 @using DemoExam.Blazor.Shared.Dto.Responses
+@using DemoExam.Blazor.ViewModels
 @using DemoExam.Domain.Models
 @using Arbus.Network
-@using DemoExam.Blazor.Network.Endpoints
-@using Order = DemoExam.Blazor.Shared.Dto.Responses.Order
 @using DemoExam.Blazor.Comparers
 @using DemoExam.Blazor.Components
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
 @inject HttpClientContext ClientContext
+@inject IJSRuntime JsRuntime
 <PageTitle>Заказы</PageTitle>
-
-
 
 <link rel="stylesheet" href="css/open-iconic/font/css/open-iconic-bootstrap.min.css"/>
 
@@ -30,22 +30,23 @@
     <thead>
     <tr>
         <th scope="col">№</th>
-        <th scope="col" aria-sort="ascending">Статус</th>
+        <th scope="col">Статус</th>
         <th scope="col">Дата доставки</th>
         <th scope="col">Пункт выдачи</th>
         <th scope="col">Код получения</th>
+        <th scope="col">Действия</th>
     </tr>
     </thead>
     <tbody>
     @foreach (var order in _orderShortDtos)
     {
-        <MyOrder Order="order" OnOrderClickCallback="OnOrderClick"/>
+        <OrderShortView Order="order" OnEditClickCallback="OnEditOrderClick" OnDeleteClickCallback="OnOrderDeleteClick"/>
     }
     </tbody>
 </table>
 
 
-<Order OrderDto="_currentViewOrder"/>
+<OrderEditView ViewModel="_currentEditViewModel" SaveChanges="SaveChanges"/>
 
 <Basket/>
 
@@ -58,7 +59,7 @@
 
     private List<OrderShort> _orderShortDtos = new();
 
-    private Order? _currentViewOrder;
+    private OrderEditViewModel? _currentEditViewModel;
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,9 +68,8 @@
             if (await EnsureUserIsAdminOrManager() is false) 
                 return;
 
-            _orderShortDtos = await ClientContext.RunEndpoint(new AllOrdersEndpoint());
             _sortField = SortByStatus;
-            OnSortFieldChanged();
+            await UpdateOrdersList();
         }
         catch (Exception e)
         {
@@ -107,10 +107,33 @@
     }
 
 
-    private async Task OnOrderClick(int id)
+    private async Task OnEditOrderClick(int id)
     {
-        _currentViewOrder = await ClientContext.RunEndpoint(new OrderEndpoint(id));
+        _currentEditViewModel = new(await ClientContext.RunEndpoint(new OrderEndpoint(id)));
+        await JsRuntime.ShowModal("orderEditModal");
         StateHasChanged();
     }
-
+    
+    private async Task SaveChanges()
+    {
+        await ClientContext.RunEndpoint(new OrderEditEndpoint(_currentEditViewModel!.Id, _currentEditViewModel.ToDto()));
+        await JsRuntime.CloseModal();
+        await UpdateOrdersList();
+    }
+    
+    private async Task OnOrderDeleteClick(int orderId)
+    {
+        var confirm = await JsRuntime.Confirm("Уверены, что хотите удалить заказ?");
+        if (confirm is false)
+            return;
+        await ClientContext.RunEndpoint(new DeleteOrderEndpoint(orderId));
+        await UpdateOrdersList();
+    }
+    
+    private async Task UpdateOrdersList()
+    {
+        _orderShortDtos = await ClientContext.RunEndpoint(new AllOrdersEndpoint());
+        OnSortFieldChanged();
+        StateHasChanged();
+    }
 }

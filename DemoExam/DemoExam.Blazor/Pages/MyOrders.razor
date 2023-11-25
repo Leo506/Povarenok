@@ -1,13 +1,15 @@
 ﻿@page "/MyOrders"
+@using DemoExam.Blazor.Extensions
+@using DemoExam.Blazor.Network.Endpoints
 @using DemoExam.Blazor.Shared.Dto.Responses
 @using Arbus.Network
-@using DemoExam.Blazor.Network.Endpoints
 @using DemoExam.Blazor.Comparers
 @using DemoExam.Blazor.Components
 @using Order = DemoExam.Blazor.Shared.Dto.Responses.Order
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
 @inject HttpClientContext ClientContext
+@inject IJSRuntime JsRuntime
 
 <PageTitle>Мои заказы</PageTitle>
 
@@ -37,7 +39,7 @@
     <tbody>
     @foreach (var order in _orderShortDtos)
     {
-        <MyOrder Order="order" OnOrderClickCallback="OnOrderClick"/>
+        <MyOrderShortView Order="order" OnOrderClickCallback="OnOrderClick"/>
     }
     </tbody>
 </table>
@@ -93,6 +95,7 @@
     private async Task OnOrderClick(int id)
     {
         _currentViewOrder = await ClientContext.RunEndpoint(new OrderEndpoint(id));
+        await JsRuntime.ShowModal("orderModal");
         StateHasChanged();
     }
 

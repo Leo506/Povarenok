@@ -11,6 +11,8 @@ public class Order
     public DateOnly OrderDate { get; set; }
 
     public string PickupPoint { get; set; } = default!;
+    
+    public int PickupPointId { get; set; }
 
     public int GetCode { get; set; }
 

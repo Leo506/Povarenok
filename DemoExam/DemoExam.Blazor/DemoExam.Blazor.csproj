@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="Arbus.Network" Version="8.0.0" />
+        <PackageReference Include="Blazor.Bootstrap" Version="1.10.4" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.11" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.4" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.4" PrivateAssets="all" />

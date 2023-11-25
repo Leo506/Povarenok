@@ -1,0 +1,31 @@
+﻿@using DemoExam.Blazor.Shared.Dto.Responses
+<tr>
+    <th scope="row">
+        Заказ №@Order.Id
+    </th>
+    <td>@Order.Status</td>
+    <td>@Order.DeliveryDate</td>
+    <td>@Order.PickupPoint</td>
+    <td>@Order.GetCode</td>
+    <td>
+        <div class="d-flex">
+            <button class="btn" @onclick="async () => await OnEditClickCallback(Order.Id)">
+                <i class="oi oi-pencil"></i>
+            </button>
+            <button class="text-danger btn" @onclick="async () => await OnDeleteClickCallback(Order.Id)">
+                <i class="oi oi-trash"/>
+            </button>
+        </div>
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public OrderShort Order { get; set; }
+    
+    [Parameter]
+    public Func<int, Task> OnEditClickCallback { get; set; }
+    
+    [Parameter]
+    public Func<int, Task> OnDeleteClickCallback { get; set; }
+}
