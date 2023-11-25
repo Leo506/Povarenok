@@ -5,12 +5,14 @@
 @using DemoExam.Domain.Models
 @using DemoExam.Blazor.Shared.Dto.Requests
 @using Arbus.Network
+@using BlazorBootstrap
 @using Product = DemoExam.Blazor.Shared.Dto.Responses.Product
 @using DemoExam.Blazor.Components
 @inject HttpClientContext ClientContext
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
+@inject ToastService ToastService
 
 <PageTitle>Товары</PageTitle>
 
@@ -59,18 +61,27 @@
 
     protected override async Task OnInitializedAsync()
     {
+        if (await EnsureUserIsAdmin() is false)
+            return;
+        _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
+    }
+
+    private async Task<bool> EnsureUserIsAdmin()
+    {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (state.User.Identity?.IsAuthenticated is false)
         {
             NavigationManager.NavigateTo(nameof(Login));
-            return;
+            return false;
         }
+
         if (state.User.IsInRole(Role.AdminRoleName) is false)
         {
             NavigationManager.NavigateTo(nameof(Catalog));
-            return;
+            return false;
         }
-        _products = await ClientContext.RunEndpoint(new ProductsListEndpoint());
+
+        return true;
     }
 
     private async Task OnDeleteProductClick(string article)
@@ -86,7 +97,7 @@
     private async Task OnEditProductClick(string article)
     {
         var product = _products.First(x => x.ArticleNumber == article);
-        _selectedViewProductEdit = ProductEditViewModel.Create(product);
+        _selectedViewProductEdit = new ProductEditViewModel(product);
         StateHasChanged();
         await JsRuntime.ShowModal("productEditModal");
     }

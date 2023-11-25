@@ -9,51 +9,48 @@ public class ProductEditViewModel
 {
     private const string PropertyMustBeFilled = "Поле должно быть заполнено";
     
-    public required string ArticleNumber { get; set; }
+    public  string ArticleNumber { get; set; }
     
     [Required(ErrorMessage = PropertyMustBeFilled)]
-    public required string Name { get; set; } = default!;
+    public  string Name { get; set; } = default!;
 
     [Required(ErrorMessage = PropertyMustBeFilled)]
-    public required string Description { get; set; } = null!;
+    public  string Description { get; set; } = null!;
 
     [Required(ErrorMessage = PropertyMustBeFilled)]
-    public required string Category { get; set; } = null!;
+    public  string Category { get; set; } = null!;
 
-    public required string? Photo { get; set; }
+    public  string? Photo { get; set; }
 
     [MinValue(1)]
     [Required(ErrorMessage = PropertyMustBeFilled)]
-    public required decimal Price { get; set; }
+    public  decimal Price { get; set; }
     
     [MinValue(0)]
     [Required(ErrorMessage = PropertyMustBeFilled)]
-    public required int QuantityInStock { get; set; }
+    public  int QuantityInStock { get; set; }
     
     [Range(0, 100, ErrorMessage = "Поле должно быть от 0 до 100")]
-    public required int? Discount { get; set; }
+    public  int? Discount { get; set; }
 
     [Required(ErrorMessage = PropertyMustBeFilled)]
-    public required string ManufacturerName { get; set; } = default!;
+    public  string ManufacturerName { get; set; } = default!;
 
     [Required(ErrorMessage = PropertyMustBeFilled)]
-    public required string SupplierName { get; set; } = default!;
+    public  string SupplierName { get; set; } = default!;
 
-    public static ProductEditViewModel Create(Product product)
+    public ProductEditViewModel(Product product)
     {
-        return new()
-        {
-            ArticleNumber = product.ArticleNumber,
-            Name = product.Name,
-            Description = product.Description,
-            Category = product.Category,
-            Price = product.Price,
-            Discount = product.Discount,
-            QuantityInStock = product.QuantityInStock,
-            ManufacturerName = product.ManufacturerName,
-            SupplierName = product.SupplierName,
-            Photo = product.Photo
-        };
+        ArticleNumber = product.ArticleNumber;
+        Name = product.Name;
+        Description = product.Description;
+        Category = product.Category;
+        Price = product.Price;
+        Discount = product.Discount;
+        QuantityInStock = product.QuantityInStock;
+        ManufacturerName = product.ManufacturerName;
+        SupplierName = product.SupplierName;
+        Photo = product.Photo;
     }
 
     public ProductEdit ToDto()

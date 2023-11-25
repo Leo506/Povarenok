@@ -7,12 +7,12 @@
     <div class="buttons_container">
         <button class="change-amount-button"
                 @onclick="async () => await BasketService.RemoveProduct(Product)">
-            <i class="oi oi-minus"></i>
+            <i class="bi-dash"></i>
         </button>
         <div class="number">@BasketService.GetProductAmount(Product)</div>
         <button class="change-amount-button"
                 @onclick="async () => await BasketService.AddProduct(Product)">
-            <i class="oi oi-plus"></i>
+            <i class="bi-plus"></i>
         </button>
     </div>
 }

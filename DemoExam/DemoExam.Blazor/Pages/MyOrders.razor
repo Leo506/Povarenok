@@ -3,6 +3,7 @@
 @using DemoExam.Blazor.Network.Endpoints
 @using DemoExam.Blazor.Shared.Dto.Responses
 @using Arbus.Network
+@using BlazorBootstrap
 @using DemoExam.Blazor.Comparers
 @using DemoExam.Blazor.Components
 @using Order = DemoExam.Blazor.Shared.Dto.Responses.Order
@@ -10,16 +11,15 @@
 @inject NavigationManager NavigationManager
 @inject HttpClientContext ClientContext
 @inject IJSRuntime JsRuntime
+@inject ToastService ToastService
 
 <PageTitle>Мои заказы</PageTitle>
-
-<link rel="stylesheet" href="css/open-iconic/font/css/open-iconic-bootstrap.min.css"/>
 
 <h3>Мои заказы</h3>
 
 <div class="d-flex w-25 align-items-center">
     <span>
-        <i class="oi oi-sort-ascending"></i>
+        <i class="bi-sort-down"></i>
     </span>
     <select class="form-select" id="sorting" @bind="_sortField" @bind:after="OnSortFieldChanged">
         <option>@SortByStatus</option>
@@ -63,25 +63,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var authState = await AuthStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
-            if (authState.User.Identity?.IsAuthenticated is false)
-                NavigationManager.NavigateTo(nameof(Login));
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
+        if (authState.User.Identity?.IsAuthenticated is false)
+            NavigationManager.NavigateTo(nameof(Login));
 
-            var userId = int.Parse(authState.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "-1");
-            _orderShortDtos = await ClientContext.RunEndpoint(new UserOrdersEndpoint(userId));
-            _sortField = SortByStatus;
-            OnSortFieldChanged();
-        }
-        catch (Exception e)
-        {
-            //TODO: exception handling
-        }
-        finally
-        {
-            await base.OnInitializedAsync();
-        }
+        var userId = int.Parse(authState.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "-1");
+        _orderShortDtos = await ClientContext.RunEndpoint(new UserOrdersEndpoint(userId));
+        _sortField = SortByStatus;
+        OnSortFieldChanged();
     }
 
     private void OnSortFieldChanged()

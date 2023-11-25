@@ -1,0 +1,23 @@
+﻿@using DemoExam.Blazor.Extensions
+@using BlazorBootstrap
+@inherits ErrorBoundary
+@inject ToastService ToastService
+@inject ILogger<GlobalExceptionBoundary> Logger
+
+@ChildContent
+
+@code {
+    protected override Task OnErrorAsync(Exception exception)
+    {
+        try
+        {
+            ToastService.FromException(exception);
+            return Task.CompletedTask;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e, "Unexpected error occured");
+            return Task.CompletedTask;
+        }
+    }
+}

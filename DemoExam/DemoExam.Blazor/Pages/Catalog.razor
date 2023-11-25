@@ -2,19 +2,18 @@
 @using DemoExam.Blazor.Shared.Dto.Responses
 @using DemoExam.Blazor.Network.Endpoints
 @using Arbus.Network
+@using BlazorBootstrap
 @using DemoExam.Blazor.Components
 @inject HttpClientContext ClientContext
+@inject ToastService ToastService
 
 <PageTitle>Каталог</PageTitle>
-
-<link rel="stylesheet" href="css/open-iconic/font/css/open-iconic-bootstrap.min.css"/>
-
 
 <h2>Каталог товаров</h2>
 <div class="d-flex flex-row gap-5">
     <div class="input-group">
         <span class="input-group-text">
-            <i class="oi oi-magnifying-glass"></i>
+            <i class="bi-search"></i>
         </span>
         <input class="form-control" type="text" placeholder="Поиск по названию" id="searchString"
                @bind="_searchString" @bind:after="OnSearchInputChanged"/>
@@ -64,8 +63,15 @@
     
     protected override async Task OnInitializedAsync()
     {
-        await GetCatalog();
-        GetCategories();
+        try
+        {
+            await GetCatalog();
+            GetCategories();
+        }
+        catch (Exception e)
+        {
+            _products = Enumerable.Empty<Product>();
+        }
     }
 
     private void GetCategories()
@@ -75,10 +81,7 @@
             : Enumerable.Empty<string>();
     }
 
-    private async Task GetCatalog()
-    {
-        _products = await ClientContext.RunEndpoint(new CatalogEndpoint());
-    }
+    private async Task GetCatalog() => _products = await ClientContext.RunEndpoint(new CatalogEndpoint());
 
     private Task OnSearchInputChanged() => OnFilterChanged();
 

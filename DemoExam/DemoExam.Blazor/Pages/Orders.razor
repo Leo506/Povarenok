@@ -12,14 +12,11 @@
 @inject HttpClientContext ClientContext
 @inject IJSRuntime JsRuntime
 <PageTitle>Заказы</PageTitle>
-
-<link rel="stylesheet" href="css/open-iconic/font/css/open-iconic-bootstrap.min.css"/>
-
 <h3>Заказы</h3>
 
 <div class="d-flex w-25 align-items-center">
     <span>
-        <i class="oi oi-sort-ascending"></i>
+        <i class="bi-sort-down"></i>
     </span>
     <select class="form-select" id="sorting" @bind="_sortField" @bind:after="OnSortFieldChanged">
         <option>@SortByStatus</option>

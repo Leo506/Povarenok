@@ -4,16 +4,19 @@
 @using DemoExam.Blazor.Services.PickupPoints
 @using DemoExam.Blazor.Shared.Dto.Responses
 @using Arbus.Network
+@using BlazorBootstrap
 @using DemoExam.Blazor.Shared.Dto.Requests
+@using System.Globalization
 @inject IBasketService BasketService
 @inject IPickupPointsService PickupPointsService
 @inject IJSRuntime JsRuntime
 @inject HttpClientContext ClientContext
+@inject ToastService ToastsService
 
 @if (BasketService.TotalProductsCount > 0)
 {
     <button data-bs-toggle="modal" data-bs-target="#basketModal" class="btn btn-primary fab d-flex align-items-center justify-content-center">
-        <i class="oi oi-basket" style="font-size: 35px"></i>
+        <i class="bi-basket" style="font-size: 35px"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             @BasketService.TotalProductsCount
         </span>
@@ -64,7 +67,7 @@
                                 <td>@((product.PriceWithDiscount * BasketService.GetProductAmount(product)).ToString("F2"))</td>
                                 <td>
                                     <button class="text-danger btn" @onclick="async () => await DeleteProduct(product)">
-                                        <i class="oi oi-trash"/>
+                                        <i class="bi-trash"/>
                                     </button>
                                 </td>
                             </tr>
@@ -120,10 +123,17 @@
 
     private async Task UpdateProductsList()
     {
-        _products = new();
-        foreach (var (article, _) in BasketService.GetAll())
+        try
         {
-            _products.Add(await ClientContext.RunEndpoint(new ProductEndpoint(article)));
+            _products = new();
+            foreach (var (article, _) in BasketService.GetAll())
+            {
+                _products.Add(await ClientContext.RunEndpoint(new ProductEndpoint(article)));
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
         }
     }
 
@@ -140,7 +150,16 @@
             Products = BasketService.GetAll()
         }));
         await JsRuntime.CloseModal();
-        BasketService.Clear();
+        await BasketService.Clear();
+        ToastsService.Notify(new ToastMessage()
+        {
+            Type = ToastType.Success,
+            IconName = IconName.Basket,
+            HelpText = DateTime.Now.ToString(CultureInfo.CurrentCulture),
+            Message = "Заказ успешно оформлен",
+            Title = "Новый заказ"
+        });
+
     }
 
 }

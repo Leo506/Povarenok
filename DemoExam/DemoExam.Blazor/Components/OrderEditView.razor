@@ -73,14 +73,14 @@
                                         <div class="buttons_container">
                                             <button class="change-amount-button"
                                                     @onclick="() => DeleteItem(item.Article)">
-                                                <i class="oi oi-minus"></i>
+                                                <i class="bi-dash"></i>
                                             </button>
                                             <div class="number">@item.Amount</div>
                                             @if (ViewModel.CanAddItem(item.Article))
                                             {
                                                 <button class="change-amount-button"
                                                         @onclick="() => AddItem(item.Article)">
-                                                    <i class="oi oi-plus"></i>
+                                                    <i class="bi-plus"></i>
                                                 </button>
                                             }
                                         </div>

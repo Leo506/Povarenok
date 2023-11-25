@@ -16,5 +16,5 @@ public interface IBasketService
     int GetProductAmount(Product product);
 
     Dictionary<string, int> GetAll();
-    void Clear();
+    Task Clear();
 }

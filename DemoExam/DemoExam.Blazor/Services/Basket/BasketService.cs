@@ -55,9 +55,10 @@ public class BasketService : IBasketService
     }
 
     public Dictionary<string, int> GetAll() => _products;
-    public void Clear()
+    public async Task Clear()
     {
         _products.Clear();
+        await _localStorageService.SetAsync(BasketKey, _products);
         BasketContentChanged?.Invoke();
     }
 }
