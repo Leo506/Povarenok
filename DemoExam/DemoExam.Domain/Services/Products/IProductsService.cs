@@ -12,8 +12,6 @@ public interface IProductsService
 
     Task UpdateProduct(string productArticle, Action<Product> productEditAction);
 
-    Task<bool> Exists(string article);
-
     Task<Product> GetByArticleNumber(string article);
     Task<IEnumerable<Product>> FindProduct(string searchString, string category);
 }

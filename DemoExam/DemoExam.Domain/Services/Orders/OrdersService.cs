@@ -20,10 +20,6 @@ public class OrdersService : IOrdersService
     }
 
     public Task<IEnumerable<Order>> GetAllOrders() => _ordersRepository.GetAllAsync();
-    public Task UpdateOrder(Order order)
-    {
-        return _ordersRepository.UpdateOrder(order);
-    }
 
     public Task<List<Order>> GetOrdersForUser(int userId)
     {

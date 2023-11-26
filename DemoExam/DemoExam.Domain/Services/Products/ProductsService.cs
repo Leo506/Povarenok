@@ -34,8 +34,6 @@ public class ProductsService : IProductsService
         await _repository.UpdateAsync(product);
     }
 
-    public Task<bool> Exists(string article) => _repository.Contains(article);
-
     public async Task<Product> GetByArticleNumber(string article)
     {
         var product = await _repository.GetAsync(article).ConfigureAwait(false);
