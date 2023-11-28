@@ -10,7 +10,7 @@ public class OrderTests : TestFixture
         RegisterAndLogin();
 
         new CatalogPage(WebDriver)
-            .AddProductToBasket(3)
+            .AddProductToBasket()
             .ClickBasket();
 
         new BasketPage(WebDriver)
