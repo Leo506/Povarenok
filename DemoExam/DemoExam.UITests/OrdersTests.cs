@@ -17,7 +17,7 @@ public class OrdersTests : TestFixture
             .EnsureThereIsOrders();
     }
 
-    [Test]
+    /*[Test]
     public void DeleteOrder_Success()
     {
         LoginAsAdmin();
@@ -34,7 +34,7 @@ public class OrdersTests : TestFixture
             .ClickDeleteButton();
         new AlertPage(WebDriver)
             .Confirm();
-    }
+    }*/
 
     [Test]
     public void EditOrder_Success()

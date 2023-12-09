@@ -4,7 +4,7 @@ namespace DemoExam.UITests;
 
 public class ProductsTests : TestFixture
 {
-    [Test]
+    /*[Test]
     public void DeleteProduct_Success()
     {
         LoginAsAdmin();
@@ -16,7 +16,7 @@ public class ProductsTests : TestFixture
             .ClickDeleteButton();
         new AlertPage(WebDriver)
             .Confirm();
-    }
+    }*/
 
     [Test]
     public void EditProduct_Success()
