@@ -15,7 +15,7 @@ public class NewProduct
     [Required]
     public string? Category { get; set; }
     
-    [Base64String(allowEmpty:true)]
+    [Base64String]
     public string? Photo { get; set; }
 
     [Required]
