@@ -68,6 +68,11 @@ public class OrderEditViewModel
         return orderItem.Amount < _originalOrderItemsCount[article];
     }
 
+    public bool CanDeleteItem(string article)
+    {
+        return _originalOrderItemsCount.Sum(x => x.Value) - _itemsToDelete.Sum(x => x.Value) - 1 >= 1;
+    }
+
     public OrderEdit ToDto()
     {
         return new OrderEdit()

@@ -1,9 +1,9 @@
-﻿@using DemoExam.Blazor.ViewModels
+﻿@using PickupPoint = DemoExam.Blazor.Shared.Dto.Responses.PickupPoint
+@using DemoExam.Blazor.ViewModels
 @using DemoExam.Domain.Models
 @using DemoExam.Blazor.Services.PickupPoints
 @using Arbus.Network
 @using BlazorBootstrap
-@using PickupPoint = DemoExam.Blazor.Shared.Dto.Responses.PickupPoint
 @inject IPickupPointsService PickupPointService
 @inject HttpClientContext ClientContext
 <div class="modal fade" id="orderEditModal" tabindex="-1" aria-labelledby="orderEditModalLabel">
@@ -72,10 +72,13 @@
                                     <td><a target="_blank" href="/catalog/@item.Article">@item.Title</a></td>
                                     <td>
                                         <div class="buttons_container">
-                                            <button class="change-amount-button"
-                                                    @onclick="() => DeleteItem(item.Article)">
-                                                <i class="bi-dash"></i>
-                                            </button>
+                                            @if (ViewModel.CanDeleteItem(item.Article))
+                                            {
+                                                <button class="change-amount-button"
+                                                        @onclick="() => DeleteItem(item.Article)">
+                                                    <i class="bi-dash"></i>
+                                                </button>
+                                            }
                                             <div class="number">@item.Amount</div>
                                             @if (ViewModel.CanAddItem(item.Article))
                                             {
